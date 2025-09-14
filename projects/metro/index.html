@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Milan Subway – Diorama</title>
+<style>
+ html,body{height:100%}
+  body{
+    margin:0; color:#fff; font-family: Arial, sans-serif;
+    display:flex; justify-content:center;
+    background:#000;
+  }
+
+  .subtitle {
+    font-size: 0.9em;        /* testo più piccolo */
+    color: #777;             /* colore più tenue */
+    margin-top: -5px;        /* avvicina al titolo */
+    margin-bottom: 15px;     /* spazio sotto */
+    font-style: italic;      /* facoltativo, corsivo */
+  }
+
+  /* ===== BACKGROUND IMAGE ===== */
+  .bg-img{
+    position:fixed; inset:0; z-index:-2;
+    background:url('images/background.png') center/cover no-repeat;
+    filter: brightness(1);
+  }
+  .bg-overlay{
+    position:fixed; inset:0; z-index:-1;
+    background:rgba(0,0,0,0.35);
+  }
+
+  /* ===== CONTAINER ===== */
+  .container{
+    width:100%; max-width:1280px; padding:0 20px 80px;
+    background: transparent;
+  }
+
+  /* ===== HERO ===== */
+  .hero{ position:relative; margin:32px 0 28px; overflow:visible; }
+  .hero-media{ position:relative; }
+  .hero-media img{
+    width:100%; height:auto; display:block;
+    /* drop-shadow che rispetta la trasparenza del PNG */
+    filter: drop-shadow(0 30px 60px rgba(0,0,0,.75)) drop-shadow(0 8px 20px rgba(0,0,0,.55));
+    border-radius: 8px;
+  }
+  .hero-overlay{
+    position:absolute; inset:0;
+    display:flex; flex-direction:column; justify-content:flex-end; gap:16px;
+    padding:28px 24px 80px;
+    pointer-events:none;
+  }
+  .main-title{
+    margin:0 0 6px; font-size:2.4rem; line-height:1.1;
+    text-shadow:0 2px 10px rgba(0,0,0,.6);
+  }
+  .intro{
+    max-width:980px; margin:0;
+    font-size:1rem; line-height:1.5;
+    color:#e9e9e9; text-shadow:0 2px 8px rgba(0,0,0,.55);
+  }
+
+  /* ===== BACK BUTTON ===== */
+  .back-btn{
+    position:fixed; top:20px; left:20px; z-index:10;
+    font-size:16px; font-weight:600; color:#fff;
+    background:rgba(18,20,26,.92); padding:8px 14px; border-radius:8px;
+    border:1px solid rgba(255,255,255,.12); text-decoration:none;
+    box-shadow:0 4px 14px rgba(0,0,0,.35);
+    transition:background .2s ease, color .2s ease;
+  }
+  .back-btn:hover{ background:#9ee7ff; color:#0b0c10; }
+
+  /* Media entro il contenitore */
+  *, *::before, *::after { box-sizing: border-box; }
+  img, video, canvas, svg { max-width: 100%; height: auto; display: block; }
+
+  /* Fai andare i media alla larghezza del foglio (container) */
+  .figure { width: 100%; max-width: none; margin: 0; }
+  .figure img { width: 100%; height: auto; }
+
+  
+
+
+  /* ===== PROJECT DETAILS ===== */
+  .pd{
+    margin: 28px 0 0;
+    border:1px solid rgba(255,255,255,.12);
+    border-radius: 10px;
+    background: rgba(12,12,14,.45);
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0,0,0,.35);
+  }
+  .pd > summary{
+    list-style: none;
+    cursor: pointer;
+    padding: 14px 18px;
+    font-weight: 700;
+    letter-spacing: .02em;
+    background: rgba(18,20,26,.65);
+    border-bottom:1px solid rgba(255,255,255,.08);
+    position: relative;
+  }
+  .pd > summary::-webkit-details-marker{ display:none; }
+  .pd > summary:after{
+    content:"▾";
+    position:absolute; right:14px; top:50%; transform:translateY(-50%);
+    opacity:.85;
+  }
+  .pd[open] > summary:after{ content:"▴"; }
+  .pd-content{ padding: 18px; display: grid; gap: 26px; }
+
+  .pd-section h3{
+    margin: 0 0 10px; font-size: 1.15rem;
+    text-shadow:0 2px 8px rgba(0,0,0,.45);
+  }
+  .caption{
+    margin:.35rem 0 0; font-size:.9rem; color:#d7d7da; opacity:.9;
+  }
+
+  /* ===== Before/After verticale (immagini SOVRAPPOSTE e FERME) ===== */
+  .ba-wrap{
+    --cut: 50%; /* percentuale da sinistra (0% = sopra tutta nascosta; 100% = tutta visibile) */
+    position: relative;
+    width: 100%;
+    aspect-ratio: auto;
+    border-radius: 8px;
+    overflow: hidden;
+    border:1px solid rgba(255,255,255,.12);
+    box-shadow: 0 20px 50px rgba(0,0,0,.35);
+    background:#000;
+    touch-action: none; /* evita scroll mentre trascini su mobile */
+    max-width: none; margin-inline: 0; /* Se vuoi limitare lo slider a 960px */
+  }
+  /* Immagini ferme, full-bleed, sovrapposte */
+  .ba-img{
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    object-fit:cover; object-position:center;
+  }
+  /* Pannello superiore tagliato: mostra solo a destra della linea */
+  .ba-top{
+    position:absolute; inset:0;
+    clip-path: polygon(var(--cut) 0, 100% 0, 100% 100%, var(--cut) 100%);
+  }
+  /* Linea/handle = SLIDER */
+  .ba-handle{
+    position:absolute; top:0; bottom:0; left:var(--cut);
+    /* area cliccabile più larga, linea al centro */
+    width: 28px; margin-left: -14px;
+    cursor: col-resize; z-index:3;
+  }
+  /* linea visiva al centro dell’area cliccabile */
+  .ba-handle::before{
+    content:""; position:absolute; top:0; bottom:0; left:50%;
+    transform: translateX(-50%);
+    width:2px; background: #41ffb3;
+    box-shadow: 0 0 10px #149964;
+  }
+  /* piccoli “grip” per feedback (opzionale) */
+  .ba-handle::after{
+    content:""; position:absolute; top:50%; left:50%;
+    transform: translate(-50%,-50%);
+    width:22px; height:22px; border-radius:50%;
+    background: #149964;
+    border:1px solid #41ffb3;
+    box-shadow: 0 0 14px #41ffb3;
+    pointer-events: none;
+  }
+
+  /* Video NON croppato, full-width del foglio */
+  .video-wrap{
+    position: relative;
+    width: 100%;
+    /* rimuovo l'aspect-ratio fisso */
+    aspect-ratio: auto;             /* <-- override del 16/9 */
+    border-radius: 8px;
+    overflow: hidden;
+    border:1px solid rgba(255,255,255,.12);
+    box-shadow: 0 20px 50px rgba(0,0,0,.35);
+    background:#000;
+  }
+
+  .video-wrap video{
+    /* niente absolute, niente inset, niente height:100% */
+    position: static;
+    display: block;
+    width: 100%;      /* = larghezza foglio (container) */
+    height: auto;     /* mantiene il ratio reale, nessun crop */
+    object-fit: contain; /* (ridondante con height:auto, ma ok) */
+    background:#000;  /* bande pulite se serve */
+  }
+
+  .divider{ width:100%; height:1px; background: rgba(255,255,255,.12); margin: 28px 0; }
+
+  /* ——— Box statico stile "Project details" ——— */
+  .pd-box{
+    margin: 26px 0 80px;
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:10px;
+    background: rgba(12,12,14,.45);
+    overflow:hidden;
+    box-shadow:0 20px 50px rgba(0,0,0,.35);
+    backdrop-filter: blur(4px);
+  }
+  .pd-box-header h3{
+    padding:14px 18px;
+    font-size: 1rem;
+    font-weight:700;
+    letter-spacing:.02em;
+    background: rgba(18,20,26,.65);
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  .pd-box-content{
+    padding:18px;
+  }
+
+  /* ——— Loghi centrati, nessun effetto ——— */
+  .software-logos{
+    display:flex; justify-content:center; align-items:center;
+    gap:28px; flex-wrap:wrap; padding:4px 0;
+  }
+  .software-logos img{
+    height:48px; width:auto; display:block;
+    border:0; box-shadow:none; background:transparent;
+    filter:none; transition:none; user-select:none; -webkit-user-drag:none;
+  }
+
+</style>
+</head>
+<body>
+
+<a href="../../portfolio.html" class="back-btn">← Back</a>
+
+<div class="container">
+  <!-- HERO -->
+  <header class="hero" id="hero">
+    <div class="hero-media">
+      <!-- Header image (orizzontale, con ombra aderente) -->
+      <img src="images/header-image.png" alt="Milan Metro – Diorama header image" />
+    </div>
+
+    <!-- Overlay testi -->
+    <div class="hero-overlay">
+      <h1 class="main-title">Milan Subway — Diorama</h1>
+      <p class="intro">
+        For this solo university project focused on <strong>environment design</strong>, <strong>lighting</strong>, and <strong>compositing</strong>, I created a section of the <em>Milan subway</em> entrance starting from a personal concept.
+        The scene was modeled in <strong>Autodesk Maya</strong>, rendered with <strong>Arnold</strong>, and composited in <strong>NukeX</strong>.
+      </p>
+
+    </div>
+  </header>
+  <!-- PROJECT DETAILS (chiuso di default) -->
+  <details class="pd">
+     <summary>Project details</summary>
+    <div class="pd-content">
+
+      <!-- Concept & References -->
+      <section class="pd-section" id="concept & references">
+         <h3>References</h3>
+         <figure class="figure">
+         <img src="images/reference.png">
+        </figure>
+      </section>
+
+      <div class="divider"></div>
+
+      <!-- Turntable -->
+      <section class="pd-section" id="turntable">
+        <h3>Turntable (360°)</h3>
+        <p class="subtitle">
+          Stages shown (in order): AO → Wireframe + AO → Beauty → Comp.
+        </p>
+        <div class="video-wrap">
+          <!-- <video src="images/turntable.mp4" controls preload="metadata"></video> -->
+          <video src="images/turntable.mp4" controls preload="metadata"></video>
+        </div>
+      </section>
+
+    </div>
+  </details> <!-- fine Project details -->
+  
+
+  <!-- (Qui potrai aggiungere altre sezioni come References, Blockout, Assets, ecc.) -->
+  <div class="divider-full"></div>
+
+  <section class="pd-box" id="software" role="region" aria-labelledby="software-title">
+      <div class="pd-box-header">
+        <h3 id="software-title" style="margin:0;">Software used</h3>
+      </div>
+      <div class="pd-box-content">
+        <div class="software-logos">
+          <img src="images/logos/maya.svg" alt="Autodesk Maya">
+          <img src="images/logos/zbrush.svg" alt="Maxon ZBrush" style="filter: brightness(0) invert(1);">
+          <img src="images/logos/substance.svg" alt="Substance Painter">
+          <img src="images/logos/nuke.svg" alt="Nuke X">
+          <!-- aggiungi altri loghi se vuoi -->
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    // Slider = la linea (handle). Immagini ferme; cambiamo solo il "taglio" con --cut.
+    document.querySelectorAll('[data-ba]').forEach((wrap)=>{
+      const topPanel = wrap.querySelector('.ba-top');
+      const handle   = wrap.querySelector('.ba-handle');
+
+      let cut = 50; // 0..100
+      const apply = () => {
+        wrap.style.setProperty('--cut', cut + '%');
+        handle.setAttribute('aria-valuenow', String(Math.round(cut)));
+      };
+      apply();
+
+      // Funzione per aggiornare il cut in base a una X
+      const setFromClientX = (clientX) => {
+        const rect = wrap.getBoundingClientRect();
+        let pct = ((clientX - rect.left) / rect.width) * 100;
+        pct = Math.max(0, Math.min(100, pct));
+        cut = pct;
+        apply();
+      };
+
+      // Pointer Events (mouse + touch + pen)
+      let dragging = false;
+
+      handle.addEventListener('pointerdown', (e)=>{
+        dragging = true;
+        handle.setPointerCapture(e.pointerId);
+        setFromClientX(e.clientX);
+        e.preventDefault();
+      });
+
+      handle.addEventListener('pointermove', (e)=>{
+        if(!dragging) return;
+        setFromClientX(e.clientX);
+        e.preventDefault();
+      });
+
+      const endDrag = (e)=>{
+        if(!dragging) return;
+        dragging = false;
+        try { handle.releasePointerCapture(e.pointerId); } catch {}
+      };
+      handle.addEventListener('pointerup', endDrag);
+      handle.addEventListener('pointercancel', endDrag);
+      document.addEventListener('pointerup', endDrag); // safety fuori area
+
+      const probeImg = wrap.querySelector('.ba-top img') || wrap.querySelector('img');
+      const setAR = ()=>{
+        if (probeImg.naturalWidth && probeImg.naturalHeight) {
+          wrap.style.aspectRatio = `${probeImg.naturalWidth} / ${probeImg.naturalHeight}`;
+        }
+      };
+      if (probeImg.complete) setAR();
+      else probeImg.addEventListener('load', setAR);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Golden Fall</title>
+  <style>
+    /* ====== PAGE BACKGROUND ====== */
+    html,body{height:100%}
+    body{
+      margin:0; font-family: Arial, sans-serif; color:#fff;
+      display:flex; justify-content:center;
+      background: #000 url("images/background.png") center/cover no-repeat fixed;
+    }
+
+    .subtitle {
+      font-size: 0.9em;        /* testo più piccolo */
+      color: #777;             /* colore più tenue */
+      margin-top: -5px;        /* avvicina al titolo */
+      margin-bottom: 15px;     /* spazio sotto */
+      font-style: italic;      /* facoltativo, corsivo */
+    }
+
+    /* ====== CONTAINER (transparent) ====== */
+    .container{
+      width:100%; max-width:1280px; padding:0 20px 60px;
+      background: transparent; /* foglio trasparente */
+    }
+
+    /* ====== HERO (header image con overlay) ====== */
+    .hero {
+      position: relative;
+      margin: 32px 0 28px;
+      overflow: visible;
+    }
+
+    .hero-media {
+      position: relative;
+    }
+
+    .hero-media img {
+      width: 100%;
+      height: auto;
+      display: block;
+      background: transparent; /* Assicura che non ci sia riempimento */
+      filter: drop-shadow(0 30px 60px rgba(0,0,0,.45)) drop-shadow(0 8px 20px rgba(0,0,0,.35));
+    }
+
+    /* Ombra che segue i bordi del PNG */
+    .hero-media::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65); /* colore e opacità dell’ombra */
+      filter: blur(24px); /* morbidezza dell’ombra */
+      transform: translateY(10px); /* spostamento verso il basso */
+      -webkit-mask-image: url("images/header-image.png");
+      -webkit-mask-repeat: no-repeat;
+      -webkit-mask-position: center;
+      -webkit-mask-size: contain;
+     mask-image: url("images/header-image.png");
+      mask-repeat: no-repeat;
+      mask-position: center;
+      mask-size: contain;
+      pointer-events: none; /* non blocca i click */
+    }
+
+    /* overlay per testi e icone */
+    .hero-overlay{
+      position:absolute; inset:0;
+      display:flex; flex-direction:column; justify-content:flex-end; gap:16px;
+      padding:28px 24px 18px;
+    }
+
+    .main-title{ margin:0 0 6px; font-size:2.4rem; line-height:1.1; text-shadow:0 2px 10px rgba(0,0,0,.6); border-bottom: 2px solid #ccc; display: inline-block; padding-bottom: 5px;}
+    .intro{
+      max-width:980px; margin:0;
+      font-size:1rem; line-height:1.5;
+      color:#e9e9e9; text-shadow:0 2px 8px rgba(0,0,0,.55);
+    }
+
+    /* ====== ICON BAR (in basso sulla hero) ====== */
+    .icon-bar{
+      display:flex; gap:18px; align-items:center; justify-content:center;
+      margin-top:18px; padding-top:12px;
+    }
+    .icon-link{
+      display:flex; flex-direction:column; align-items:center; gap:8px;
+      text-decoration:none; color:#fff; outline:none;
+      transform-origin:center; transition: transform .18s ease, filter .18s ease, opacity .18s ease;
+      filter: grayscale(70%) brightness(.85); opacity:.9;
+    }
+    .icon-link:hover, .icon-link:focus-visible{
+      transform: translateY(-2px) scale(1.06);
+      filter: grayscale(0) brightness(1);
+      opacity:1;
+      color: gold;
+    }
+    .icon-link img{ width:90px; height:90px; object-fit:contain; display:block; }
+    .icon-link span{ font-size:.95rem; text-shadow:0 2px 6px rgba(0,0,0,.6) }
+
+    /* ====== SECTIONS ====== */
+    .section{ position:relative; margin-top:34px; }
+    .gallery-main{ width:100%; height:auto; margin:16px 0 10px; border:1px solid #333; border-radius:8px; }
+    .divider-full{ width:100%; height:1px; background: rgba(255,255,255,.12); margin: 28px 0; }
+    .divider{ width:50%; height:1px; background: rgba(255,255,255,.12); margin: 0 auto; margin-top: 10px;}
+    .divider-2{ width:50%; height:1px; background: rgba(255,255,255,.12); margin: 0 auto;}
+    .divider-title{ width:50%; height:1px; background: rgba(255,255,255,.12); margin: 0 auto;}
+
+    .foliage-roots-row {
+      display: flex;
+      gap: 10px; /* spazio tra le immagini */
+      margin-top: 20px;
+    }
+
+    .foliage-roots-row img {
+      width: 100%;
+      max-width: calc(25% - 10px); /* 4 immagini in una riga */
+      height: auto;
+      border: 1px solid #333;
+      border-radius: 4px;
+    }
+    
+
+
+    /* ====== CLOSE BUTTON (in alto a destra, X centrata) ====== */
+    .close-section-btn{
+      position:absolute; top:10px; right:10px;
+      width:36px; height:36px; border-radius:999px; border:1px solid rgba(255,255,255,.25);
+      background: rgba(0,0,0,.55); color:#fff; cursor:pointer;
+      display:grid; place-items:center; font-size:18px; line-height:1;
+      transition: background .18s ease, transform .12s ease;
+    }
+    .close-section-btn:hover{ background: rgba(0,0,0,.75); transform: scale(1.05); }
+
+    /* ====== POPUP (lasciato com’era) ====== */
+    /* ====== POPUP ====== */
+    .popup{
+      position: fixed; top:50%; left:50%; transform: translate(-50%,-50%);
+      background:#111; color:#fff;
+      padding:24px; border:1px solid #444; display:none;
+      z-index:1000; width:auto; max-width:86vw; max-height:82vh;
+      overflow:auto; text-align:center; border-radius:10px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.6);
+    }
+    .popup.active{ display:block; }
+
+    /* versione “grande” per interior/exterior */
+    .popup.big{
+      max-width:98vw;          /* più largo */
+      max-height:92vh;         /* più alto */
+      padding:28px;            /* un filo più di respiro */
+      border-width: 0;         /* look più pulito (opzionale) */
+    }
+
+    /* immagini dentro al popup */
+    .popup img{
+      max-width:100%;
+      height:auto;
+      max-height:70vh;         /* default */
+      margin-top:10px; border-radius:6px;
+    }
+
+    /* quando il popup è grande, consenti alle immagini di sfruttare più altezza */
+    .popup.big img{
+      max-height:140vh;
+    }
+
+    .overlay{
+      position:fixed; inset:0; background: rgba(0,0,0,.6); display:none; z-index:999;
+    }
+    .overlay.active{ display:block; }
+
+    /* thumbnails */
+    .thumbnails{ display:flex; gap:10px; flex-wrap:wrap; justify-content:center; align-items:center; }
+    .thumbnails img{
+      max-height:80px; width:auto; cursor:pointer; border:2px solid transparent;
+      transition: border-color .2s, filter .2s, transform .2s;
+      filter: grayscale(80%) brightness(1.2);
+    }
+    .thumbnails img:hover, .thumbnails img:focus-visible, .thumbnails img.active{
+      border-color: gold; filter: grayscale(0) brightness(1); transform: scale(1.15);
+    }
+
+    /* hotspot */
+    .hotspot-container{ position:relative; display:inline-block; }
+    .hotspot-number{
+      position:absolute; background: oklch(89.073% 0.18324 96.195 / 0.7); color:#000; padding:4px 8px;
+      border-radius:50%; cursor:pointer; font-size:16px; transition: transform .2s, background .2s;
+    }
+    .hotspot-number:hover, .hotspot-number.selected{ color:#fff; transform: scale(1.3); background: rgba(0,0,0,.9); }
+
+    /* headings */
+    h2, h3{ font-weight:600; margin: 0 0 10px; }
+
+    .video-embed{
+      position: relative;
+      width: 100%;
+      max-width: 1280px; /* opzionale */
+      aspect-ratio: 16 / 9;
+      background: #000;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,.4);
+    }
+    .video-embed iframe{
+      position:absolute; inset:0; width:100%; height:100%;
+    }
+
+    /* ====== Concept & Blockout (Exterior) ====== */
+    /* Stepper */
+    .stepper{display:flex;gap:14px;align-items:center;margin:6px 0 18px}
+    .stepper-dot{width:10px;height:10px;border-radius:50%;background:#777}
+    .stepper-dot.active{background:#fff}
+    .stepper-line{flex:1;height:2px;background:#444}
+
+    /* Concept cards */
+    .concept-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:18px}
+    .concept-card{border:1px solid #333;border-radius:8px;overflow:hidden;background:#0d0d0d}
+    .concept-card img{display:block;max-width:auto;max-height:526px;object-fit:contain;filter:grayscale(25%);background: #000;}
+
+
+    /* Blockout overview + details */
+    .blockout-layout{display:grid;grid-template-columns:1.1fr 1fr;gap:24px;align-items:center;margin-bottom:8px}
+    @media (max-width: 980px){.blockout-layout{grid-template-columns:1fr; align-items: start;}}
+
+    .blockout-left img{width:100%;max-width:1000px;border:1px solid #333;border-radius:8px;display:block}
+    .blockout-left .caption{margin-top:8px;color:#cfcfcf;font-size:.9rem}
+
+    .blockout-right{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+    @media (max-width: 720px){.blockout-right{grid-template-columns:1fr}}
+    
+
+    .detail-card{
+      border:1px solid #333;
+      border-radius:8px;
+      overflow:hidden;
+      background:#0a0a0a;
+      cursor:default;
+    }
+    .detail-card img{
+      display:block;
+      width:120%;
+      height:auto;
+      object-fit:cover;
+      /* immagine fissa, nessun effetto hover */
+      filter:none;
+    }
+
+    /* Grid dei render (cover statiche) */
+    .render-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:16px;
+      margin:12px 0 6px;
+    }
+    @media (max-width: 900px){ .render-grid{ grid-template-columns:repeat(2,1fr); } }
+    @media (max-width: 560px){ .render-grid{ grid-template-columns:1fr; } }
+
+    .render-card{
+      border:1px solid #333; border-radius:8px; overflow:hidden; background:#0a0a0a;
+      cursor:pointer; transition:transform .16s ease, box-shadow .2s ease;
+    }
+    .render-card:hover{ transform:translateY(-2px); box-shadow:0 10px 24px rgba(0,0,0,.25); }
+    .render-card img{ display:block; width:100%; height:200px; object-fit:cover; filter:grayscale(35%); }
+    .render-card figcaption{ padding:8px 10px; font-size:.9rem; color:#ddd; text-align:center; }
+
+    /* Popup: area gallery con thumbs */
+    .popup .gallery-main{
+      width:100%; height:auto; border:1px solid #333; border-radius:8px;
+    }
+    .popup .thumbs{
+      display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:12px;
+    }
+    .popup .thumbs img{
+      height:72px; width:auto; border:2px solid transparent; cursor:pointer;
+      filter:grayscale(70%) brightness(1.05); transition:transform .15s, border-color .15s, filter .15s;
+      border-radius:6px;
+    }
+    .popup .thumbs img:hover, .popup .thumbs img.active{
+      border-color:gold; filter:grayscale(0) brightness(1); transform:scale(1.05);
+    }
+    /* ===== Back to Portfolio ===== */
+    .back-btn{
+      position:fixed; top:18px; left:18px; z-index:1000;
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 12px; border-radius:10px;
+      background: rgba(18,20,26,.92);
+      border:1px solid rgba(255,255,255,.12);
+      color:#e9e9ef; text-decoration:none; font-weight:600;
+      box-shadow:0 6px 20px rgba(0,0,0,.35);
+      transition:background .18s ease, color .18s ease, transform .12s ease;
+    }
+    .back-btn:hover{ background:#9ee7ff; color:#0b0c10; transform:translateY(-1px); }
+
+    /* ——— Box statico stile "Project details" ——— */
+  .pd-box{
+    margin: 26px 0 80px;
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:10px;
+    background: rgba(12,12,14,.45);
+    overflow:hidden;
+    box-shadow:0 20px 50px rgba(0,0,0,.35);
+    backdrop-filter: blur(4px);
+  }
+  .pd-box-header h3{
+    padding:14px 18px;
+    font-size: 1rem;
+    font-weight:700;
+    letter-spacing:.02em;
+    background: rgba(18,20,26,.65);
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  .pd-box-content{
+    padding:18px;
+  }
+
+  /* ——— Loghi centrati, nessun effetto ——— */
+  .software-logos{
+    display:flex; justify-content:center; align-items:center;
+    gap:28px; flex-wrap:wrap; padding:4px 0;
+  }
+  .software-logos img{
+    height:48px; width:auto; display:block;
+    border:0; box-shadow:none; background:transparent;
+    filter:none; transition:none; user-select:none; -webkit-user-drag:none;
+  }
+
+
+
+  </style>
+</head>
+<body>
+  <a href="../../portfolio.html" class="back-btn">← Back</a>
+  <div class="container">
+
+    <!-- ====== HERO ====== -->
+    <header class="hero" id="hero">
+      <div class="hero-media">
+        <img src="images/header-image.png" alt="Header image" />
+      </div>
+      <div class="hero-overlay">
+        <h1 class="main-title">THE GOLDEN FALL</h1>
+        <p class="intro">
+          This group project was developed during my university studies with the goal of creating a short narrative film featuring motion capture animation. 
+          Set in a fantasy world inspired by <strong>Mayan mythology</strong>, the story follows a powerful god who turns people into gold.
+        </p>
+        <p>
+          My role focused primarily on <strong>Technical Art</strong>, including software management such as <strong>Unreal Engine</strong>, 
+         <strong>environment design</strong> and <strong>set dressing</strong>, <strong>foliage management</strong>, and the development of <strong>smart materials</strong> in <em>Substance Painter</em>.
+        </p>
+
+        
+
+        <!-- ICONE IN BASSO SULL’IMMAGINE -->
+        <nav class="icon-bar" aria-label="Sections">
+          <a href="#" class="icon-link" data-target="making-of">
+            <img src="images/icons/interior.png" alt="Interior icon"><span>Interior</span>
+          </a>
+          <a href="#" class="icon-link" data-target="making-of-exterior">
+            <img src="images/icons/exterior.png" alt="Exterior icon"><span>Exterior</span>
+          </a>
+          <a href="#" class="icon-link" data-target="landscape">
+            <img src="images/icons/landscape.png" alt="Landscape icon"><span>Landscape</span>
+          </a>
+          <a href="#" class="icon-link" data-target="foliage">
+            <img src="images/icons/foliage.png" alt="Foliage icon"><span>Foliage</span>
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- ====== SECTIONS (mostrate su click icona) ====== -->
+    <section class="section" id="making-of" data-toggle="true" hidden>
+      <button class="close-section-btn" aria-label="Close section" onclick="hideAll()">×</button>
+      <h2>Making Of – Interior</h2>
+
+      <h3>References</h3>
+      <img src="images/interior-moodboard.png" alt="Moodboard Interior" class="gallery-main" />
+
+      <div class="divider-full"></div>
+
+      <h3>Blockout</h3>
+      <p class="subtitle">
+        Initial interior scene layout, modeled in <strong>Maya</strong> and rendered with <strong>Arnold</strong>.
+      </p>
+      <img src="images/interior-blockout.png" alt="Blockout Interior" class="gallery-main" />
+
+      <div class="divider-full"></div>
+
+      <h3>Assets & Materials</h3>
+      <p class="subtitle">
+        <strong>3D assets</strong> modeled in <strong>Maya</strong>, with high-detail sculpts created in <strong>ZBrush</strong> and baked into <strong>normal maps</strong> in <strong>Substance Painter</strong>. Base <strong>smart materials</strong> created in <strong>Substance Painter</strong> and refined by <strong>texture artists</strong> to achieve the final <strong> look</strong> in <strong>Unreal Engine</strong>.
+      </p>
+
+      <p style="text-align: center; font-style: italic; margin-bottom: 15px; color: gold;">
+        Select a number to view the corresponding asset details.
+      </p>
+
+      <div class="hotspot-container">
+        <img id="interiorScene2" src="images/interior-scene-1.png" alt="Interior Scene 1" class="gallery-main" />
+        <div class="hotspot-number" style="top:48%;left:46%;"
+             data-hover-img="images/interior-portal-highlight.png"
+             onclick="activateHotspot(this);openPopup('popup-interior-portal')">1</div>
+      </div>
+      <div class="divider-2"></div>
+
+      <div class="hotspot-container">
+        <img id="interiorScene" src="images/interior-scene-2.png" alt="Interior Scene 2" class="gallery-main" />
+        <div class="hotspot-number" style="top:67%;left:58%;"
+             data-hover-img="images/interior-base-highlight.png"
+             onclick="activateHotspot(this);openPopup('popup-interior-base')">1</div>
+        <div class="hotspot-number" style="top:46%;left:52%;"
+             data-hover-img="images/interior-sculpture-highlight.png"
+             onclick="activateHotspot(this);openPopup('popup-interior-sculpture')">2</div>
+        <div class="hotspot-number" style="top:37.5%;left:45%;"
+             data-hover-img="images/interior-stairs1-highlight.png"
+             onclick="activateHotspot(this);openPopup('popup-interior-stairs1')">3</div>
+        <div class="hotspot-number" style="top:64.5%;left:32%;"
+             data-hover-img="images/interior-stairs2-highlight.png"
+             onclick="activateHotspot(this);openPopup('popup-interior-stairs2')">4</div>
+        <div class="hotspot-number" style="top:25%;left:64%;"
+             data-hover-img="images/interior-fountain-highlight.png"
+             onclick="activateHotspot(this);openPopup('popup-interior-fountain')">5</div>
+      </div>
+      <div class="divider-full"></div>
+
+      <!-- ====== dentro #making-of (INTERIOR) ====== -->
+    <h3>In-Engine Renders</h3>
+    <div class="render-grid">
+      <figure class="render-card" onclick="openGallery('int_corridor1')">
+        <img src="images/interior-renders/corridor1-3.jpg" alt="Interior render – Corridor 1">
+        <figcaption>Corridor 1</figcaption>
+      </figure>
+
+      <figure class="render-card" onclick="openGallery('int_corridor2')">
+        <img src="images/interior-renders/corridor2-3.jpg" alt="Interior render – Corridor 2">
+        <figcaption>Corridor 2</figcaption>
+      </figure>
+
+      <figure class="render-card" onclick="openGallery('int_corridor3')">
+        <img src="images/interior-renders/corridor3-3.jpg" alt="Interior render – Corridor 3">
+        <figcaption>Corridor 3</figcaption>
+      </figure>
+
+      <figure class="render-card" onclick="openGallery('int_fountain')">
+        <img src="images/interior-renders/fountain-3.jpg" alt="Interior render – Fountain">
+        <figcaption>Fountain</figcaption>
+      </figure>
+
+      <figure class="render-card" onclick="openGallery('int_pool')">
+        <img src="images/interior-renders/pool-3.jpg" alt="Interior render – Pool">
+        <figcaption>Pool</figcaption>
+      </figure>
+
+      <figure class="render-card" onclick="openGallery('int_entrance')">
+        <img src="images/interior-renders/entrance-3.jpg" alt="Interior render – Entrance">
+        <figcaption>Entrance</figcaption>
+      </figure>
+      
+    </div>
+    <div class="divider-full"></div>
+      
+    </section>
+
+    <section class="section" id="making-of-exterior" data-toggle="true" hidden>
+      <button class="close-section-btn" aria-label="Close section" onclick="hideAll()">×</button>
+      <h2>Making Of – Exterior</h2>
+
+      <h3>References</h3>
+      <img src="images/exterior-moodboard.png" alt="Moodboard Exterior" class="gallery-main" />
+
+      <div class="divider-full"></div>
+
+      <!-- Concept -->
+      <h3>Concept – from sketch to final</h3>
+      <p class="subtitle">
+        Exterior temple concept art created in <strong>Photoshop</strong>, from initial sketches to the final design.
+      </p>
+      <div class="stepper" aria-hidden="true">
+        <span class="stepper-dot active"></span><span class="stepper-line"></span>
+        <span class="stepper-dot"></span><span class="stepper-line"></span>
+        <span class="stepper-dot"></span>
+      </div>
+
+      <div class="concept-row">
+        <figure class="concept-card">
+          <img src="images/exterior-concept-sketch.jpg" alt="Exterior concept – sketch" loading="lazy">
+
+        </figure>
+        <figure class="concept-card">
+          <img src="images/exterior-concept-wip.jpg" alt="Exterior concept – first pass" loading="lazy">
+
+        </figure>
+        <figure class="concept-card">
+          <img src="images/exterior-concept-final.jpg" alt="Exterior concept – final" loading="lazy">
+
+        </figure>
+      </div>
+
+      <div class="divider-full"></div>
+
+      <!-- Blockout -->
+      <h3>Blockout – overview & details</h3>
+      <p class="subtitle">
+        Initial exterior scene layout, modeled in <strong>Maya</strong> and rendered with <strong>Arnold</strong>.
+      </p>
+      <div class="blockout-layout">
+        <!-- Sinistra: overview sticky -->
+        <div class="blockout-left">
+          <img src="images/exterior-blockout-overview.jpg" alt="Exterior blockout overview" loading="lazy">
+          <p class="caption">Blockout overview</p>
+        </div>
+
+        <!-- Destra -->
+        <div class="blockout-right">
+          <figure class="detail-card">
+            <img src="images/exterior-blockout-detail-01-thumb.jpg" alt="Detail 01 – Entrance massing" loading="lazy">
+          </figure>
+
+          <figure class="detail-card">
+            <img src="images/exterior-blockout-detail-02-thumb.jpg" alt="Detail 02 – Column rhythm" loading="lazy">
+          </figure>
+
+          <figure class="detail-card">
+            <img src="images/exterior-blockout-detail-03-thumb.jpg" alt="Detail 03 – Stairs proportion" loading="lazy">
+          </figure>
+
+          <figure class="detail-card">
+            <img src="images/exterior-blockout-detail-04-thumb.jpg" alt="Detail 04 – Relief sizing" loading="lazy">
+          </figure>
+        </div>
+      </div>
+
+      <div class="divider-full"></div>
+
+      <!-- Assets & Materials (hotspots) -->
+      <h3>Assets & Materials</h3>
+      <p class="subtitle">
+        <strong>3D assets</strong> modeled in <strong>Maya</strong>, with high-detail sculpts created in <strong>ZBrush</strong> and baked into <strong>normal maps</strong> in <strong>Substance Painter</strong>. Base <strong>smart materials</strong> created in <strong>Substance Painter</strong> and refined by <strong>texture artists</strong> to achieve the final <strong> look</strong> in <strong>Unreal Engine</strong>.
+      </p>
+
+      <p style="text-align: center; font-style: italic; margin-bottom: 15px; color: gold;">
+        Select a number to view the corresponding asset details.
+      </p>
+
+      <div class="hotspot-container">
+        <img id="exteriorScene" src="images/exterior-scene.png" alt="Exterior Scene" class="gallery-main" />
+        <div class="hotspot-number" style="top:68%;left:49.5%;" data-hover-img="images/exterior-arch-highlight.png" onclick="activateHotspot(this);openPopup('popup-exterior-arch')">1</div>
+        <div class="hotspot-number" style="top:90%;left:64%;" data-hover-img="images/exterior-bottom-rocks-highlight.png" onclick="activateHotspot(this);openPopup('popup-exterior-bottom-rocks')">2</div>
+        <div class="hotspot-number" style="top:80%;left:49.5%;" data-hover-img="images/exterior-central-wall-highlight.png" onclick="activateHotspot(this);openPopup('popup-exterior-central-wall')">3</div>
+        <div class="hotspot-number" style="top:79%;left:55%;" data-hover-img="images/exterior-columns-highlight.png" onclick="activateHotspot(this);openPopup('popup-exterior-columns')">4</div>
+        <div class="hotspot-number" style="top:76.5%;left:45%;" data-hover-img="images/exterior-entrance-highlight.png" onclick="activateHotspot(this);openPopup('popup-exterior-entrance')">5</div>
+        <div class="hotspot-number" style="top:55.5%;left:49.5%;" data-hover-img="images/exterior-relief-highlight.png" onclick="activateHotspot(this);openPopup('popup-exterior-relief')">6</div>
+        <div class="hotspot-number" style="top:79%;left:23.5%;" data-hover-img="images/exterior-side-walls-highlight.png" onclick="activateHotspot(this);openPopup('popup-exterior-side-walls')">7</div>
+        <div class="hotspot-number" style="top:90%;left:49.5%;" data-hover-img="images/exterior-stairs-highlight.png" onclick="activateHotspot(this);openPopup('popup-exterior-stairs')">8</div>
+        <div class="hotspot-number" style="top:39%;left:49.5%;" data-hover-img="images/exterior-stelae-highlight.png" onclick="activateHotspot(this);openPopup('popup-exterior-stelae')">9</div>
+        <div class="hotspot-number" style="top:82%;left:37%;" data-hover-img="images/exterior-water-slide-highlight.png" onclick="activateHotspot(this);openPopup('popup-exterior-water-slide')">10</div>
+        <div class="hotspot-number" style="top:30%;left:25%;" data-hover-img="images/exterior-mountain-highlight.png" onclick="activateHotspot(this);openPopup('popup-exterior-mountain')">11</div>
+      </div>
+
+      <div class="divider-full"></div>
+
+      <!-- ====== dentro #making-of-exterior (EXTERIOR) ====== -->
+    <h3>In-Engine Renders</h3>
+    <div class="render-grid">
+      <figure class="render-card" onclick="openGallery('ext_entrance_in')">
+        <img src="images/exterior-renders/entrance-in-3.jpg" alt="Exterior render – Entrance In">
+        <figcaption>Entrance In</figcaption>
+      </figure>
+
+      <figure class="render-card" onclick="openGallery('ext_entrance_out')">
+        <img src="images/exterior-renders/entrance-out-3.jpg" alt="Exterior render – Entrance Out">
+        <figcaption>Entrance Out</figcaption>
+      </figure>
+
+      <figure class="render-card" onclick="openGallery('ext_long_shot')">
+        <img src="images/exterior-renders/long-shot-3.jpg" alt="Exterior render – Long Shot">
+        <figcaption>Long Shot</figcaption>
+      </figure>
+
+    </div>
+
+    <div class="divider-full"></div>
+
+
+    </section>
+
+
+    <section class="section" id="landscape" data-toggle="true" hidden>
+      <button class="close-section-btn" aria-label="Close section" onclick="hideAll()">×</button>
+      <h2>Landscape</h2>
+      
+      <h3>References</h3>
+      <img src="images/landscape-moodboard.png" alt="Moodboard Landscape" class="gallery-main" />
+
+      <div class="divider-full"></div>
+
+      <h3>Procedural Mountain</h3>
+      <p class="subtitle">
+        Mountains height-maps generated in <strong>Gaea</strong> and used to create landscape in <strong>Unreal Engine</strong>.
+      </p>
+      <img src="images/landscape-mountain-1.png" alt="Mountain Landscape" class="gallery-main" />
+      <img src="images/landscape-mountain-2.png" alt="Mountain Landscape" class="gallery-main" />
+      <img src="images/landscape-mountain-3.png" alt="Mountain Landscape" class="gallery-main" />
+
+      <div class="divider-full"></div>
+
+
+      <h3>Scene Composition</h3>
+      <p class="subtitle">
+        Scene composition in <strong>Unreal Engine</strong>.
+      </p>
+      <img id="landMain" src="images/landscape-3.png" alt="Landscape Main" class="gallery-main" />
+      <div class="thumbnails" id="landThumbs">
+        <img src="images/landscape-1.png" alt="Landscape 1" />
+        <img src="images/landscape-2.png" alt="Landscape 2" />
+        <img src="images/landscape-3.png" alt="Landscape 3" class="active"/>
+      </div>
+
+      <div class="divider-full"></div>
+
+      <img src="images/landscape-start.png" alt="Landscape Start" class="gallery-main" />
+
+      <div class="divider-full"></div>
+
+    </section>
+
+    <section class="section" id="foliage" data-toggle="true" hidden>
+      <button class="close-section-btn" aria-label="Close section" onclick="hideAll()">×</button>          
+      <h2>Foliage</h2>
+      <h3>References</h3>
+      <img src="images/foliage-moodboard.png" alt="Moodboard Foliage" class="gallery-main" />
+
+      <div class="divider-full"></div>
+
+      <h3>Climbing plants & roots</h3>
+      <p class="subtitle">
+        Vegetation assets used in both the <strong>interior</strong> and <strong>exterior</strong> environments, created in <strong>SpeedTree</strong>, with textures and components designed in <strong>Photoshop</strong> and integrated into <strong>Unreal Engine</strong>.
+      </p>
+
+      <div class="foliage-roots-row">
+        <img src="images/roots1.png" alt="Roots 1">
+        <img src="images/roots2.png" alt="Roots 2">
+        <img src="images/roots3.png" alt="Roots 3">
+        <img src="images/roots4.png" alt="Roots 4">
+      </div>
+
+      <div class="divider-full"></div>
+
+      <h3>Foliage assets overview</h3>
+      <p class="subtitle">
+        Collection of vegetation assets used in the scene, created in <strong>SpeedTree</strong> or <strong>Maya</strong>, with foliage components prepared in <strong>Photoshop</strong> and integrated into <strong>Unreal Engine</strong>.
+      </p>
+
+      <img src="images/foliage-main-moss.png" alt="Foliage Moss" class="gallery-main" />
+      <div class="thumbnails">
+        <img src="images/foliage-moss-1.png" onclick="openPopup('popup-foliage-moss-1')">
+        <img src="images/foliage-moss-2.png" onclick="openPopup('popup-foliage-moss-2')">
+        <img src="images/foliage-moss-3.png" onclick="openPopup('popup-foliage-moss-3')">
+        <img src="images/foliage-moss-4.png" onclick="openPopup('popup-foliage-moss-4')">
+        <img src="images/foliage-moss-5.png" onclick="openPopup('popup-foliage-moss-5')">
+        <img src="images/foliage-moss-6.png" onclick="openPopup('popup-foliage-moss-6')">
+        <img src="images/foliage-moss-7.png" onclick="openPopup('popup-foliage-moss-7')">
+        <img src="images/foliage-moss-8.png" onclick="openPopup('popup-foliage-moss-8')">
+      </div>
+      <div class="divider"></div>
+
+      <img src="images/foliage-main-grass.png" alt="Foliage Grass" class="gallery-main" />
+      <div class="thumbnails">
+        <img src="images/foliage-grass-1.png" onclick="openPopup('popup-foliage-grass-1')">
+        <img src="images/foliage-grass-2.png" onclick="openPopup('popup-foliage-grass-2')">
+        <img src="images/foliage-grass-3.png" onclick="openPopup('popup-foliage-grass-3')">
+        <img src="images/foliage-grass-4.png" onclick="openPopup('popup-foliage-grass-4')">
+        <img src="images/foliage-grass-5.png" onclick="openPopup('popup-foliage-grass-5')">
+        <img src="images/foliage-grass-6.png" onclick="openPopup('popup-foliage-grass-6')">
+        <img src="images/foliage-grass-7.png" onclick="openPopup('popup-foliage-grass-7')">
+        <img src="images/foliage-grass-8.png" onclick="openPopup('popup-foliage-grass-8')">
+        <img src="images/foliage-grass-9.png" onclick="openPopup('popup-foliage-grass-9')">
+      </div>
+      <div class="divider"></div>
+
+      <img src="images/foliage-main-bush1.png" alt="Foliage Bush1" class="gallery-main" />
+      <div class="thumbnails">
+        <img src="images/foliage-bush1-1.png" onclick="openPopup('popup-foliage-bush1-1')">
+      </div>
+      <div class="divider"></div>
+
+      <img src="images/foliage-main-bush2.png" alt="Foliage Bush2" class="gallery-main" />
+      <div class="thumbnails">
+        <img src="images/foliage-bush2-1.png" onclick="openPopup('popup-foliage-bush2-1')">
+      </div>
+      <div class="divider"></div>
+
+      <img src="images/foliage-main-palm1.png" alt="Foliage Palm1" class="gallery-main" />
+      <div class="thumbnails">
+        <img src="images/foliage-palm1-1.png" onclick="openPopup('popup-foliage-palm1-1')">
+        <img src="images/foliage-palm1-2.png" onclick="openPopup('popup-foliage-palm1-2')">
+        <img src="images/foliage-palm1-3.png" onclick="openPopup('popup-foliage-palm1-3')">
+        <img src="images/foliage-palm1-4.png" onclick="openPopup('popup-foliage-palm1-4')">
+        <img src="images/foliage-palm1-5.png" onclick="openPopup('popup-foliage-palm1-5')">
+        <img src="images/foliage-palm1-6.png" onclick="openPopup('popup-foliage-palm1-6')">
+        <img src="images/foliage-palm1-7.png" onclick="openPopup('popup-foliage-palm1-7')">
+      </div>
+      <div class="divider"></div>
+
+      <img src="images/foliage-main-palm2.png" alt="Foliage Palm1" class="gallery-main" />
+      <div class="thumbnails">
+        <img src="images/foliage-palm2-1.png" onclick="openPopup('popup-foliage-palm2-1')">
+        <img src="images/foliage-palm2-2.png" onclick="openPopup('popup-foliage-palm2-2')">
+        <img src="images/foliage-palm2-3.png" onclick="openPopup('popup-foliage-palm2-3')">
+        <img src="images/foliage-palm2-4.png" onclick="openPopup('popup-foliage-palm2-4')">
+        <img src="images/foliage-palm2-5.png" onclick="openPopup('popup-foliage-palm2-5')">
+        <img src="images/foliage-palm2-6.png" onclick="openPopup('popup-foliage-palm2-6')">
+        <img src="images/foliage-palm2-7.png" onclick="openPopup('popup-foliage-palm2-7')">
+      </div>
+      <div class="divider"></div>
+
+      <img src="images/foliage-main-palm3.png" alt="Foliage Palm3" class="gallery-main" />
+      <div class="thumbnails">
+        <img src="images/foliage-palm3-1.png" onclick="openPopup('popup-foliage-palm3-1')">
+        <img src="images/foliage-palm3-2.png" onclick="openPopup('popup-foliage-palm3-2')">
+        <img src="images/foliage-palm3-3.png" onclick="openPopup('popup-foliage-palm3-3')">
+      </div>
+      <div class="divider"></div>
+
+      <img src="images/foliage-main-plant1.png" alt="Foliage Plant1" class="gallery-main" />
+      <div class="thumbnails">
+        <img src="images/foliage-plant1-1.png" onclick="openPopup('popup-foliage-plant1-1')">
+        <img src="images/foliage-plant1-2.png" onclick="openPopup('popup-foliage-plant1-2')">
+        <img src="images/foliage-plant1-3.png" onclick="openPopup('popup-foliage-plant1-3')">
+        <img src="images/foliage-plant1-4.png" onclick="openPopup('popup-foliage-plant1-4')">
+        <img src="images/foliage-plant1-5.png" onclick="openPopup('popup-foliage-plant1-5')">
+      </div>
+      <div class="divider"></div>
+
+      <img src="images/foliage-main-plant2.png" alt="Foliage Plant2" class="gallery-main" />
+      <div class="thumbnails">
+        <img src="images/foliage-plant2-1.png" onclick="openPopup('popup-foliage-plant2-1')">
+        <img src="images/foliage-plant2-2.png" onclick="openPopup('popup-foliage-plant2-2')">
+        <img src="images/foliage-plant2-3.png" onclick="openPopup('popup-foliage-plant2-3')">
+        <img src="images/foliage-plant2-4.png" onclick="openPopup('popup-foliage-plant2-4')">
+        <img src="images/foliage-plant2-5.png" onclick="openPopup('popup-foliage-plant2-5')">
+        <img src="images/foliage-plant2-6.png" onclick="openPopup('popup-foliage-plant2-6')">
+        <img src="images/foliage-plant2-7.png" onclick="openPopup('popup-foliage-plant2-7')">
+      </div>
+      <div class="divider"></div>
+
+      <img src="images/foliage-main-plant3.png" alt="Foliage Plant3" class="gallery-main" />
+      <div class="thumbnails">
+        <img src="images/foliage-plant3-1.png" onclick="openPopup('popup-foliage-plant3-1')">
+        <img src="images/foliage-plant3-2.png" onclick="openPopup('popup-foliage-plant3-2')">
+        <img src="images/foliage-plant3-3.png" onclick="openPopup('popup-foliage-plant3-3')">
+        <img src="images/foliage-plant3-4.png" onclick="openPopup('popup-foliage-plant3-4')">
+        <img src="images/foliage-plant3-5.png" onclick="openPopup('popup-foliage-plant3-5')">
+        <img src="images/foliage-plant3-6.png" onclick="openPopup('popup-foliage-plant3-6')">
+        <img src="images/foliage-plant3-7.png" onclick="openPopup('popup-foliage-plant3-7')">
+        <img src="images/foliage-plant3-8.png" onclick="openPopup('popup-foliage-plant3-8')">
+        <img src="images/foliage-plant3-8.png" onclick="openPopup('popup-foliage-plant3-9')">
+        <img src="images/foliage-plant3-10.png" onclick="openPopup('popup-foliage-plant3-10')">
+      </div>
+      <div class="divider"></div>
+
+      <img src="images/foliage-main-tree.png" alt="Foliage Tree" class="gallery-main" />
+      <div class="thumbnails">
+        <img src="images/foliage-tree-1.png" onclick="openPopup('popup-foliage-tree-1')">
+      </div>
+      <div class="divider"></div>
+
+      <img src="images/foliage-main-trees.png" alt="Foliage Trees" class="gallery-main" />
+      <div class="thumbnails">
+        <img src="images/foliage-trees-1.png" onclick="openPopup('popup-foliage-trees-1')">
+        <img src="images/foliage-trees-2.png" onclick="openPopup('popup-foliage-trees-2')">
+      </div>
+      <div class="divider"></div>
+
+      <img src="images/foliage-main-liane.png" alt="Foliage Liane" class="gallery-main" />
+      <div class="thumbnails">
+        <img src="images/foliage-liane-1.png" onclick="openPopup('popup-foliage-liane-1')">
+        <img src="images/foliage-liane-2.png" onclick="openPopup('popup-foliage-liane-2')">
+        <img src="images/foliage-liane-3.png" onclick="openPopup('popup-foliage-liane-3')">
+        <img src="images/foliage-liane-4.png" onclick="openPopup('popup-foliage-liane-4')">
+        <img src="images/foliage-liane-5.png" onclick="openPopup('popup-foliage-liane-5')">
+        <img src="images/foliage-liane-6.png" onclick="openPopup('popup-foliage-liane-6')">
+        <img src="images/foliage-liane-7.png" onclick="openPopup('popup-foliage-liane-7')">
+        <img src="images/foliage-liane-8.png" onclick="openPopup('popup-foliage-liane-8')">
+        <img src="images/foliage-liane-9.png" onclick="openPopup('popup-foliage-liane-9')">
+        <img src="images/foliage-liane-10.png" onclick="openPopup('popup-foliage-liane-10')">
+        <img src="images/foliage-liane-11.png" onclick="openPopup('popup-foliage-liane-11')">
+        <img src="images/foliage-liane-12.png" onclick="openPopup('popup-foliage-liane-12')">
+        <img src="images/foliage-liane-13.png" onclick="openPopup('popup-foliage-liane-13')">
+      </div>
+      <div class="divider-full"></div>
+    </section>
+
+    <section class="section" id="video">
+      <h2>Full Video</h2>
+      <div class="video-embed">
+        <iframe
+          src="https://www.youtube.com/embed/your_video_id" 
+          title="The Golden Fall - Full Video"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+          referrerpolicy="strict-origin-when-cross-origin"></iframe>
+      </div>
+    </section>
+
+    <section class="pd-box" id="software" role="region" aria-labelledby="software-title">
+      <div class="pd-box-header">
+        <h3 id="software-title" style="margin:0;">Software used</h3>
+      </div>
+      <div class="pd-box-content">
+        <div class="software-logos">
+          <img src="images/logos/maya.svg" alt="Autodesk Maya">
+          <img src="images/logos/zbrush.svg" alt="Maxon ZBrush" style="filter: brightness(0) invert(1);">
+          <img src="images/logos/photoshop.svg" alt="Adobe Photoshop">
+          <img src="images/logos/substance.svg" alt="Substance Painter">
+          <img src="images/logos/speedtree.svg" alt="SpeedTree" style="filter: brightness(0) invert(1);">
+          <img src="images/logos/gaea.svg" alt="Gaea">
+          <img src="images/logos/unreal.svg" alt="Unreal Engine" style="filter: brightness(0) invert(1);">
+
+          <!-- aggiungi altri loghi se vuoi -->
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Popup + overlay (riusati) -->
+    <div class="overlay" id="overlay" onclick="closePopup()"></div>
+    <div class="popup" id="popup">
+      <h3 id="popup-title">Asset Detail</h3>
+      <p id="popup-desc">Images and description about the asset go here.</p>
+      <img id="popup-img" src="" alt="Popup Image" />
+      <button class="close-section-btn" style="position:static;margin:16px auto 0" onclick="closePopup()">×</button>
+    </div>
+
+  </div>
+
+  <script>
+    // all’avvio: nessuna sezione mostrata
+    window.addEventListener('load', hideAll);
+
+    // click icone: mostra sezione
+    document.querySelectorAll('.icon-link').forEach(link=>{
+      link.addEventListener('click', e=>{
+        e.preventDefault();
+        const id = link.dataset.target;
+        showSection(id);
+      });
+    });
+
+    function updateVideoVisibility(){
+      const anyOpen = Array.from(document.querySelectorAll('.section[data-toggle]'))
+        .some(s => !s.hidden);
+      const video = document.getElementById('video');
+      if (video) video.hidden = anyOpen;   // se c’è qualcosa aperto = nascondi video
+    }
+
+    function hideAll(){
+      document.querySelectorAll('.section[data-toggle]').forEach(s => s.hidden = true);
+      updateVideoVisibility();              // nessuna aperta => mostra video
+      window.scrollTo({top:0, behavior:'smooth'});
+    }
+
+    function showSection(id){
+      document.querySelectorAll('.section[data-toggle]').forEach(s => {
+        s.hidden = (s.id !== id);
+      });
+      updateVideoVisibility();              // c’è una sezione aperta => nascondi video
+      const hero = document.getElementById('hero');
+      const y = hero.getBoundingClientRect().bottom + window.scrollY + 10;
+      window.scrollTo({ top: y, behavior:'smooth' });
+    }
+
+
+    // Hotspot states
+    function activateHotspot(elem){
+      elem.closest('.hotspot-container').querySelectorAll('.hotspot-number').forEach(h=>h.classList.remove('selected'));
+      elem.classList.add('selected');
+    }
+
+    // Popup data (ridotto: aggiungi le tue voci)
+    const popupData = {
+      'popup-interior-base': { img: "images/popup-base.png" },
+      'popup-interior-portal': { img: "images/popup-portal.png" },
+      'popup-interior-sculpture': { img: "images/popup-sculpture.png" },
+      'popup-interior-stairs1': { img: "images/popup-stairs1.png" },
+      'popup-interior-stairs2': { img: "images/popup-stairs2.png" },
+      'popup-interior-fountain': { img: "images/popup-fountain.png" },
+      'popup-exterior-arch': { img: "images/popup-exterior-arch.png" },
+      'popup-exterior-bottom-rocks': { img: "images/popup-exterior-bottom-rocks.png" },
+      'popup-exterior-central-wall': { img: "images/popup-exterior-central-wall.png" },
+      'popup-exterior-columns': { img: "images/popup-exterior-columns.png" },
+      'popup-exterior-entrance': { img: "images/popup-exterior-entrance.png" },
+      'popup-exterior-relief': { img: "images/popup-exterior-relief.png" },
+      'popup-exterior-side-walls': { img: "images/popup-exterior-side-walls.png" },
+      'popup-exterior-stairs': { img: "images/popup-exterior-stairs.png" },
+      'popup-exterior-stelae': { img: "images/popup-exterior-stelae.png" },
+      'popup-exterior-water-slide': { img: "images/popup-exterior-water-slide.png" },
+      'popup-exterior-mountain': { img: "images/popup-exterior-mountain.png" },
+      'popup-foliage1': { img: "images/foliage-thumb-1.png" },
+      'popup-foliage2': { img: "images/foliage-thumb-2.png" },
+      'popup-foliage-moss-1': { img: "images/foliage-moss-1.png" },
+      'popup-foliage-moss-2': { img: "images/foliage-moss-2.png" },
+      'popup-foliage-moss-3': { img: "images/foliage-moss-3.png" },
+      'popup-foliage-moss-4': { img: "images/foliage-moss-4.png" },
+      'popup-foliage-moss-5': { img: "images/foliage-moss-5.png" },
+      'popup-foliage-moss-6': { img: "images/foliage-moss-6.png" },
+      'popup-foliage-moss-7': { img: "images/foliage-moss-7.png" },
+      'popup-foliage-moss-8': { img: "images/foliage-moss-8.png" },
+      'popup-foliage-grass-1': { img: "images/foliage-grass-1.png" },
+      'popup-foliage-grass-2': { img: "images/foliage-grass-2.png" },
+      'popup-foliage-grass-3': { img: "images/foliage-grass-3.png" },
+      'popup-foliage-grass-4': { img: "images/foliage-grass-4.png" },
+      'popup-foliage-grass-5': { img: "images/foliage-grass-5.png" },
+      'popup-foliage-grass-6': { img: "images/foliage-grass-6.png" },
+      'popup-foliage-grass-7': { img: "images/foliage-grass-7.png" },
+      'popup-foliage-grass-8': { img: "images/foliage-grass-8.png" },
+      'popup-foliage-grass-9': { img: "images/foliage-grass-9.png" },
+      'popup-foliage-bush1-1': { img: "images/foliage-bush1-1.png" },
+      'popup-foliage-bush2-1': { img: "images/foliage-bush2-1.png" },
+      'popup-foliage-palm1-1': { img: "images/foliage-palm1-1.png" },
+      'popup-foliage-palm1-2': { img: "images/foliage-palm1-2.png" },
+      'popup-foliage-palm1-3': { img: "images/foliage-palm1-3.png" },
+      'popup-foliage-palm1-4': { img: "images/foliage-palm1-4.png" },
+      'popup-foliage-palm1-5': { img: "images/foliage-palm1-5.png" },
+      'popup-foliage-palm1-6': { img: "images/foliage-palm1-6.png" },
+      'popup-foliage-palm1-7': { img: "images/foliage-palm1-7.png" },
+      'popup-foliage-palm2-1': { img: "images/foliage-palm2-1.png" },
+      'popup-foliage-palm2-2': { img: "images/foliage-palm2-2.png" },
+      'popup-foliage-palm2-3': { img: "images/foliage-palm2-3.png" },
+      'popup-foliage-palm2-4': { img: "images/foliage-palm2-4.png" },
+      'popup-foliage-palm2-5': { img: "images/foliage-palm2-5.png" },
+      'popup-foliage-palm2-6': { img: "images/foliage-palm2-6.png" },
+      'popup-foliage-palm2-7': { img: "images/foliage-palm2-7.png" },
+      'popup-foliage-palm3-1': { img: "images/foliage-palm3-1.png" },
+      'popup-foliage-palm3-2': { img: "images/foliage-palm3-2.png" },
+      'popup-foliage-palm3-3': { img: "images/foliage-palm3-3.png" },
+      'popup-foliage-plant1-1': { img: "images/foliage-plant1-1.png" },
+      'popup-foliage-plant1-2': { img: "images/foliage-plant1-2.png" },
+      'popup-foliage-plant1-3': { img: "images/foliage-plant1-3.png" },
+      'popup-foliage-plant1-4': { img: "images/foliage-plant1-4.png" },
+      'popup-foliage-plant1-5': { img: "images/foliage-plant1-5.png" },
+      'popup-foliage-plant2-1': { img: "images/foliage-plant2-1.png" },
+      'popup-foliage-plant2-2': { img: "images/foliage-plant2-2.png" },
+      'popup-foliage-plant2-3': { img: "images/foliage-plant2-3.png" },
+      'popup-foliage-plant2-4': { img: "images/foliage-plant2-4.png" },
+      'popup-foliage-plant2-5': { img: "images/foliage-plant2-5.png" },
+      'popup-foliage-plant2-6': { img: "images/foliage-plant2-6.png" },
+      'popup-foliage-plant2-7': { img: "images/foliage-plant2-7.png" },
+      'popup-foliage-plant3-1': { img: "images/foliage-plant3-1.png" },
+      'popup-foliage-plant3-2': { img: "images/foliage-plant3-2.png" },
+      'popup-foliage-plant3-3': { img: "images/foliage-plant3-3.png" },
+      'popup-foliage-plant3-4': { img: "images/foliage-plant3-4.png" },
+      'popup-foliage-plant3-5': { img: "images/foliage-plant3-5.png" },
+      'popup-foliage-plant3-6': { img: "images/foliage-plant3-6.png" },
+      'popup-foliage-plant3-7': { img: "images/foliage-plant3-7.png" },
+      'popup-foliage-plant3-8': { img: "images/foliage-plant3-8.png" },
+      'popup-foliage-plant3-9': { img: "images/foliage-plant3-9.png" },
+      'popup-foliage-plant3-10': { img: "images/foliage-plant3-10.png" },
+      'popup-foliage-tree-1': { img: "images/foliage-tree-1.png" },
+      'popup-foliage-trees-1': { img: "images/foliage-trees-1.png" },
+      'popup-foliage-trees-2': { img: "images/foliage-trees-2.png" },
+      'popup-foliage-liane-1': { img: "images/foliage-liane-1.png" },
+      'popup-foliage-liane-2': { img: "images/foliage-liane-2.png" },
+      'popup-foliage-liane-3': { img: "images/foliage-liane-3.png" },
+      'popup-foliage-liane-4': { img: "images/foliage-liane-4.png" },
+      'popup-foliage-liane-5': { img: "images/foliage-liane-5.png" },
+      'popup-foliage-liane-6': { img: "images/foliage-liane-6.png" },
+      'popup-foliage-liane-7': { img: "images/foliage-liane-7.png" },
+      'popup-foliage-liane-8': { img: "images/foliage-liane-8.png" },
+      'popup-foliage-liane-9': { img: "images/foliage-liane-9.png" },
+      'popup-foliage-liane-10': { img: "images/foliage-liane-10.png" },
+      'popup-foliage-liane-11': { img: "images/foliage-liane-11.png" },
+      'popup-foliage-liane-12': { img: "images/foliage-liane-12.png" },
+      'popup-foliage-liane-13': { img: "images/foliage-liane-13.png" }
+    };
+
+    const overlay = document.getElementById('overlay');
+    const pop = document.getElementById('popup');
+
+    function openPopup(id){
+      const data = popupData[id]; if(!data) return;
+
+      // Ricreo il contenuto "default" del popup ogni volta
+      pop.innerHTML = `
+        <h3 id="popup-title">Asset Detail</h3>
+        <p id="popup-desc"></p>
+        <img id="popup-img" src="" alt="Popup Image" />
+        <button class="close-section-btn" style="position:static;margin:16px auto 0" onclick="closePopup()">×</button>
+      `;
+
+      pop.querySelector('#popup-title').textContent = data.title;
+      pop.querySelector('#popup-desc').textContent = data.desc;
+      pop.querySelector('#popup-img').src = data.img;
+
+      // grande solo per interior/exterior
+      pop.classList.toggle('big', id.startsWith('popup-exterior') || id.startsWith('popup-interior'));
+
+      overlay.classList.add('active');
+      pop.classList.add('active');
+    }
+    function closePopup(){
+      overlay.classList.remove('active');
+      pop.classList.remove('active');
+      pop.classList.remove('big');        // reset dimensione per la prossima apertura
+    }
+    // Hover hotspot: swap immagine principale
+    document.querySelectorAll('.hotspot-number').forEach(h=>{
+      const container = h.closest('.hotspot-container');
+      const mainImg = container?.querySelector('.gallery-main');
+      if(!mainImg) return;
+      const originalSrc = mainImg.src;
+      const hoverSrc = h.dataset.hoverImg;
+      if(hoverSrc){
+        h.addEventListener('mouseenter', ()=> mainImg.src = hoverSrc);
+        h.addEventListener('mouseleave', ()=> mainImg.src = originalSrc);
+      }
+    });
+
+    // Swap thumbs landscape
+    (function setupThumbSwap(mainId, thumbsSelector){
+      const main = document.getElementById(mainId);
+      const thumbs = document.querySelectorAll(`${thumbsSelector} img`);
+      thumbs.forEach(img=>{
+        img.tabIndex = 0;
+        img.addEventListener('click', ()=>{
+          main.src = img.src;
+          thumbs.forEach(t=>t.classList.remove('active'));
+          img.classList.add('active');
+        });
+        img.addEventListener('keydown', e=>{
+          if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); img.click(); }
+        });
+      });
+    })('landMain','#landThumbs');
+
+    /* ===== Galleries per i render ===== */
+    const galleries = {
+      // INTERIOR
+      int_corridor1: [
+        "images/interior-renders/corridor1-1.jpg",
+        "images/interior-renders/corridor1-2.jpg",
+        "images/interior-renders/corridor1-3.jpg"
+      ],
+      int_corridor2: [
+        "images/interior-renders/corridor2-1.jpg",
+        "images/interior-renders/corridor2-2.jpg",
+        "images/interior-renders/corridor2-3.jpg"
+      ],
+       int_corridor3: [
+        "images/interior-renders/corridor3-1.jpg",
+        "images/interior-renders/corridor3-2.jpg",
+        "images/interior-renders/corridor3-3.jpg"
+      ],
+      int_fountain: [
+        "images/interior-renders/fountain-1.jpg",
+        "images/interior-renders/fountain-2.jpg",
+        "images/interior-renders/fountain-3.jpg"
+      ],
+       int_pool: [
+        "images/interior-renders/pool-1.jpg",
+        "images/interior-renders/pool-2.jpg",
+        "images/interior-renders/pool-3.jpg"
+      ],
+       int_entrance: [
+        "images/interior-renders/entrance-1.jpg",
+        "images/interior-renders/entrance-2.jpg",
+        "images/interior-renders/entrance-3.jpg"
+      ],
+
+      // EXTERIOR
+      ext_entrance_in: [
+        "images/exterior-renders/entrance-in-1.jpg",
+        "images/exterior-renders/entrance-in-2.jpg",
+        "images/exterior-renders/entrance-in-3.jpg"
+      ],
+      ext_entrance_out: [
+        "images/exterior-renders/entrance-out-1.jpg",
+        "images/exterior-renders/entrance-out-2.jpg",
+        "images/exterior-renders/entrance-out-3.jpg"
+      ],
+      ext_long_shot: [
+        "images/exterior-renders/long-shot-1.jpg",
+        "images/exterior-renders/long-shot-2.jpg",
+        "images/exterior-renders/long-shot-3.jpg"
+      ]
+    };
+
+    /* ===== Apri gallery nel popup con main + thumbnails ===== */
+    function openGallery(key, startIndex = 0){
+      const imgs = galleries[key];
+      if(!imgs || !imgs.length) return;
+
+      // Ricreo il contenuto della gallery direttamente nel popup
+      pop.innerHTML = `
+        <h3 id="popup-title">Gallery</h3>
+        <p id="popup-desc"></p>
+        <img id="gallery-main" class="gallery-main" src="${imgs[startIndex]}" alt="Render">
+        <div class="thumbs" id="gallery-thumbs"></div>
+        <button class="close-section-btn" style="position:static;margin:16px auto 0" onclick="closePopup()">×</button>
+      `;
+
+      const main = pop.querySelector('#gallery-main');
+      const thumbs = pop.querySelector('#gallery-thumbs');
+
+      imgs.forEach((src, i) => {
+        const t = document.createElement('img');
+        t.src = src;
+        if(i === startIndex) t.classList.add('active');
+        t.addEventListener('click', () => {
+          main.src = src;
+          thumbs.querySelectorAll('img').forEach(el => el.classList.remove('active'));
+          t.classList.add('active');
+        });
+        thumbs.appendChild(t);
+      });
+
+      pop.classList.add('big');          // la gallery la mostriamo in grande
+      overlay.classList.add('active');
+      pop.classList.add('active');
+    }
+
+
+    
+
+  </script>
+</body>
+</html>
