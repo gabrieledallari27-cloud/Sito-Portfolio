@@ -28,8 +28,12 @@
     background: linear-gradient(180deg, var(--bg) 0%, #07070a 100%);
     font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     overflow-x:hidden;
-  }
 
+    /* Layout per sticky footer */
+    display:flex; flex-direction:column; min-height:100svh;
+  }
+  main{ flex:1 0 auto; }
+  /* ===== NAVBAR ===== */
   .navbar{
     position:fixed; inset:0 0 auto 0; z-index:50;
     display:flex; align-items:center; justify-content:space-between; gap:14px; padding:12px 20px;
@@ -38,10 +42,12 @@
     border-bottom:1px solid rgba(125,255,179,.14);
   }
   .brand{ display:flex; align-items:center; gap:12px; text-decoration:none; color:var(--ink); }
-  .brand-mark{
-    width:38px; height:38px; border-radius:10px;
-    background: radial-gradient(100% 100% at 30% 30%, var(--line), rgba(125,255,179,.25) 60%, transparent 100%);
-    box-shadow: var(--glowS); border:1px solid rgba(255,255,255,.1);
+  /* SLOT LOGO */
+  .brand-logo{
+    width:38px; height:38px; border-radius:10px; display:block;
+    object-fit:contain; background:transparent;
+    border:1px solid rgba(255,255,255,.10);
+    box-shadow: var(--glowS);
   }
   .brand h1{ font: 800 1.1rem/1 Inter, system-ui; letter-spacing:.02em; margin:0; }
   .nav a{
@@ -50,6 +56,7 @@
   }
   .nav a:hover{ border-color: rgba(125,255,179,.35); box-shadow: 0 0 16px rgba(125,255,179,.25); transform: translateY(-1px); }
 
+  /* ===== HERO ===== */
   .hero{
     position:relative;
     height: min(78vh, 56.25vw);
@@ -96,10 +103,12 @@
   }
   .hero-btn:hover{ transform: translateY(-1px); filter: brightness(1.05); box-shadow: 0 0 26px rgba(125,255,179,.4), inset 0 0 10px rgba(255,255,255,.18); }
 
+  /* ===== SEZIONI ===== */
   .section{ position:relative; z-index:1; padding: clamp(28px, 5vw, 56px) 20px; max-width:1280px; margin:0 auto; background:transparent; }
   .section h2{ font:800 clamp(22px,3.6vw,40px)/1.1 Inter, system-ui; margin:0 0 16px; letter-spacing:.02em; }
   .section .kicker{ color:var(--accent); text-transform:uppercase; letter-spacing:.18em; font-size:.8rem; margin-bottom:6px; }
 
+  /* ===== RIBBON ===== */
   .ribbon-stage{
     position:relative; margin-top: 6vh; margin-bottom: 22px; height: calc(var(--tile-h) + 64px); overflow:hidden; background:transparent;
   }
@@ -126,12 +135,25 @@
   .btn{ appearance:none; border:none; cursor:pointer; text-decoration:none; padding:10px 14px; border-radius:999px; font-weight:700; letter-spacing:.02em; color:#0d1117; background:var(--accent); box-shadow: var(--glowS); }
   .btn.alt{ background:var(--accent-2); box-shadow: 0 0 22px rgba(255,194,75,.28); }
 
-  .contacts{ display:grid; gap:14px; grid-template-columns: repeat(3, minmax(0,1fr)); }
-  @media (max-width: 760px){ .contacts{ grid-template-columns:1fr; } }
-  .contact{ background:#0f1217cc; border:1px solid var(--border); border-radius:14px; padding:14px 16px; display:flex; align-items:center; gap:12px; }
-  .contact a{ color:#fff; text-decoration:none; border-bottom:1px dashed rgba(125,255,179,.4); }
-  .contact a:hover{ border-bottom-color: rgba(125,255,179,.8); }
+  /* ===== FOOTER CONTATTI (piccolo, centrato, sempre in fondo) ===== */
+  .site-footer{
+    flex-shrink:0;
+    border-top:1px solid var(--border);
+    background: linear-gradient(180deg, rgba(10,12,16,.35), rgba(10,12,16,.12));
+    backdrop-filter: blur(4px);
+  }
+  .footer-inner{
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 12px 16px;
+    display:flex; align-items:center; justify-content:center; gap:18px; flex-wrap:wrap;
+    font-size: 0.95rem;
+  }
+  .footer-inner .sep{ opacity:.35; }
+  .footer-inner a{ color:#fff; text-decoration:none; border-bottom:1px dashed rgba(125,255,179,.35); }
+  .footer-inner a:hover{ border-bottom-color: rgba(125,255,179,.8); }
 
+  /* ===== VFX ===== */
   .vfx{ position:absolute; inset:0; pointer-events:none; }
   .vfx-grain{
     z-index:5; background-image: url("images/vfx/film_grain_512.png");
@@ -152,85 +174,103 @@
   @media (prefers-reduced-motion: reduce){ .vfx-dust{ animation:none } }
 </style>
 </head>
+ <link rel="canonical" href="https://gabrieledallari.art/">
+ <meta name="description" content="3D Artist — Environment & Technical Art. Portfolio e showreel.">
+
+ <meta property="og:type" content="website">
+ <meta property="og:title" content="Gabriele Dallari — 3D Artist">
+ <meta property="og:description" content="Environment & Technical Art. Portfolio e showreel.">
+ <meta property="og:image" content="https://gabrieledallari.art/images/og/home.jpg">
+ <meta property="og:url" content="https://gabrieledallari.art/">
+
+ <meta name="twitter:card" content="summary_large_image">
+
 <body>
 
+  <!-- VFX -->
   <div class="vfx vfx-grain"></div>
   <div class="vfx vfx-dust dust-far"></div>
   <div class="vfx vfx-dust dust-near"></div>
 
+  <!-- NAVBAR (riusabile in tutte le pagine) -->
   <header class="navbar" role="banner">
     <a class="brand" href="index.html" aria-label="Home">
-      <span class="brand-mark" aria-hidden="true"></span><h1>Your Name</h1>
+      <img class="brand-logo" src="images/logo.svg" alt="Logo" width="40" height="40" />
+      <h1>GABRIELE DALLARI</h1>
     </a>
     <nav class="nav" aria-label="Primary">
       <a href="portfolio.html">Portfolio</a>
       <a href="#showreel">Showreel</a>
-      <a href="about.html">About Me</a>   <!-- << sposta a pagina dedicata -->
+      <a href="about.html">About Me</a>
       <a href="#contacts">Contacts</a>
     </nav>
   </header>
 
-  <section id="showreel" class="hero" aria-label="Showreel">
-    <video src="media/showreel.mp4" autoplay muted loop playsinline poster="media/showreel-poster.jpg"></video>
-    <div class="hero-center">
-      <div class="hero-title">SHOWREEL</div>
-      <a class="hero-btn" href="https://www.youtube.com/watch?v=your_video_id" target="_blank" rel="noopener">Guarda su YouTube</a>
-    </div>
-  </section>
+  <!-- CONTENUTO -->
+  <main>
+    <section id="showreel" class="hero" aria-label="Showreel">
+      <video src="media/showreel.mp4" autoplay muted loop playsinline poster="media/showreel-poster.jpg"></video>
+      <div class="hero-center">
+        <div class="hero-title">SHOWREEL</div>
+        <a class="hero-btn" href="https://youtu.be/dKwzu5KsCe8" target="_blank" rel="noopener">Guarda su YouTube</a>
+      </div>
+    </section>
 
-  <section class="section" aria-label="Portfolio">
-    <div class="kicker">Selected Works</div><h2>Portfolio Highlights</h2>
+    <section class="section" aria-label="Portfolio">
+      <div class="kicker">Selected Works</div><h2>Portfolio Highlights</h2>
 
-    <div class="ribbon-stage" id="ribbon">
-      <div class="ribbon-track" id="ribbonTrack">
-        <div class="tile" data-id="0" style="--img:url('projects/the-golden-fall/images/portfolio/goldenfall-cover.png')">
-          <div class="img" style="background-image:var(--img)"></div><div class="label">The Golden Fall</div>
-        </div>
-        <div class="tile" data-id="1" style="--img:url('projects/swamp/images/portfolio/swamp-cover.png')">
-          <div class="img"></div><div class="label">Catalina Swamp</div>
-        </div>
-        <div class="tile" data-id="2" style="--img:url('projects/metro/images/portfolio/metro-cover3.png')">
-          <div class="img"></div><div class="label">Milan Subway — Diorama</div>
-        </div>
-        <div class="tile" data-id="3" style="--img:url('projects/sloth/images/portfolio/sloth-cover.png')">
-          <div class="img"></div><div class="label">Sloth Guardian</div>
-        </div>
-        <div class="tile" data-id="4" style="--img:url('projects/climbing-roots/assets/cover.jpg')">
-          <div class="img"></div><div class="label">Climbing Plants & Roots</div>
-        </div>
-
-        <!-- duplicato per loop -->
-        <div class="tile" data-id="0" style="--img:url('projects/the-golden-fall/images/portfolio/goldenfall-cover.png')">
-          <div class="img" style="background-image:var(--img)"></div><div class="label">The Golden Fall</div>
-        </div>
-        <div class="tile" data-id="1" style="--img:url('projects/swamp/images/portfolio/swamp-cover.png')">
-          <div class="img"></div><div class="label">Catalina Swamp</div>
-        </div>
-        <div class="tile" data-id="2" style="--img:url('projects/metro/images/portfolio/metro-cover3.png')">
-          <div class="img"></div><div class="label">Milan Subway — Diorama</div>
-        </div>
-        <div class="tile" data-id="3" style="--img:url('projects/sloth/images/portfolio/sloth-cover.png')">
-          <div class="img"></div><div class="label">Sloth Guardian</div>
-        </div>
-        <div class="tile" data-id="4" style="--img:url('projects/climbing-roots/assets/cover.jpg')">
-          <div class="img"></div><div class="label">Climbing Plants & Roots</div>
+      <div class="ribbon-stage" id="ribbon">
+        <div class="ribbon-track" id="ribbonTrack">
+          <div class="tile" data-id="0" style="--img:url('projects/the-golden-fall/images/portfolio/goldenfall-cover.png')">
+            <div class="img" style="background-image:var(--img)"></div><div class="label">The Golden Fall</div>
+          </div>
+          <div class="tile" data-id="1" style="--img:url('projects/swamp/images/portfolio/swamp-cover.png')">
+            <div class="img" style="background-image:var(--img)"></div><div class="label">Catalina Swamp</div>
+          </div>
+          <div class="tile" data-id="2" style="--img:url('projects/metro/images/portfolio/metro-cover3.png')">
+            <div class="img" style="background-image:var(--img)"></div><div class="label">Milan Subway — Diorama</div>
+          </div>
+          <div class="tile" data-id="3" style="--img:url('projects/sloth/images/portfolio/sloth-cover.png')">
+            <div class="img" style="background-image:var(--img)"></div><div class="label">Sloth Guardian</div>
+          </div>
+          <div class="tile" data-id="4" style="--img:url('projects/climbing-roots/assets/cover.jpg')">
+            <div class="img" style="background-image:var(--img)"></div><div class="label">Climbing Plants & Roots</div>
+          </div>
+          <!-- duplicato per loop -->
+          <div class="tile" data-id="0" style="--img:url('projects/the-golden-fall/images/portfolio/goldenfall-cover.png')">
+            <div class="img" style="background-image:var(--img)"></div><div class="label">The Golden Fall</div>
+          </div>
+          <div class="tile" data-id="1" style="--img:url('projects/swamp/images/portfolio/swamp-cover.png')">
+            <div class="img" style="background-image:var(--img)"></div><div class="label">Catalina Swamp</div>
+          </div>
+          <div class="tile" data-id="2" style="--img:url('projects/metro/images/portfolio/metro-cover3.png')">
+            <div class="img" style="background-image:var(--img)"></div><div class="label">Milan Subway — Diorama</div>
+          </div>
+          <div class="tile" data-id="3" style="--img:url('projects/sloth/images/portfolio/sloth-cover.png')">
+            <div class="img" style="background-image:var(--img)"></div><div class="label">Sloth Guardian</div>
+          </div>
+          <div class="tile" data-id="4" style="--img:url('projects/climbing-roots/assets/cover.jpg')">
+            <div class="img" style="background-image:var(--img)"></div><div class="label">Climbing Plants & Roots</div>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="portfolio-cta">
-      <a class="btn" href="portfolio.html">Apri il Portfolio</a>
-    </div>
-  </section>
+      <div class="portfolio-cta">
+        <a class="btn" href="portfolio.html">Apri il Portfolio</a>
+      </div>
+    </section>
+  </main>
 
-  <section id="contacts" class="section" aria-label="Contacts">
-    <div class="kicker">Contacts</div><h2>Get in touch</h2>
-    <div class="contacts">
-      <div class="contact">Email · <a href="mailto:youremail@example.com">youremail@example.com</a></div>
-      <div class="contact">LinkedIn · <a href="https://www.linkedin.com/" target="_blank" rel="noopener">linkedin.com/in/yourname</a></div>
-      <div class="contact">ArtStation · <a href="https://www.artstation.com/" target="_blank" rel="noopener">artstation.com/yourname</a></div>
+  <!-- FOOTER CONTATTI (uguale in ogni pagina) -->
+  <footer class="site-footer" id="contacts" role="contentinfo">
+    <div class="footer-inner">
+      <span>Email · <a href="mailto:youremail@example.com">gabrieledallari.art@gmail.com</a></span>
+      <span class="sep">•</span>
+      <span>LinkedIn · <a href="https://www.linkedin.com/" target="_blank" rel="noopener">linkedin.com/in/gabriele-dallari</a></span>
+      <span class="sep">•</span>
+      <span>ArtStation · <a href="https://www.instagram.com/" target="_blank" rel="noopener">instagram.com/gabbodallari</a></span>
     </div>
-  </section>
+  </footer>
 
 <script>
 /* Ribbon loop + auto-active al centro */
@@ -272,6 +312,7 @@
   function onResize(){ track.style.transform='translateY(-50%) translateX(0)'; offset=0; computeSegmentWidth(); apply(); setActiveByNearestCenter(); }
   window.addEventListener('resize', onResize, {passive:true});
   onResize(); requestAnimationFrame(loop);
+  window.addEventListener('load', onResize, {once:true});
 })();
 </script>
 </body>

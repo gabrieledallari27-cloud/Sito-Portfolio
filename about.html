@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>About — Your Name</title>
+<title>Your Name — About</title>
 <meta name="theme-color" content="#0b0c10" />
 <style>
   :root{
@@ -11,15 +11,36 @@
     --line:#7dffb3; --accent:#7dffb3; --accent-2:#ffc24b;
     --border:rgba(255,255,255,.12);
     --glowS:0 0 22px rgba(125,255,179,.35), inset 0 0 10px rgba(255,255,255,.18);
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%}
-  body{
-    margin:0; color:var(--ink);
-    background: linear-gradient(180deg, var(--bg) 0%, #07070a 100%);
-    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    --max-copy: 720px;
   }
 
+  *{ box-sizing:border-box }
+  html,body{ height:100% }
+  body{
+    margin:0; color:var(--ink);
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    background:#000; overflow-x:hidden;
+
+    /* sticky footer */
+    display:flex; flex-direction:column; min-height:100svh;
+  }
+  main{ flex:1 0 auto; }
+
+  /* ===== SFONDO FISSO A TUTTA PAGINA ===== */
+  .page-bg{
+    position:fixed; inset:0; z-index:-2;
+    background: url("images/about/about-bg.webp") center/cover no-repeat;
+    background-attachment: fixed;
+  }
+  .page-scrim{
+    position:fixed; inset:0; z-index:-1;
+    background:
+      linear-gradient(180deg, rgba(11,12,16,.85), rgba(11,12,16,.55) 40%, rgba(11,12,16,.72)),
+      radial-gradient(1200px 600px at 20% 40%, rgba(125,255,179,.08), transparent 70%);
+    pointer-events:none;
+  }
+
+  /* ===== NAVBAR (come home) ===== */
   .navbar{
     position:fixed; inset:0 0 auto 0; z-index:50;
     display:flex; align-items:center; justify-content:space-between; gap:14px; padding:12px 20px;
@@ -28,62 +49,152 @@
     border-bottom:1px solid rgba(125,255,179,.14);
   }
   .brand{ display:flex; align-items:center; gap:12px; text-decoration:none; color:var(--ink); }
-  .brand-mark{
-    width:38px; height:38px; border-radius:10px;
-    background: radial-gradient(100% 100% at 30% 30%, var(--line), rgba(125,255,179,.25) 60%, transparent 100%);
-    box-shadow: var(--glowS); border:1px solid rgba(255,255,255,.1);
+  /* SLOT LOGO (sostituisci src nel markup) */
+  .brand-logo{
+    width:38px; height:38px; border-radius:10px; display:block;
+    object-fit:contain; background:transparent;
+    border:1px solid rgba(255,255,255,.10);
+    box-shadow: var(--glowS);
   }
   .brand h1{ font: 800 1.1rem/1 Inter, system-ui; letter-spacing:.02em; margin:0; }
   .nav a{
     color:var(--ink); text-decoration:none; padding:10px 12px; border-radius:10px; border:1px solid transparent;
+    transition: transform .15s ease, border-color .15s ease, box-shadow .2s ease;
   }
   .nav a:hover{ border-color: rgba(125,255,179,.35); box-shadow: 0 0 16px rgba(125,255,179,.25); transform: translateY(-1px); }
-  .nav a[aria-current="page"]{ border-color: rgba(125,255,179,.6); }
 
-  .section{ position:relative; z-index:1; padding: clamp(28px, 5vw, 56px) 20px; max-width:1280px; margin:84px auto 0; }
-  .section h2{ font:800 clamp(22px,3.6vw,40px)/1.1 Inter, system-ui; margin:0 0 16px; letter-spacing:.02em; }
-  .section .kicker{ color:var(--accent); text-transform:uppercase; letter-spacing:.18em; font-size:.8rem; margin-bottom:6px; }
-
-  .about{ display:grid; gap:22px; align-items:center; grid-template-columns: 1.1fr .9fr; }
-  @media (max-width: 900px){ .about{ grid-template-columns: 1fr; } }
-  .about .portrait{
-    height: 420px; border-radius:20px; overflow:hidden; border:1px solid var(--border);
-    background:#000 center/cover no-repeat; box-shadow: 0 18px 50px rgba(0,0,0,.55); position:relative;
+  /* ===== TESTATA (linea + titoli) ===== */
+  .page-head{
+    margin-top:84px; /* spazio per navbar */
+    padding: 46px 20px 24px;
+    display:flex; flex-direction:column; align-items:center; text-align:center;
   }
-  .about .portrait::after{ content:""; position:absolute; inset:0; pointer-events:none; border-radius:20px; box-shadow: inset 0 0 120px rgba(0,0,0,.55); }
-  .about p{ color:var(--muted); margin:0 0 10px; line-height:1.6; }
+  .page-head .sep-line{
+    width: clamp(180px, 22vw, 320px); height:3px; border-radius:999px;
+    background: linear-gradient(90deg, transparent, var(--line), transparent);
+    box-shadow: 0 0 24px rgba(125,255,179,.55);
+    margin-bottom:14px;
+  }
+  .page-head .kicker{
+    color:var(--accent); text-transform:uppercase; letter-spacing:.18em; font-size:.8rem; margin-bottom:6px;
+  }
+  .page-head .title{
+    font: 900 clamp(26px,6.8vw,72px)/1 Inter, system-ui; letter-spacing:.04em; margin:0;
+    text-shadow: 0 0 3px rgba(125,255,179,.6), 0 0 18px rgba(125,255,179,.28);
+  }
 
-  .portfolio-cta{ display:flex; gap:12px; margin-top:18px; flex-wrap:wrap; }
-  .btn{ appearance:none; border:none; cursor:pointer; text-decoration:none; padding:10px 14px; border-radius:999px; font-weight:700; letter-spacing:.02em; color:#0d1117; background:var(--accent); box-shadow: var(--glowS); }
+  /* ===== BLOCCO ABOUT (verticale, centrato) ===== */
+  .about{
+    padding: clamp(18px, 4vw, 36px) 20px 56px;
+    display:flex; flex-direction:column; align-items:center; gap:22px;
+    max-width:min(960px, 92vw); margin:0 auto;
+  }
+  .portrait{ margin:0; }
+  .portrait img{
+    display:block;
+    width: min(680px, 60vw);
+    height:auto; border:none; border-radius:0;
+    box-shadow: 0 60px 120px rgba(0,0,0,.60), 0 0 80px rgba(125,255,179,.18);
+    border-bottom: 2px solid #fff;  /* linea bianca in basso */
+  }
+  .about-copy{
+    width:min(var(--max-copy), 92vw);
+    text-align:left; color:var(--muted); line-height:1.65;
+  }
+  .about-copy p{ margin:0 0 12px; }
+  .portfolio-cta{
+    display:flex; gap:12px; margin-top:12px; flex-wrap:wrap; justify-content:center;
+  }
+  .btn{
+    appearance:none; border:none; cursor:pointer; text-decoration:none;
+    padding:10px 14px; border-radius:999px; font-weight:700; letter-spacing:.02em;
+    color:#0d1117; background:var(--accent); box-shadow: var(--glowS);
+  }
   .btn.alt{ background:var(--accent-2); box-shadow: 0 0 22px rgba(255,194,75,.28); }
+
+  /* ===== FOOTER CONTATTI (piccolo, centrato, sempre in fondo) ===== */
+  .site-footer{
+    flex-shrink:0;
+    border-top:1px solid var(--border);
+    background: linear-gradient(180deg, rgba(10,12,16,.35), rgba(10,12,16,.12));
+    backdrop-filter: blur(4px);
+  }
+  .footer-inner{
+    max-width: 980px; margin: 0 auto; padding: 12px 16px;
+    display:flex; align-items:center; justify-content:center; gap:18px; flex-wrap:wrap;
+    font-size: 0.95rem;
+  }
+  .footer-inner .sep{ opacity:.35; }
+  .footer-inner a{ color:#fff; text-decoration:none; border-bottom:1px dashed rgba(125,255,179,.35); }
+  .footer-inner a:hover{ border-bottom-color: rgba(125,255,179,.8); }
 </style>
 </head>
+ <link rel="canonical" href="https://gabrieledallari.art/">
+ <meta name="description" content="3D Artist — Environment & Technical Art. Portfolio e showreel.">
+
+ <meta property="og:type" content="website">
+ <meta property="og:title" content="Gabriele Dallari — 3D Artist">
+ <meta property="og:description" content="Environment & Technical Art. Portfolio e showreel.">
+ <meta property="og:image" content="https://gabrieledallari.art/images/og/home.jpg">
+ <meta property="og:url" content="https://gabrieledallari.art/">
+
+ <meta name="twitter:card" content="summary_large_image">
 <body>
+
+  <!-- SFONDO FISSO -->
+  <div class="page-bg" aria-hidden="true"></div>
+  <div class="page-scrim" aria-hidden="true"></div>
+
+  <!-- NAVBAR (uguale alla home) -->
   <header class="navbar" role="banner">
     <a class="brand" href="index.html" aria-label="Home">
-      <span class="brand-mark" aria-hidden="true"></span><h1>Your Name</h1>
+      <img class="brand-logo" src="images/logo.svg" alt="Logo" width="38" height="38" />
+      <h1>GABRIELE DALLARI</h1>
     </a>
     <nav class="nav" aria-label="Primary">
       <a href="portfolio.html">Portfolio</a>
       <a href="index.html#showreel">Showreel</a>
       <a href="about.html" aria-current="page">About Me</a>
-      <a href="index.html#contacts">Contacts</a>
+      <a href="#contacts">Contacts</a>
     </nav>
   </header>
 
-  <section class="section" aria-label="About Me">
-    <div class="kicker">About</div><h2>About Me</h2>
-    <div class="about">
-      <div class="portrait" style="background-image:url('images/me.jpg')"></div>
-      <div>
-        <p>3D Artist / Generalist con focus su environment design, foliage e pipeline material/tech. Estetica post-apocalittica, atmosfere rilassanti e storytelling ambientale.</p>
-        <p>Tools: Unreal, Maya, Substance, ZBrush, SpeedTree.</p>
+  <main>
+    <!-- TESTATA -->
+    <section class="page-head" aria-label="Header">
+      <div class="sep-line" aria-hidden="true"></div>
+      <div class="kicker">About</div>
+      <h1 class="title">GABRIELE DALLARI</h1>
+    </section>
+
+    <!-- ABOUT: immagine sopra, testo sotto -->
+    <section id="about" class="about" aria-label="About Me">
+      <figure class="portrait">
+        <img src="images/about/profile.png" alt="Portrait of Your Name">
+      </figure>
+
+      <div class="about-copy">
+        <p>I’m a 3D Generalist based in Milan, currently completing my studies in Creative Technologies – 3D & VFX at NABA.</p>
+        <p>I can follow the entire 3D pipeline, from concept to final compositing. Over time I’ve developed a strong passion for environment design, especially using Unreal Engine. I’m a collaborative team player, curious and proactive, always learning and pushing both the technical and artistic side to bring ideas to life.</p>
+
         <div class="portfolio-cta">
           <a class="btn" href="docs/YourName_CV.pdf" target="_blank" rel="noopener">Scarica CV</a>
           <a class="btn alt" href="mailto:youremail@example.com">Contattami</a>
         </div>
       </div>
+    </section>
+  </main>
+
+  <!-- FOOTER CONTATTI (uguale in ogni pagina) -->
+  <footer class="site-footer" id="contacts" role="contentinfo">
+    <div class="footer-inner">
+      <span>Email · <a href="mailto:youremail@example.com">gabrieledallari.art@gmail.com</a></span>
+      <span class="sep">•</span>
+      <span>LinkedIn · <a href="https://www.linkedin.com/" target="_blank" rel="noopener">linkedin.com/in/gabriele-dallari</a></span>
+      <span class="sep">•</span>
+      <span>ArtStation · <a href="https://www.instagram.com/" target="_blank" rel="noopener">instagram.com/gabbodallari</a></span>
     </div>
-  </section>
+  </footer>
+
 </body>
 </html>
