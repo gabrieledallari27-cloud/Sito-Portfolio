@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Contact — Gabriele Dallari</title>
+<meta name="theme-color" content="#0b0c10" />
+<link rel="icon" href="images/logo_color.svg" type="image/svg+xml" />
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+
+<link rel="canonical" href="https://www.gabrieledallari.art/contact.html" />
+
+<style>
+  :root{
+    --bg:#0b0c10; --ink:#e9eaef; --muted:#b9b9c4;
+    --line:#9ee7ff; --accent:#9ee7ff; --accent-2:#ffc24b;
+    --border:rgba(255,255,255,.12);
+
+    --card-w: min(1100px, 94vw);
+    --led-thickness: 3px;
+    --danger:#ff6b6b;
+  }
+
+  *{box-sizing:border-box}
+  html,body{height:100%}
+
+  body{
+    margin:0; color:var(--ink);
+    background:
+      linear-gradient(180deg, rgba(10,12,16,.78), rgba(10,12,16,.62)),
+      url("images/contact/bg.webp") center / cover fixed no-repeat,
+      #07070a;
+    font-family: "Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    display:flex; flex-direction:column; min-height:100svh; overflow-x:hidden;
+    -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+  }
+  main{ flex:1 0 auto; }
+
+  /* Grain sopra allo sfondo (sotto i contenuti) */
+  .vfx-grain{
+    position:fixed; inset:0; pointer-events:none; z-index:0;
+    background-image:url("images/vfx/film_grain_512.png");
+    background-size:140px 140px; background-repeat:repeat;
+    mix-blend-mode:soft-light; opacity:.14;
+  }
+
+  /* ===== NAVBAR ===== */
+  .navbar{
+    position:fixed; inset:0 0 auto 0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    gap:14px; padding:12px 20px;
+    background: linear-gradient(180deg, rgba(10,12,16,.78), rgba(10,12,16,.35) 55%, transparent);
+    backdrop-filter: blur(6px);
+    border-bottom:1px solid rgba(158,231,255,.14);
+    flex-wrap:nowrap;                 /* resta su una riga */
+  }
+
+  /* Brand a sinistra: può andare a capo */
+  .brand{
+    display:flex; align-items:center; gap:12px;
+    text-decoration:none; color:var(--ink);
+    flex:0 1 auto;                    /* può stringersi */
+    min-width:0;                      /* consente il wrap del testo */
+  }
+  .brand-logo{ width:38px; height:38px; border-radius:10px; display:block; object-fit:contain; background:transparent; }
+  .brand h1{
+    margin:0; font-family:"Bebas Neue",sans-serif; font-weight:400;
+    font-size:clamp(22px,2.2vw,28px); line-height:1; letter-spacing:.04em;
+    white-space:normal;               /* ✅ può andare a capo */
+  }
+
+  /* Link a destra: UNA riga, senza overflow */
+  .nav{
+    margin-left:auto;
+    display:flex; align-items:center; justify-content:flex-end;
+    gap:clamp(8px,1.6vw,16px);
+    white-space:nowrap; flex-wrap:nowrap; /* ✅ non va a capo */
+    flex:1 1 auto; min-width:0;           /* occupa lo spazio rimanente */
+  }
+  .nav a{
+    color:var(--ink); text-decoration:none;
+    padding:8px 10px; border-radius:10px; border:1px solid transparent;
+    transition: transform .15s ease, border-color .15s ease, box-shadow .2s ease;
+    font-size:clamp(11px,1.9vw,14px);   /* riduce gradualmente */
+  }
+  .nav a:hover{ border-color: rgba(158,231,255,.35); box-shadow: 0 0 16px rgba(158,231,255,.25); transform: translateY(-1px); }
+
+  /* Compatta ulteriormente sui telefoni più stretti */
+  @media (max-width: 560px){
+    .nav{ gap:10px; }
+    .nav a{ font-size:12px; padding:8px 8px; }
+  }
+  @media (max-width: 440px){
+    .nav{ gap:8px; }
+    .nav a{ font-size:11px; padding:7px 7px; letter-spacing:0; }
+  }
+  @media (max-width: 380px){
+    .nav a{ font-size:10.5px; padding:6px 6px; }
+  }
+  @media (max-width: 340px){
+    .nav a{ font-size:10px; padding:5px 6px; }
+    .navbar{ padding:10px 14px; }
+    .brand h1{ font-size:20px; }      /* libera spazio se serve */
+  }
+
+  /* ===== CARD CONTATTI (bordo LED con alone ciano) ===== */
+  .wrap{ margin-top:84px; padding: clamp(20px,5vw,60px) 20px; display:flex; justify-content:center; }
+  .contact-card{
+    width: var(--card-w);
+    background: transparent;
+    backdrop-filter: none;
+    border: var(--led-thickness) solid rgba(255,255,255,.95);
+    border-radius: 20px;
+    box-shadow:
+      0 0 38px rgba(158,231,255,.45),
+      0 0 0 1px rgba(255,255,255,.35) inset,
+      inset 0 0 12px rgba(255,255,255,.08);
+    padding: clamp(18px, 4vw, 40px);
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: clamp(18px, 4vw, 40px);
+    align-items:stretch;
+  }
+  @media (max-width: 900px){ .grid{ grid-template-columns: 1fr; } }
+
+  /* Colonna sinistra: titolo gigante */
+  .left-col{ display:flex; align-items:center; }
+  .contact-title{
+    margin:0; width:100%;
+    font-family:"Bebas Neue",sans-serif; font-weight:400;
+    font-size:clamp(64px,12vw,220px);
+    line-height:.9; letter-spacing:.02em;
+    text-shadow:0 0 3px rgba(0,0,0,.4);
+  }
+
+  /* ===== FORM ===== */
+  form{ width:100%; }
+  .row{ display:grid; grid-template-columns: 1fr 1fr; gap:14px; }
+  @media (max-width:700px){ .row{ grid-template-columns:1fr; } }
+  label{ display:block; font-size:.85rem; color:var(--muted); margin:12px 0 6px; }
+  input, textarea{
+    width:100%; color:var(--ink); background:transparent;
+    border:none; outline:none;
+    border-bottom:2px solid rgba(255,255,255,.22);
+    padding:10px 4px 12px;
+    font:400 1rem/1.4 "Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    transition:border-color .2s ease, box-shadow .2s ease;
+  }
+  input:focus, textarea:focus{
+    border-bottom-color:var(--line);
+    box-shadow:0 6px 20px -8px rgba(158,231,255,.35);
+  }
+  textarea{ min-height:140px; resize:vertical; }
+
+  .field.invalid input,
+  .field.invalid textarea{ border-bottom-color: var(--danger); }
+  .error{ color:var(--danger); font-size:.82rem; margin-top:6px; display:none; }
+  .field.invalid .error{ display:block; }
+
+  .actions{ display:flex; gap:12px; margin-top:18px; flex-wrap:wrap; align-items:center; }
+
+  /* Pulsante scuro con hover “acceso” */
+  .btn{
+    appearance:none; border:1px solid var(--border); cursor:pointer;
+    color:var(--ink); background:rgba(18,20,26,.92);
+    padding:12px 18px; border-radius:999px; font-weight:700; letter-spacing:.02em;
+    box-shadow:0 8px 22px rgba(0,0,0,.35);
+    transition: transform .15s ease, background .2s ease, color .2s ease, box-shadow .2s ease, filter .2s ease;
+    font-family:"Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  }
+  .btn:hover, .btn:focus-visible{
+    background:var(--accent); color:#0b0c10;
+    transform:translateY(-1px) scale(1.03);
+    box-shadow:0 0 26px rgba(158,231,255,.45), inset 0 0 10px rgba(255,255,255,.18);
+    filter:brightness(1.03);
+  }
+  .btn[disabled]{ opacity:.6; cursor:not-allowed; }
+
+  .note{ color:var(--muted); font-size:.9rem; }
+  .success{
+    display:none; margin-top:14px; padding:10px 12px; border-radius:12px;
+    background:rgba(158,231,255,.10); border:1px solid rgba(158,231,255,.35);
+    color:#eaf7ff;
+  }
+
+  .recaptcha{ margin-top:14px; }
+</style>
+</head>
+<body>
+
+  <!-- Navbar via partial -->
+  <div data-include="partials/navbar.html"></div>
+
+  <!-- Grain sopra allo sfondo -->
+  <div class="vfx-grain" aria-hidden="true"></div>
+
+  <main class="wrap">
+    <section class="contact-card" aria-label="Contact form">
+      <div class="grid">
+        <div class="left-col">
+          <h1 class="contact-title">LET’S<br>GET IN<br>TOUCH</h1>
+        </div>
+
+        <!-- Netlify form with validation + reCAPTCHA -->
+        <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field"
+              action="/contact-success.html" id="contactForm" novalidate>
+          <input type="hidden" name="form-name" value="contact">
+          <input type="text" name="bot-field" style="display:none">
+          <input type="hidden" name="message_to_owner" id="message_to_owner">
+
+          <div class="row">
+            <div class="field" id="fName">
+              <label for="fullName">Full name *</label>
+              <input id="fullName" name="fullName" type="text" autocomplete="name" required>
+              <div class="error">Please enter your name and surname.</div>
+            </div>
+            <div class="field" id="fEmail">
+              <label for="email">Email *</label>
+              <input id="email" name="email" type="email" autocomplete="email" required>
+              <div class="error">Please enter a valid email address.</div>
+            </div>
+          </div>
+
+          <div class="field" id="fMessage">
+            <label for="message">Message *</label>
+            <textarea id="message" name="message" required></textarea>
+            <div class="error">Please write at least 20 characters.</div>
+          </div>
+
+          <!-- reCAPTCHA di Netlify -->
+          <div class="recaptcha" data-netlify-recaptcha="true"></div>
+
+          <div class="actions">
+            <button class="btn" type="submit" id="submitBtn" disabled>Send</button>
+            <span class="note">You’ll get a confirmation on this page.</span>
+          </div>
+
+          <p class="success" id="successMsg" role="status">Thanks! Your message was sent.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/partials.js"></script>
+  <script>
+  // --- Validation helpers ---
+  const form = document.getElementById('contactForm');
+  const btn  = document.getElementById('submitBtn');
+
+  const fields = {
+    fullName: {
+      el: document.getElementById('fullName'),
+      wrap: document.getElementById('fName'),
+      test(v){
+        const parts = v.trim().split(/\s+/).filter(Boolean);
+        return parts.length >= 2 && parts.every(p => /[A-Za-zÀ-ÖØ-öø-ÿ'-]{2,}/.test(p));
+      }
+    },
+    email: {
+      el: document.getElementById('email'),
+      wrap: document.getElementById('fEmail'),
+      test(v){ return /^\S+@\S+\.\S+$/.test(v.trim()); }
+    },
+    message: {
+      el: document.getElementById('message'),
+      wrap: document.getElementById('fMessage'),
+      test(v){ return v.trim().length >= 20; }
+    }
+  };
+
+  function validateOne(key){
+    const {el, wrap, test} = fields[key];
+    const ok = test(el.value || '');
+    wrap.classList.toggle('invalid', !ok);
+    return ok;
+  }
+  function validateAll(){
+    const ok = Object.keys(fields).every(validateOne);
+    btn.disabled = !ok;
+    return ok;
+  }
+
+  Object.values(fields).forEach(({el}) => {
+    el.addEventListener('input', validateAll);
+    el.addEventListener('blur', e => validateOne(e.target.id));
+  });
+  validateAll();
+
+  // Prepara la mail automatica e blocca invio se invalid
+  form.addEventListener('submit', function (e) {
+    if (!validateAll()) { e.preventDefault(); return; }
+    const name = (fields.fullName.el.value || '').trim();
+    const msg  = (fields.message.el.value || '').trim();
+
+    const auto = `Ciao Gabriele,
+Ti contatto per avere informazioni sul tuo servizio.
+
+${msg}
+
+${name}`;
+    document.getElementById('message_to_owner').value = auto;
+
+    btn.disabled = true;
+  });
+
+  // feedback opzionale se torni con ?sent=1
+  const successMsg = document.getElementById('successMsg');
+  if (new URLSearchParams(location.search).get('sent') === '1') {
+    successMsg.style.display = 'block';
+  }
+  </script>
+</body>
+</html>

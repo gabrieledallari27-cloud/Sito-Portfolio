@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#0b0c10" />
 
 <!-- Favicon -->
-<link rel="icon" href="images/logo.svg" type="image/svg+xml" />
+<link rel="icon" href="images/logo_color.svg" type="image/svg+xml" />
 
 <!-- Fonts: Bebas Neue + Montserrat (Thin 100, Regular 400) -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,10 +16,15 @@
 
 <style>
   :root{
-    --bg:#0b0c10; --ink:#e9eaef; --muted:#aeb0bf;
-    --line:#7dffb3; --accent:#7dffb3; --accent-2:#ffc24b;
+    /* Palette in linea con la pagina portfolio */
+    --bg:#0b0c10; 
+    --ink:#e9e9ef; 
+    --muted:#b9b9c4;
+    --accent:#9ee7ff;          /* come nel portfolio */
+    --line:rgb(158,231,255);    /* bagliore/cornici coerenti */
     --border:rgba(255,255,255,.12);
-    --glowS:0 0 22px rgba(125,255,179,.35), inset 0 0 10px rgba(255,255,255,.18);
+
+    --glowS:0 0 22px rgba(158,231,255,.28), inset 0 0 10px rgba(255,255,255,.12);
 
     --featherH: 18vh;
     --grain-tile: 140px; --grain-opacity: 0.14;
@@ -32,6 +37,11 @@
     /* FONT STACKS */
     --font-display: "Bebas Neue", sans-serif;
     --font-sans: "Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+
+    /* Colori pulsanti scuri */
+    --btn-bg:#12141a;
+    --btn-ink:#e9e9ef;
+    --btn-hover:#9ee7ff;
   }
 
   *{box-sizing:border-box}
@@ -40,219 +50,203 @@
     position:relative; margin:0; color:var(--ink);
     background: linear-gradient(180deg, var(--bg) 0%, #07070a 100%);
     font-family: var(--font-sans);
-    font-weight: 400; /* Montserrat Regular di base */
+    font-weight: 400;
     overflow-x:hidden;
-
     display:flex; flex-direction:column; min-height:100svh;
   }
   main{ flex:1 0 auto; }
 
   /* ===== NAVBAR ===== */
   .navbar{
-    position:fixed; inset:0 0 auto 0; z-index:50;
-    display:flex; align-items:center; justify-content:space-between; gap:14px; padding:12px 20px;
+    position:fixed; inset:0 0 auto 0; z-index:60; /* sopra all'intro video */
+    display:flex; align-items:center; justify-content:space-between;
+    gap:14px; padding:12px 20px;
     background: linear-gradient(180deg, rgba(10,12,16,.78), rgba(10,12,16,.35) 55%, transparent);
     backdrop-filter: blur(6px);
-    border-bottom:1px solid rgba(125,255,179,.14);
+    border-bottom:1px solid rgba(158,231,255,.14);
+    flex-wrap:nowrap;                 /* resta su una riga */
   }
-  .brand{ display:flex; align-items:center; gap:12px; text-decoration:none; color:var(--ink); }
-  .brand-logo{
-    width:38px; height:38px; border-radius:10px; display:block;
-    object-fit:contain; background:transparent;
+  /* Brand a sinistra: può andare a capo */
+  .brand{
+    display:flex; align-items:center; gap:12px; text-decoration:none; color:var(--ink);
+    flex:0 1 auto; min-width:0;
   }
-  /* Titolo grosso in navbar: Bebas Neue */
+  .brand-logo{ width:38px; height:38px; border-radius:10px; display:block; object-fit:contain; background:transparent; }
   .brand h1{
-    margin:0;
-    font-family: var(--font-display);
-    font-weight: 400;              /* Bebas ha un peso unico */
-    font-size: clamp(22px, 2.2vw, 28px);
-    line-height: 1;
-    letter-spacing: .04em;
+    margin:0; font-family: var(--font-display); font-weight: 400;
+    font-size: clamp(22px, 2.2vw, 28px); line-height: 1; letter-spacing: .04em;
+    white-space:normal;               /* ✅ può andare a capo */
+  }
+  /* Links a destra: una sola riga sempre */
+  .nav{
+    margin-left:auto;
+    display:flex; align-items:center; justify-content:flex-end;
+    gap:clamp(8px,1.6vw,16px);
+    white-space:nowrap; flex-wrap:nowrap; /* ✅ non va a capo */
+    flex:1 1 auto; min-width:0;
+  }
+  .nav a{
+    color:var(--ink); text-decoration:none; padding:8px 10px; border-radius:10px; border:1px solid transparent;
+    transition: transform .15s ease, border-color .15s ease, box-shadow .2s ease, background .2s ease, color .2s ease;
+    font-family: var(--font-sans); font-weight: 400;
+    font-size:clamp(11px,1.9vw,14px);   /* si riduce sui device piccoli */
+  }
+  .nav a:hover{ 
+    border-color: rgba(158,231,255,.35); 
+    box-shadow: 0 0 16px rgba(158,231,255,.25); 
+    transform: translateY(-1px); 
+    background: rgba(158,231,255,.08);
+  }
+  /* Compatta ulteriormente sui telefoni stretti */
+  @media (max-width: 560px){
+    .nav{ gap:10px; }
+    .nav a{ font-size:12px; padding:8px 8px; }
+  }
+  @media (max-width: 440px){
+    .nav{ gap:8px; }
+    .nav a{ font-size:11px; padding:7px 7px; letter-spacing:0; }
+  }
+  @media (max-width: 380px){
+    .nav a{ font-size:10.5px; padding:6px 6px; }
+  }
+  @media (max-width: 340px){
+    .nav a{ font-size:10px; padding:5px 6px; }
+    .navbar{ padding:10px 14px; }
+    .brand h1{ font-size:20px; }      /* libera spazio se serve */
   }
 
-  .nav a{
-    color:var(--ink); text-decoration:none; padding:10px 12px; border-radius:10px; border:1px solid transparent;
-    transition: transform .15s ease, border-color .15s ease, box-shadow .2s ease;
-    font-family: var(--font-sans);
-    font-weight: 400; /* testo navigazione: Montserrat regular */
+  /* ===== INTRO VIDEO OVERLAY ===== */
+  .intro-overlay{
+    position:fixed; inset:0; z-index:40; /* sotto la navbar, sopra il resto */
+    background:#000; display:grid; place-items:center;
+    opacity:1; transition:opacity .5s ease;
   }
-  .nav a:hover{ border-color: rgba(125,255,179,.35); box-shadow: 0 0 16px rgba(125,255,179,.25); transform: translateY(-1px); }
+  .intro-overlay.hidden{ opacity:0; pointer-events:none; }
+  .intro-overlay video{
+    width:100%; height:100%; object-fit:cover;
+    filter: contrast(1.05) saturate(1.05) brightness(.95);
+  }
+  .intro-skip{
+    position:fixed; right:16px; bottom:16px; z-index:41;
+    appearance:none; border:1px solid var(--border); border-radius:999px;
+    background: var(--btn-bg); color: var(--btn-ink);
+    padding:10px 14px; font-weight:700; letter-spacing:.02em; cursor:pointer;
+    transition: transform .15s ease, box-shadow .2s ease, background .2s ease, color .2s ease, border-color .2s ease;
+  }
+  .intro-skip:hover, .intro-skip:focus-visible{
+    background: var(--btn-hover); color:#0b0c10; border-color: rgba(158,231,255,.55);
+    box-shadow: 0 0 24px rgba(158,231,255,.35), inset 0 0 10px rgba(255,255,255,.18);
+    transform: scale(1.06);
+    outline: none;
+  }
 
   /* ===== HERO ===== */
-  .hero{
-    position:relative;
-    height: min(78vh, 56.25vw);
-    min-height: 520px;
-    margin-top:64px;
-    isolation:isolate;
-    overflow:hidden;
-    background: transparent;
-  }
+  .hero{ position:relative; height:min(78vh,56.25vw); min-height:520px; margin-top:64px; isolation:isolate; overflow:hidden; background:transparent; }
   .hero video{
     position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
-    filter: contrast(1.05) saturate(1.1) brightness(.9);
-    mask-image: linear-gradient(to bottom,
-      rgba(0,0,0,0) 0%,
-      rgba(0,0,0,1) var(--featherH),
-      rgba(0,0,0,1) calc(100% - var(--featherH)),
-      rgba(0,0,0,0) 100%);
-    -webkit-mask-image: linear-gradient(to bottom,
-      rgba(0,0,0,0) 0%,
-      rgba(0,0,0,1) var(--featherH),
-      rgba(0,0,0,1) calc(100% - var(--featherH)),
-      rgba(0,0,0,0) 100%);
+    filter: contrast(.9) saturate(.9) brightness(1.1);
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) var(--featherH), rgba(0,0,0,1) calc(100% - var(--featherH)), rgba(0,0,0,0) 100%);
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) var(--featherH), rgba(0,0,0,1) calc(100% - var(--featherH)), rgba(0,0,0,0) 100%);
   }
-  .hero-center{
-    position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
-    z-index:20; display:flex; flex-direction:column; align-items:center; gap:14px; text-align:center;
-  }
-  /* Titolo SHOWREEL: Bebas Neue */
+  .hero-center{ position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); z-index:20; display:flex; flex-direction:column; align-items:center; gap:14px; text-align:center; }
   .hero-title{
-    font-family: var(--font-display);
-    font-weight: 400;
-    font-size: clamp(36px,8vw,86px);
-    line-height: 1;
-    letter-spacing:.06em;
-    padding:10px 18px; color:#f5fff9;
-    text-shadow: 0 0 3px rgba(125,255,179,.8), 0 0 22px rgba(125,255,179,.35);
+    font-family: var(--font-display); font-weight:400; font-size:clamp(36px,8vw,86px);
+    line-height:1; letter-spacing:.06em; padding:10px 18px; color:#f5fff9;
+    text-shadow: 0 0 3px var(--line), 0 0 22px rgba(158,231,255,.35);
     filter: drop-shadow(0 10px 30px rgba(0,0,0,.7));
   }
   .hero-title::after{
     content:""; display:block; height:3px; width:200px; margin:12px auto 0;
     background: linear-gradient(90deg, transparent, var(--line), transparent);
-    box-shadow: 0 0 24px rgba(125,255,179,.55); border-radius:999px;
+    box-shadow: 0 0 24px rgba(158,231,255,.55); border-radius:999px;
   }
-  .hero-btn{
+
+  /* ===== BUTTONS — dark default, accent on hover/focus ===== */
+  .btn, .hero-btn{
     display:inline-flex; align-items:center; gap:10px; text-decoration:none; font-weight:800; letter-spacing:.03em;
-    padding:12px 16px; border-radius:999px; color:#0f1217; background:var(--accent);
-    box-shadow: var(--glowS);
-    transition: transform .15s ease, filter .2s ease, box-shadow .2s ease;
+    padding:12px 16px; border-radius:999px; 
+    background: var(--btn-bg); color: var(--btn-ink);
+    border:1px solid var(--border);
+    box-shadow: 0 8px 22px rgba(0,0,0,.35);
+    transition: transform .15s ease, filter .2s ease, box-shadow .2s ease, background .2s ease, color .2s ease, border-color .2s ease;
     font-family: var(--font-sans);
+    cursor:pointer;
   }
-  .hero-btn:hover{ transform: translateY(-1px); filter: brightness(1.05); box-shadow: 0 0 26px rgba(125,255,179,.4), inset 0 0 10px rgba(255,255,255,.18); }
+  .btn:hover, .btn:focus-visible,
+  .hero-btn:hover, .hero-btn:focus-visible{
+    background: var(--btn-hover);
+    color:#0b0c10;
+    border-color: rgba(158,231,255,.6);
+    box-shadow: 0 0 26px rgba(158,231,255,.35), inset 0 0 10px rgba(255,255,255,.18);
+    transform: scale(1.06);
+    outline:none;
+  }
+  .btn:active, .hero-btn:active{ transform: scale(1.02); }
 
-  /* ===== SEZIONI ===== */
-  .section{ position:relative; z-index:1; padding: clamp(28px, 5vw, 56px) 20px; max-width:1280px; margin:0 auto; background:transparent; }
-  /* Titoli sezione: Montserrat (restano sans, non “grosso display”) */
-  .section h2{
-    font-family: var(--font-sans);
-    font-weight: 700;
-    font-size: clamp(22px,3.6vw,40px);
-    line-height: 1.1;
-    margin:0 0 16px; letter-spacing:.02em;
-  }
-  /* Sottotitoli/secondary: Montserrat Thin */
-  .section .kicker{
-    color:var(--accent); text-transform:uppercase; letter-spacing:.18em; font-size:.8rem; margin-bottom:6px;
-    font-family: var(--font-sans);
-    font-weight: 100; /* Thin */
-  }
+  .section{ position:relative; z-index:1; padding:clamp(28px,5vw,56px) 20px; max-width:1280px; margin:0 auto; background:transparent; }
+  .section h2{ font-family:var(--font-sans); font-weight:700; font-size:clamp(22px,3.6vw,40px); line-height:1.1; margin:0 0 16px; letter-spacing:.02em; }
+  .section .kicker{ color:var(--accent); text-transform:uppercase; letter-spacing:.18em; font-size:.8rem; margin-bottom:6px; font-family:var(--font-sans); font-weight:100; }
 
-  /* ===== RIBBON ===== */
-  .ribbon-stage{
-    position:relative; margin-top: 6vh; margin-bottom: 22px; height: calc(var(--tile-h) + 64px); overflow:hidden; background:transparent;
-  }
-  .ribbon-stage::before,
-  .ribbon-stage::after{ content:""; position:absolute; top:0; bottom:0; width:16%; pointer-events:none; z-index:3; }
-  .ribbon-stage::before{ left:0;  background: linear-gradient(90deg, var(--bg), rgba(11,12,16,0)); }
-  .ribbon-stage::after{  right:0; background: linear-gradient(270deg, var(--bg), rgba(11,12,16,0)); }
+  .ribbon-stage{ position:relative; margin-top:6vh; margin-bottom:22px; height:calc(var(--tile-h) + 64px); overflow:hidden; background:transparent; }
+  .ribbon-stage::before, .ribbon-stage::after{ content:""; position:absolute; top:0; bottom:0; width:16%; pointer-events:none; z-index:3; }
+  .ribbon-stage::before{ left:0;  background:linear-gradient(90deg, var(--bg), rgba(11,12,16,0)); }
+  .ribbon-stage::after{  right:0; background:linear-gradient(270deg, var(--bg), rgba(11,12,16,0)); }
 
-  .ribbon-track{ position:absolute; left:0; top:50%; transform: translateY(-50%); display:flex; align-items:center; gap: var(--tile-gap); will-change: transform; }
-  .tile{
-    position:relative; flex: 0 0 var(--tile-w); height: var(--tile-h);
-    transform: skewX(var(--skew)); overflow:hidden; border:none; border-radius:0; background:#090b10;
-    box-shadow: 0 28px 76px rgba(0,0,0,.55), 0 2px 0 rgba(255,255,255,.04) inset;
-    cursor: default; pointer-events: none;
-    transition: transform .45s cubic-bezier(.22,.8,.24,1), filter .28s ease, opacity .28s ease, box-shadow .28s ease;
-    filter: grayscale(.6) brightness(.9); opacity:.9;
-  }
-  .tile .img{ position:absolute; inset:-6%; transform: skewX(calc(-1 * var(--skew))) scale(1.12); transform-origin:center; background:#000 center/cover no-repeat; transition: transform .65s cubic-bezier(.22,.8,.24,1), filter .3s ease, opacity .3s ease; }
-  /* Caption delle tile: Montserrat Regular */
-  .tile .label{
-    position:absolute; left:18px; bottom:16px; z-index:2; transform: skewX(calc(-1 * var(--skew)));
-    color:#e8fef3; letter-spacing:.02em; font-size:1rem; text-shadow: 0 2px 10px rgba(0,0,0,.7);
-    font-family: var(--font-sans);
-    font-weight: 400; /* Regular */
-  }
-  .tile.active{ transform: translateY(-6px) skewX(var(--skew)) scale(1.06); filter: grayscale(0) brightness(1); opacity:1; box-shadow: 0 36px 90px rgba(0,0,0,.65), 0 0 0 1px rgba(125,255,179,.45) inset, 0 0 46px rgba(125,255,179,.28); }
-  .tile.active .img{ transform: skewX(calc(-1 * var(--skew))) scale(1.16); filter: saturate(1.06) contrast(1.05); }
+  .ribbon-track{ position:absolute; left:0; top:50%; transform:translateY(-50%); display:flex; align-items:center; gap:var(--tile-gap); will-change:transform; }
+  .tile{ position:relative; flex:0 0 var(--tile-w); height:var(--tile-h); transform:skewX(var(--skew)); overflow:hidden; border:none; border-radius:0; background:#090b10;
+         box-shadow:0 28px 76px rgba(0,0,0,.55), 0 2px 0 rgba(255,255,255,.04) inset; cursor:default; pointer-events:none;
+         transition:transform .45s cubic-bezier(.22,.8,.24,1), filter .28s ease, opacity .28s ease, box-shadow .28s ease; filter:grayscale(.6) brightness(.9); opacity:.9; }
+  .tile .img{ position:absolute; inset:-6%; transform:skewX(calc(-1 * var(--skew))) scale(1.12); transform-origin:center; background:#000 center/cover no-repeat; transition:transform .65s cubic-bezier(.22,.8,.24,1), filter .3s ease, opacity .3s ease; }
+  .tile .label{ position:absolute; left:18px; bottom:16px; z-index:2; transform:skewX(calc(-1 * var(--skew))); color:#e8fef3; letter-spacing:.02em; font-size:1rem; text-shadow:0 2px 10px rgba(0,0,0,.7); font-family:var(--font-sans); font-weight:400; }
+  .tile.active{ transform:translateY(-6px) skewX(var(--skew)) scale(1.06); filter:grayscale(0) brightness(1); opacity:1; box-shadow:0 36px 90px rgba(0,0,0,.65), 0 0 0 1px rgba(158,231,255,.45) inset, 0 0 46px rgba(158,231,255,.28); }
+  .tile.active .img{ transform:skewX(calc(-1 * var(--skew))) scale(1.16); filter:saturate(1.06) contrast(1.05); }
 
   .portfolio-cta{ display:flex; gap:12px; margin-top:18px; flex-wrap:wrap; justify-content:center; }
-  .btn{ appearance:none; border:none; cursor:pointer; text-decoration:none; padding:10px 14px; border-radius:999px; font-weight:700; letter-spacing:.02em; color:#0d1117; background:var(--accent); box-shadow: var(--glowS); font-family: var(--font-sans); }
-  .btn.alt{ background:var(--accent-2); box-shadow: 0 0 22px rgba(255,194,75,.28); }
 
-  /* ===== FOOTER ===== */
-  .site-footer{
-    flex-shrink:0;
-    border-top:1px solid var(--border);
-    background: linear-gradient(180deg, rgba(10,12,16,.35), rgba(10,12,16,.12));
-    backdrop-filter: blur(4px);
+  /* ===== FOOTER con SOLE ICONE ===== */
+  .site-footer{ flex-shrink:0; border-top:1px solid var(--border); background:linear-gradient(180deg, rgba(10,12,16,.35), rgba(10,12,16,.12)); backdrop-filter:blur(4px); }
+  .footer-inner{ max-width:980px; margin:0 auto; padding:14px 16px; display:flex; justify-content:center; }
+  .socials{ display:flex; align-items:center; gap:14px; }
+  .socials a{
+    width:44px; height:44px; display:grid; place-items:center;
+    border:1px solid var(--border); border-radius:999px;
+    color:var(--ink); background:rgba(18,20,26,.70);
+    box-shadow:0 8px 22px rgba(0,0,0,.35);
+    text-decoration:none;
+    transition: transform .15s ease, background .2s ease, color .2s ease, border-color .2s ease, box-shadow .2s ease;
   }
-  .footer-inner{
-    max-width: 980px;
-    margin: 0 auto;
-    padding: 12px 16px;
-    display:flex; align-items:center; justify-content:center; gap:18px; flex-wrap:wrap;
-    font-size: 0.95rem;
-    font-family: var(--font-sans);
-    font-weight: 400; /* Regular */
+  .socials a:hover, .socials a:focus-visible{
+    background:var(--accent); color:#0b0c10; border-color: rgba(158,231,255,.6);
+    box-shadow: 0 0 22px rgba(158,231,255,.35), inset 0 0 10px rgba(255,255,255,.18);
+    transform: translateY(-1px) scale(1.06);
+    outline:none;
   }
-  .footer-inner .sep{ opacity:.35; }
-  .footer-inner a{ color:#fff; text-decoration:none; border-bottom:1px dashed rgba(125,255,179,.35); }
-  .footer-inner a:hover{ border-bottom-color: rgba(125,255,179,.8); }
-
-  /* ===== VFX ===== */
+  .socials svg{ width:22px; height:22px; stroke-width:1.8; }
+  .socials svg *{ vector-effect:non-scaling-stroke; }
+  
   .vfx{ position:absolute; inset:0; pointer-events:none; }
-  .vfx-grain{
-    z-index:5; background-image: url("images/vfx/film_grain_512.png");
-    background-repeat: repeat; background-size: var(--grain-tile) var(--grain-tile);
-    mix-blend-mode: soft-light; opacity: var(--grain-opacity);
-  }
-  .vfx-grain::after{
-    content:""; position:absolute; inset:0; background-image: inherit;
-    background-repeat: inherit; background-position: 37px 29px;
-    background-size: calc(var(--grain-tile) * 1.08) calc(var(--grain-tile) * 1.08);
-    mix-blend-mode: soft-light; opacity: calc(var(--grain-opacity) * 0.6);
-  }
-  .vfx-dust{ z-index:6; background-repeat: repeat; filter: blur(0.2px); opacity:.22; }
-  .vfx-dust.dust-far{  background-image: url("images/vfx/dust_far.png");  background-size: 600px 600px;  animation: dust-far-move 160s linear infinite; }
-  .vfx-dust.dust-near{ background-image: url("images/vfx/dust_near.png"); background-size: 1000px 1000px; animation: dust-near-move 220s linear infinite; opacity:.18; }
-  @keyframes dust-far-move{  from{background-position:0 0;} to{background-position:600px 420px;} }
+  .vfx-grain{ z-index:5; background-image:url("images/vfx/film_grain_512.png"); background-repeat:repeat; background-size:var(--grain-tile) var(--grain-tile); mix-blend-mode:soft-light; opacity:var(--grain-opacity); }
+  .vfx-grain::after{ content:""; position:absolute; inset:0; background-image:inherit; background-repeat:inherit; background-position:37px 29px; background-size:calc(var(--grain-tile)*1.08) calc(var(--grain-tile)*1.08); mix-blend-mode:soft-light; opacity:calc(var(--grain-opacity)*0.6); }
+  .vfx-dust{ z-index:6; background-repeat:repeat; filter:blur(0.2px); opacity:.22; }
+  .vfx-dust.dust-far{ background-image:url("images/vfx/dust_far.png"); background-size:600px 600px; animation:dust-far-move 160s linear infinite; }
+  .vfx-dust.dust-near{ background-image:url("images/vfx/dust_near.png"); background-size:1000px 1000px; animation:dust-near-move 220s linear infinite; opacity:.18; }
+  @keyframes dust-far-move{ from{background-position:0 0;} to{background-position:600px 420px;} }
   @keyframes dust-near-move{ from{background-position:0 0;} to{background-position:-900px 300px;} }
   @media (prefers-reduced-motion: reduce){ .vfx-dust{ animation:none } }
 </style>
 </head>
- <link rel="canonical" href="https://gabrieledallari.art/">
- <meta name="description" content="3D Generalist">
-
- <meta property="og:type" content="website">
- <meta property="og:title" content="Gabriele Dallari — 3D Generalist">
- <meta property="og:description" content="Step inside to see my work.">
- <meta property="og:image" content="https://gabrieledallari.art/images/og/home.jpg">
- <meta property="og:url" content="https://gabrieledallari.art/">
-
- <meta name="twitter:card" content="summary_large_image">
 
 <body>
 
-  <!-- VFX -->
-  <div class="vfx vfx-grain"></div>
-  <div class="vfx vfx-dust dust-far"></div>
-  <div class="vfx vfx-dust dust-near"></div>
+  <!-- Include del partial navbar -->
+  <div data-include="partials/navbar.html"></div>
 
-  <!-- NAVBAR -->
-  <header class="navbar" role="banner">
-    <a class="brand" href="index.html" aria-label="Home">
-      <img class="brand-logo" src="images/logo.svg" alt="Logo" width="40" height="40" />
-      <h1>GABRIELE DALLARI</h1>
-    </a>
-    <nav class="nav" aria-label="Primary">
-      <a href="portfolio.html">Portfolio</a>
-      <a href="#showreel">Showreel</a>
-      <a href="about.html">About Me</a>
-      <a href="#contacts">Contacts</a>
-    </nav>
-  </header>
+  <!-- INTRO VIDEO OVERLAY (navbar resta visibile sopra) -->
+  <div id="introOverlay" class="intro-overlay" aria-label="Intro video">
+    <!-- Sostituisci il file con il tuo: media/intro.mp4 -->
+    <video id="introVideo" src="media/intro.mp4" autoplay muted playsinline></video>
+    <button id="introSkip" class="intro-skip" type="button" aria-label="Skip intro">Skip ▶</button>
+  </div>
 
   <!-- CONTENUTO -->
   <main>
@@ -260,7 +254,7 @@
       <video src="media/showreel.mp4" autoplay muted loop playsinline poster="media/showreel-poster.jpg"></video>
       <div class="hero-center">
         <div class="hero-title">SHOWREEL</div>
-        <a class="hero-btn" href="https://youtu.be/dKwzu5KsCe8" target="_blank" rel="noopener">Guarda su YouTube</a>
+        <a class="hero-btn" href="https://youtu.be/dKwzu5KsCe8" target="_blank" rel="noopener">Watch on YouTube</a>
       </div>
     </section>
 
@@ -304,64 +298,114 @@
       </div>
 
       <div class="portfolio-cta">
-        <a class="btn" href="portfolio.html">Apri il Portfolio</a>
+        <a class="btn" href="portfolio.html">Portfolio</a>
       </div>
     </section>
   </main>
 
-  <!-- FOOTER -->
-  <footer class="site-footer" id="contacts" role="contentinfo">
+  <!-- FOOTER: sole icone -->
+  <footer class="site-footer" role="contentinfo">
     <div class="footer-inner">
-      <span>Email · <a href="mailto:youremail@example.com">gabrieledallari.art@gmail.com</a></span>
-      <span class="sep">•</span>
-      <span>LinkedIn · <a href="https://www.linkedin.com/" target="_blank" rel="noopener">linkedin.com/in/gabriele-dallari</a></span>
-      <span class="sep">•</span>
-      <span>instagram · <a href="https://www.instagram.com/" target="_blank" rel="noopener">instagram.com/gabbodallari</a></span>
+      <nav class="socials" aria-label="Social links">
+        <!-- Email -->
+        <a href="mailto:gabrieledallari.art@gmail.com" aria-label="Email">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+            <rect x="3" y="5" width="18" height="14" rx="2" ry="2"></rect>
+            <polyline points="3,7 12,13 21,7"></polyline>
+          </svg>
+        </a>
+        <!-- LinkedIn -->
+        <a href="https://www.linkedin.com/in/gabriele-dallari" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+            <rect x="2" y="9" width="4" height="12"></rect>
+            <circle cx="4" cy="4" r="2"></circle>
+            <path d="M10 9h4v2m0 0a4 4 0 0 1 4 4v6h-4v-6a2 2 0 0 0-4 0v6h-4V9h4"></path>
+          </svg>
+        </a>
+        <!-- Instagram -->
+        <a href="https://www.instagram.com/gabbodallari" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+            <circle cx="12" cy="12" r="4.2"></circle>
+            <circle cx="17.5" cy="6.5" r="1"></circle>
+          </svg>
+        </a>
+      </nav>
     </div>
   </footer>
 
-<script>
-/* Ribbon loop + auto-active al centro */
-(function(){
-  const stage = document.getElementById('ribbon');
-  const track = document.getElementById('ribbonTrack');
-  const tiles = Array.from(track.querySelectorAll('.tile'));
-  const ids = [...new Set(tiles.map(t => t.dataset.id))];
+  <!-- Loader dei partials -->
+  <script src="js/partials.js"></script>
 
-  let speed = 60, offset = 0, segmentW = 0, running = true, last = performance.now();
+  <script>
+  /* Intro video: chiusura a fine riproduzione o via "Skip" + fallback */
+  (function(){
+    const overlay = document.getElementById('introOverlay');
+    const video   = document.getElementById('introVideo');
+    const skipBtn = document.getElementById('introSkip');
+    if(!overlay || !video) return;
 
-  function computeSegmentWidth(){
-    const first = tiles.find(t => t.dataset.id === ids[0]);
-    const second = tiles.slice(tiles.indexOf(first)+1).find(t => t.dataset.id === ids[0]);
-    if(!first || !second) return;
-    segmentW = Math.abs(second.getBoundingClientRect().left - first.getBoundingClientRect().left);
-  }
-  function setActiveByNearestCenter(){
-    const r = stage.getBoundingClientRect(), cx = r.left + r.width/2;
-    let best = {id:null,d:Infinity};
-    for(const t of tiles){
-      const tr = t.getBoundingClientRect(), tx = tr.left + tr.width/2, d = Math.abs(tx - cx);
-      if(d < best.d) best = {id:t.dataset.id, d};
+    const endIntro = () => {
+      overlay.classList.add('hidden');
+      setTimeout(()=> overlay.remove(), 600);
+    };
+
+    // chiudi alla fine o in caso di errore
+    video.addEventListener('ended', endIntro, {once:true});
+    video.addEventListener('error', endIntro, {once:true});
+    skipBtn.addEventListener('click', endIntro);
+
+    // prova ad avviare; se l'autoplay è bloccato, chiudi l'intro
+    const p = video.play();
+    if (p && typeof p.catch === 'function') {
+      p.catch(endIntro);
     }
-    tiles.forEach(t => t.classList.toggle('active', t.dataset.id === best.id));
-  }
-  function apply(){ track.style.transform = `translateY(-50%) translateX(${-offset}px)`; }
-  function loop(ts){
-    const dt = Math.min(0.05, (ts - last)/1000); last = ts;
-    if(running){
-      offset += speed*dt;
-      if(segmentW>0 && offset>=segmentW) offset -= segmentW;
-      apply(); setActiveByNearestCenter();
+
+    // fallback hard-timeout (es. file troppo lungo/non disponibile)
+    setTimeout(()=> {
+      if (document.body.contains(overlay)) endIntro();
+    }, 15000);
+  })();
+
+  /* Ribbon loop + auto-active al centro */
+  (function(){
+    const stage = document.getElementById('ribbon');
+    const track = document.getElementById('ribbonTrack');
+    const tiles = Array.from(track.querySelectorAll('.tile'));
+    const ids = [...new Set(tiles.map(t => t.dataset.id))];
+    let speed = 60, offset = 0, segmentW = 0, running = true, last = performance.now();
+    function computeSegmentWidth(){
+      const first = tiles.find(t => t.dataset.id === ids[0]);
+      const second = tiles.slice(tiles.indexOf(first)+1).find(t => t.dataset.id === ids[0]);
+      if(!first || !second) return;
+      segmentW = Math.abs(second.getBoundingClientRect().left - first.getBoundingClientRect().left);
     }
-    requestAnimationFrame(loop);
-  }
-  const io = new IntersectionObserver(es=> es.forEach(e => { running = e.isIntersecting; if(!running) last = performance.now(); }), {threshold:.1});
-  io.observe(stage);
-  function onResize(){ track.style.transform='translateY(-50%) translateX(0)'; offset=0; computeSegmentWidth(); apply(); setActiveByNearestCenter(); }
-  window.addEventListener('resize', onResize, {passive:true});
-  onResize(); requestAnimationFrame(loop);
-  window.addEventListener('load', onResize, {once:true});
-})();
-</script>
+    function setActiveByNearestCenter(){
+      const r = stage.getBoundingClientRect(), cx = r.left + r.width/2;
+      let best = {id:null,d:Infinity};
+      for(const t of tiles){
+        const tr = t.getBoundingClientRect(), tx = tr.left + tr.width/2, d = Math.abs(tx - cx);
+        if(d < best.d) best = {id:t.dataset.id, d};
+      }
+      tiles.forEach(t => t.classList.toggle('active', t.dataset.id === best.id));
+    }
+    function apply(){ track.style.transform = `translateY(-50%) translateX(${-offset}px)`; }
+    function loop(ts){
+      const dt = Math.min(0.05, (ts - last)/1000); last = ts;
+      if(running){
+        offset += speed*dt;
+        if(segmentW>0 && offset>=segmentW) offset -= segmentW;
+        apply(); setActiveByNearestCenter();
+      }
+      requestAnimationFrame(loop);
+    }
+    const io = new IntersectionObserver(es=> es.forEach(e => { running = e.isIntersecting; if(!running) last = performance.now(); }), {threshold:.1});
+    io.observe(stage);
+    function onResize(){ track.style.transform='translateY(-50%) translateX(0)'; offset=0; computeSegmentWidth(); apply(); setActiveByNearestCenter(); }
+    window.addEventListener('resize', onResize, {passive:true});
+    onResize(); requestAnimationFrame(loop);
+    window.addEventListener('load', onResize, {once:true});
+  })();
+  </script>
 </body>
 </html>
