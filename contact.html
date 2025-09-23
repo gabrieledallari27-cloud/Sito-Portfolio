@@ -191,6 +191,35 @@
   }
 
   .recaptcha{ margin-top:14px; }
+
+  /* ===== FOOTER con sole icone ===== */
+  .site-footer{
+    flex-shrink:0;
+    border-top:1px solid var(--border);
+    background: linear-gradient(180deg, rgba(10,12,16,.35), rgba(10,12,16,.12));
+    backdrop-filter: blur(4px);
+  }
+  .footer-inner{
+    max-width: 980px; margin: 0 auto; padding: 14px 16px;
+    display:flex; justify-content:center;
+  }
+  .socials{ display:flex; align-items:center; gap:14px; }
+  .socials a{
+    width:44px; height:44px; display:grid; place-items:center;
+    border:1px solid var(--border); border-radius:999px;
+    color:var(--ink); background:rgba(18,20,26,.70);
+    box-shadow:0 8px 22px rgba(0,0,0,.35);
+    text-decoration:none;
+    transition: transform .15s ease, background .2s ease, color .2s ease, border-color .2s ease, box-shadow .2s ease;
+  }
+  .socials a:hover, .socials a:focus-visible{
+    background:var(--accent); color:#0b0c10; border-color: rgba(158,231,255,.6);
+    box-shadow: 0 0 22px rgba(158,231,255,.35), inset 0 0 10px rgba(255,255,255,.18);
+    transform: translateY(-1px) scale(1.06);
+    outline:none;
+  }
+  .socials svg{ width:22px; height:22px; stroke-width:1.8; }
+  .socials svg *{ vector-effect:non-scaling-stroke; }
 </style>
 </head>
 <body>
@@ -247,6 +276,37 @@
       </div>
     </section>
   </main>
+
+  <!-- FOOTER: sole icone -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <nav class="socials" aria-label="Social links">
+        <!-- Email -->
+        <a href="mailto:gabrieledallari.art@gmail.com" aria-label="Email">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+            <rect x="3" y="5" width="18" height="14" rx="2" ry="2"></rect>
+            <polyline points="3,7 12,13 21,7"></polyline>
+          </svg>
+        </a>
+        <!-- LinkedIn -->
+        <a href="https://www.linkedin.com/in/gabriele-dallari" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+            <rect x="2" y="9" width="4" height="12"></rect>
+            <circle cx="4" cy="4" r="2"></circle>
+            <path d="M10 9h4v2m0 0a4 4 0 0 1 4 4v6h-4v-6a2 2 0 0 0-4 0v6h-4V9h4"></path>
+          </svg>
+        </a>
+        <!-- Instagram -->
+        <a href="https://www.instagram.com/gabbodallari" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+            <circle cx="12" cy="12" r="4.2"></circle>
+            <circle cx="17.5" cy="6.5" r="1"></circle>
+          </svg>
+        </a>
+      </nav>
+    </div>
+  </footer>
 
   <script src="js/partials.js"></script>
   <script>
