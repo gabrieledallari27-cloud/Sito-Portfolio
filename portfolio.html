@@ -267,23 +267,24 @@
     opacity:.98;
   }
 
-  /* ===== CTA compatta (solo verticale) — smussata e su due righe, Montserrat ===== */
+  /* ===== CTA compatta (solo verticale) — SOLO "Open", più piccola ===== */
   .edge-cta{
     position:absolute; z-index:32; display:none;
-    flex-direction:column; align-items:center; justify-content:center;
-    gap:2px;
-    font-weight:600; text-decoration:none; color:#0b0c10;
-    background:var(--accent); padding:10px 14px;
-    border-radius:999px;
+    align-items:center; justify-content:center;
+    font-weight:700; text-decoration:none; color:#0b0c10;
+    background:var(--accent);
+    padding:8px 12px;                 /* più piccola */
+    border-radius:999px;               /* smussata come CTA desktop */
     box-shadow:0 10px 24px rgba(0,0,0,.4);
     text-align:center;
     line-height:1.05;
-    white-space:normal;
+    white-space:nowrap;                /* resta su una riga */
     pointer-events:auto;
-    font-family: inherit; /* stesso font della CTA desktop: Montserrat */
+    font-family: inherit;              /* Montserrat */
+    font-size:12.5px;                  /* più piccola */
+    gap:0;
   }
-  .edge-cta span{ display:block; }
-  body.vertical .edge-cta{ display:flex; }
+  body.vertical .edge-cta{ display:inline-flex; }
 
   /* scalabilità */
   @media (max-width: 1200px){ :root{ --card-w: 300px; --card-h: 168px; } }
@@ -320,10 +321,8 @@
 
         <div class="col-wrap"><div id="colA" class="column"></div></div>
 
-        <!-- CTA compatta mobile (due righe) -->
-        <a id="edgeCtaA" class="edge-cta" href="#" target="_self" rel="noopener">
-          <span>Open</span><span>project ↗</span>
-        </a>
+        <!-- CTA compatta mobile — solo "Open" -->
+        <a id="edgeCtaA" class="edge-cta" href="#" target="_self" rel="noopener">Open</a>
 
         <div class="arc-wrap">
           <button id="upA" class="arc-btn up" aria-label="Previous">▲</button>
@@ -345,10 +344,8 @@
 
         <div class="col-wrap"><div id="colB" class="column"></div></div>
 
-        <!-- CTA compatta mobile (due righe) -->
-        <a id="edgeCtaB" class="edge-cta" href="#" target="_self" rel="noopener">
-          <span>Open</span><span>project ↗</span>
-        </a>
+        <!-- CTA compatta mobile — solo "Open" -->
+        <a id="edgeCtaB" class="edge-cta" href="#" target="_self" rel="noopener">Open</a>
 
         <div class="arc-wrap">
           <button id="upB" class="arc-btn up" aria-label="Previous">▲</button>
@@ -520,9 +517,9 @@ function HalfColumn(opts){
     // CTA (solo verticale)
     let ctaLeft = null, ctaTop = null;
     if(edgeCtaEl && isVertical()){
-      edgeCtaEl.style.display = 'flex';
-      const ctaW = edgeCtaEl.offsetWidth || 120;
-      const ctaH = edgeCtaEl.offsetHeight || 40;
+      edgeCtaEl.style.display = 'inline-flex';
+      const ctaW = edgeCtaEl.offsetWidth || 84;
+      const ctaH = edgeCtaEl.offsetHeight || 32;
       if(side === 'left'){
         ctaLeft = Math.max(6, centerLeft - ctaW - 10);              // CTA a sinistra
       }else{
@@ -543,7 +540,7 @@ function HalfColumn(opts){
 
     if(edgeCtaEl){
       if(isVertical()){
-        edgeCtaEl.style.display = 'flex';
+        edgeCtaEl.style.display = 'inline-flex';
         if(a.ctaLeft!=null) edgeCtaEl.style.left = a.ctaLeft + 'px';
         if(a.ctaTop!=null)  edgeCtaEl.style.top  = a.ctaTop  + 'px';
       }else{
@@ -687,7 +684,7 @@ let halfA, halfB;
 function isVerticalLayout(){ return innerHeight > innerWidth; }
 function updateSwitchLabel(){
   switchBtn.textContent = onRight ? 'Back to 3D Portfolio ←' : 'Concepts & Artworks →';
-  document.body.classList.toggle('on-right', onRight);   // <— guida l’allineamento nel footer
+  document.body.classList.toggle('on-right', onRight);   // guida l’allineamento nel footer
 }
 function toggleInfoVisibility(){
   const v = window.__isVertical;
