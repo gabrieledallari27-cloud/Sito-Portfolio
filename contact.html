@@ -324,7 +324,7 @@
     </div>
   </footer>
 
-  <script src="js/partials.js"></script>
+  <script src="/js/partials.js?v=v5" defer></script>
   <script>
   // ===== Misura dinamica della navbar e aggiorna padding-top del body
   (function(){
@@ -376,7 +376,7 @@
     email: {
       el: document.getElementById('email'),
       wrap: document.getElementById('fEmail'),
-      test(v){ return /^\\S+@\\S+\\.\\S+$/.test(v.trim()); }
+      test(v){ return /^\S+@\S+\.\S+$/.test(v.trim()); }
     },
     message: {
       el: document.getElementById('message'),
