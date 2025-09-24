@@ -17,14 +17,56 @@
 <link rel="manifest" href="/site.webmanifest">
 <meta name="theme-color" content="#0b0c10" />
 
+<!-- Crawling / snippet hints -->
+<meta name="robots" content="index,follow,max-snippet:160,max-image-preview:large,max-video-preview:-1">
+<meta name="googlebot" content="index,follow,max-snippet:160,max-image-preview:large,max-video-preview:-1">
+
 <!-- Open Graph / Twitter -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Gabriele Dallari">
 <meta property="og:title" content="Contact — Gabriele Dallari | 3D Generalist & Environment Artist">
 <meta property="og:description" content="Scrivimi per collaborazioni, commissioni o informazioni. Risponderò al più presto.">
 <meta property="og:url" content="https://gabrieledallari.art/contact.html">
-<meta property="og:image" content="/images/og/home.jpg">
+<meta property="og:image" content="https://gabrieledallari.art/images/og/home.jpg">
+<meta property="og:locale" content="it_IT">
 <meta name="twitter:card" content="summary_large_image">
+
+<!-- Structured data -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@graph":[
+    {
+      "@type":"ContactPage",
+      "name":"Contact — Gabriele Dallari",
+      "url":"https://gabrieledallari.art/contact.html",
+      "description":"Contatta Gabriele Dallari per collaborazioni e informazioni.",
+      "inLanguage":"en"
+    },
+    {
+      "@type":"Person",
+      "name":"Gabriele Dallari",
+      "url":"https://gabrieledallari.art/",
+      "jobTitle":"3D Generalist & Environment/Technical Artist",
+      "email":"mailto:gabrieledallari.art@gmail.com",
+      "sameAs":[
+        "mailto:gabrieledallari.art@gmail.com",
+        "https://www.linkedin.com/in/gabriele-dallari",
+        "https://www.instagram.com/gabbodallari",
+        "https://www.youtube.com/watch?v=dKwzu5KsCe8"
+      ],
+      "contactPoint":[
+        {
+          "@type":"ContactPoint",
+          "contactType":"Business",
+          "email":"mailto:gabrieledallari.art@gmail.com",
+          "availableLanguage":["en","it"]
+        }
+      ]
+    }
+  ]
+}
+</script>
 
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -79,7 +121,6 @@
 
   /* ===== CARD CONTATTI (bordo LED con alone ciano) ===== */
   .wrap{
-    /* prima c’era margin-top:84px; ora NO (ci pensa il body) */
     padding: clamp(20px,5vw,60px) 20px;
     display:flex; justify-content:center;
   }
@@ -213,39 +254,40 @@
 
         <!-- Netlify form with validation + reCAPTCHA -->
         <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field"
-              action="/contact-success.html" id="contactForm" novalidate>
+              action="/contact-success.html" id="contactForm" novalidate aria-live="polite">
           <input type="hidden" name="form-name" value="contact">
-          <input type="text" name="bot-field" style="display:none">
+          <input type="text" name="bot-field" style="display:none" aria-hidden="true">
           <input type="hidden" name="message_to_owner" id="message_to_owner">
 
           <div class="row">
             <div class="field" id="fName">
               <label for="fullName">Full name *</label>
-              <input id="fullName" name="fullName" type="text" autocomplete="name" required>
-              <div class="error">Please enter your name and surname.</div>
+              <input id="fullName" name="fullName" type="text" autocomplete="name" required aria-required="true">
+              <div class="error" role="alert">Please enter your name and surname.</div>
             </div>
             <div class="field" id="fEmail">
               <label for="email">Email *</label>
-              <input id="email" name="email" type="email" autocomplete="email" required>
-              <div class="error">Please enter a valid email address.</div>
+              <input id="email" name="email" type="email" autocomplete="email" required aria-required="true" inputmode="email">
+              <div class="error" role="alert">Please enter a valid email address.</div>
             </div>
           </div>
 
           <div class="field" id="fMessage">
             <label for="message">Message *</label>
-            <textarea id="message" name="message" required></textarea>
-            <div class="error">Please write at least 20 characters.</div>
+            <textarea id="message" name="message" required aria-required="true"></textarea>
+            <div class="error" role="alert">Please write at least 20 characters.</div>
           </div>
 
           <!-- reCAPTCHA di Netlify -->
           <div class="recaptcha" data-netlify-recaptcha="true"></div>
+          <noscript><p class="note">Please enable JavaScript to submit the form.</p></noscript>
 
           <div class="actions">
             <button class="btn" type="submit" id="submitBtn" disabled>Send</button>
             <span class="note">You’ll get a confirmation on this page.</span>
           </div>
 
-          <p class="success" id="successMsg" role="status">Thanks! Your message was sent.</p>
+          <p class="success" id="successMsg" role="status" aria-live="polite">Thanks! Your message was sent.</p>
         </form>
       </div>
     </section>
@@ -334,7 +376,7 @@
     email: {
       el: document.getElementById('email'),
       wrap: document.getElementById('fEmail'),
-      test(v){ return /^\S+@\S+\.\S+$/.test(v.trim()); }
+      test(v){ return /^\\S+@\\S+\\.\\S+$/.test(v.trim()); }
     },
     message: {
       el: document.getElementById('message'),
@@ -347,6 +389,8 @@
     const {el, wrap, test} = fields[key];
     const ok = test(el.value || '');
     wrap.classList.toggle('invalid', !ok);
+    // A11y: esponi stato
+    el.setAttribute('aria-invalid', String(!ok));
     return ok;
   }
   function validateAll(){
@@ -376,6 +420,7 @@ ${name}`;
     document.getElementById('message_to_owner').value = auto;
 
     btn.disabled = true;
+    btn.textContent = 'Sending…';
   });
 
   // feedback opzionale se torni con ?sent=1

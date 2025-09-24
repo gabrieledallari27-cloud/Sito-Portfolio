@@ -17,14 +17,44 @@
 <link rel="manifest" href="/site.webmanifest">
 <meta name="theme-color" content="#0b0c10" />
 
+<!-- Crawling / snippet hints -->
+<meta name="robots" content="index,follow,max-snippet:160,max-image-preview:large,max-video-preview:-1">
+<meta name="googlebot" content="index,follow,max-snippet:160,max-image-preview:large,max-video-preview:-1">
+
 <!-- Open Graph / Twitter -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Gabriele Dallari">
 <meta property="og:title" content="Portfolio — Gabriele Dallari | 3D Generalist & Environment Artist">
 <meta property="og:description" content="Selected works: 3D Environments, Technical Art, Concept & Artworks.">
 <meta property="og:url" content="https://gabrieledallari.art/portfolio.html">
-<meta property="og:image" content="/images/og/home.jpg">
+<meta property="og:image" content="https://gabrieledallari.art/images/og/home.jpg">
+<meta property="og:locale" content="it_IT">
 <meta name="twitter:card" content="summary_large_image">
+
+<!-- Structured data -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"CollectionPage",
+  "name":"Portfolio — Gabriele Dallari",
+  "url":"https://gabrieledallari.art/portfolio.html",
+  "description":"Selezione di progetti 3D, Environment Art e concept.",
+  "hasPart": {
+    "@type":"ItemList",
+    "itemListElement":[
+      {"@type":"ListItem","position":1,"url":"https://gabrieledallari.art/projects/the-golden-fall/index.html","name":"The Golden Fall","image":"https://gabrieledallari.art/projects/the-golden-fall/images/portfolio/goldenfall-cover.png"},
+      {"@type":"ListItem","position":2,"url":"https://gabrieledallari.art/projects/swamp/index.html","name":"Abandoned PBY Catalina","image":"https://gabrieledallari.art/projects/swamp/images/portfolio/swamp-cover.png"},
+      {"@type":"ListItem","position":3,"url":"https://gabrieledallari.art/projects/metro/index.html","name":"Milan Subway — Diorama","image":"https://gabrieledallari.art/projects/metro/images/portfolio/metro-cover3.png"},
+      {"@type":"ListItem","position":4,"url":"https://gabrieledallari.art/projects/sloth/index.html","name":"Sloth Guardian","image":"https://gabrieledallari.art/projects/sloth/images/portfolio/sloth-cover.png"},
+      {"@type":"ListItem","position":5,"url":"https://gabrieledallari.art/projects/climbing-roots/index.html","name":"Climbing Plants & Roots","image":"https://gabrieledallari.art/projects/climbing-roots/assets/cover.jpg"},
+      {"@type":"ListItem","position":6,"url":"https://gabrieledallari.art/projects/artworks/forest-guardian/index.html","name":"Forest Guardian — Concept","image":"https://gabrieledallari.art/projects/artworks/forest-guardian/cover.png"},
+      {"@type":"ListItem","position":7,"url":"https://gabrieledallari.art/projects/artworks/neon-alley/index.html","name":"Neon Alley","image":"https://gabrieledallari.art/projects/artworks/neon-alley/cover.png"},
+      {"@type":"ListItem","position":8,"url":"https://gabrieledallari.art/projects/artworks/oil-portrait/index.html","name":"Oil Study — Portrait","image":"https://gabrieledallari.art/projects/artworks/oil-portrait/cover.png"},
+      {"@type":"ListItem","position":9,"url":"https://gabrieledallari.art/projects/artworks/mythic-ruins/index.html","name":"Mythic Ruins","image":"https://gabrieledallari.art/projects/artworks/mythic-ruins/cover.png"}
+    ]
+  }
+}
+</script>
 
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -64,7 +94,7 @@
     margin:0; overflow:hidden; color:var(--text);
     background: radial-gradient(1200px 600px at 20% 40%, rgba(158,231,255,.08), transparent 70%),
                 linear-gradient(180deg,#0b0c10 0%,#07070a 100%);
-    font-family: "Montserrat", system-ui, Arial, sans-serif; /* Montserrat ovunque */
+    font-family: "Montserrat", system-ui, Arial, sans-serif;
   }
 
   /* ===== HEADER ===== */
@@ -82,7 +112,7 @@
   .ph-title{
     margin:0;
     text-align:center;
-    font-family:"Bebas Neue", sans-serif; /* titolo invariato */
+    font-family:"Bebas Neue", sans-serif;
     font-weight:400;
     font-size:clamp(24px, 4.2vw, 44px);
     line-height:1;
@@ -102,7 +132,6 @@
     padding:10px 14px; font-weight:600; text-decoration:none;
     box-shadow:0 8px 22px rgba(0,0,0,.35);
     transition: transform .15s ease, background .2s ease, color .2s ease, border-color .2s ease;
-    font-family: inherit; /* Montserrat */
   }
   .chip:hover{ background:var(--accent); color:#0b0c10; border-color: rgba(158,231,255,.6); transform: translateY(-1px); }
   .back-btn{ position:static; }
@@ -115,21 +144,18 @@
     backdrop-filter: blur(6px);
     border-top:1px solid rgba(158,231,255,.18);
     height: var(--foot-h);
-    pointer-events:none; /* disattivo, poi riattivo sulla inner */
+    pointer-events:none;
   }
   .portfolio-footer .footer-inner{
     height:100%;
     display:flex; align-items:center; justify-content:flex-end;
     padding: 0 18px;
-    pointer-events:auto; /* il bottone è cliccabile */
+    pointer-events:auto;
   }
-  /* Quando sei sulla pagina destra, allinea lo switch a sinistra */
   body.on-right .portfolio-footer .footer-inner{ justify-content:flex-start; }
-
-  /* Switch adesso è dentro il footer e non è fixed */
   .switch-btn{ position:static; }
 
-  /* ===== WRAPPER: sempre orizzontale (anche mobile) ===== */
+  /* ===== WRAPPER ===== */
   .viewport{
     position:absolute; left:0; right:0; top:var(--head-h); bottom:var(--foot-h);
     overflow:hidden;
@@ -176,14 +202,12 @@
   .kicker{ font-size:.85rem; letter-spacing:.18em; color:var(--accent); text-transform:uppercase; }
   .title{ font-size: clamp(28px, 4.6vw, 64px); line-height:1.02; margin:6px 0 0; }
   .subtitle{ margin:6px 0 0; font-size: clamp(14px, 1.4vw, 18px); color:var(--muted); }
-  .cta{ margin-top:14px; display:inline-flex; align-items:center; gap:10px; font-weight:600; text-decoration:none; color:#0b0c10; background:var(--accent); padding:10px 14px; border-radius:999px; transition: box-shadow .22s ease, transform .15s ease, filter .22s ease; font-family: inherit; }
+  .cta{ margin-top:14px; display:inline-flex; align-items:center; gap:10px; font-weight:600; text-decoration:none; color:#0b0c10; background:var(--accent); padding:10px 14px; border-radius:999px; transition: box-shadow .22s ease, transform .15s ease, filter .22s ease; }
   .cta:hover,.cta:focus-visible{ box-shadow: 0 0 24px rgba(158,231,255,.35), inset 0 0 10px rgba(255,255,255,.35); transform: translateY(-1px); filter: brightness(1.03); }
   .half-right .preview-info{ left:auto; right:44px; text-align:right; }
-
-  /* In verticale: pannello info completamente nascosto (rimane solo il bottone a lato della card) */
   body.vertical .preview-info{ display:none !important; }
 
-  /* ===== FRECCE (restano fisse) ===== */
+  /* ===== FRECCE ===== */
   .arc-wrap{ position:absolute; inset:0; z-index:31; width:100%; height:100%; pointer-events:none; }
   .arc-btn{
     position:absolute; z-index:31; pointer-events:auto;
@@ -192,7 +216,6 @@
     cursor:pointer; font-size:18px; line-height:1;
     box-shadow:0 8px 28px rgba(0,0,0,.35);
     transition: transform .15s ease, outline-color .15s ease, opacity .2s ease;
-    font-family: inherit;
   }
   .arc-btn:hover{ outline:1px solid rgba(158,231,255,.45); transform: translateY(-1px) scale(1.02); }
   .arc-btn[disabled]{ opacity:.35; pointer-events:none; }
@@ -288,26 +311,24 @@
     opacity:.98;
   }
 
-  /* ===== CTA compatta (solo verticale) — SOLO "Open", più piccola ===== */
+  /* ===== CTA compatta (solo verticale) ===== */
   .edge-cta{
     position:absolute; z-index:32; display:none;
     align-items:center; justify-content:center;
     font-weight:700; text-decoration:none; color:#0b0c10;
     background:var(--accent);
-    padding:8px 12px;                 /* più piccola */
-    border-radius:999px;               /* smussata come CTA desktop */
+    padding:8px 12px;
+    border-radius:999px;
     box-shadow:0 10px 24px rgba(0,0,0,.4);
     text-align:center;
     line-height:1.05;
-    white-space:nowrap;                /* resta su una riga */
+    white-space:nowrap;
     pointer-events:auto;
-    font-family: inherit;              /* Montserrat */
-    font-size:12.5px;                  /* più piccola */
+    font-size:12.5px;
     gap:0;
   }
   body.vertical .edge-cta{ display:inline-flex; }
 
-  /* scalabilità */
   @media (max-width: 1200px){ :root{ --card-w: 300px; --card-h: 168px; } }
   @media (max-width: 900px){  :root{ --card-w: 280px; --card-h: 160px; } }
   @media (max-width: 600px){  :root{ --card-w: 260px; --card-h: 150px; } }
@@ -323,7 +344,7 @@
       <h1 class="ph-title">PORTFOLIO</h1>
       <span class="chip ph-spacer" aria-hidden="true">← Back</span>
     </div>
-    
+    <div class="ph-line" aria-hidden="true"></div>
   </header>
 
   <div class="viewport">
@@ -454,7 +475,7 @@ function HalfColumn(opts){
 
   let activeIndex = 0;
   let animating   = false;
-  let frozenAnchor = null; // mantiene frecce/cta ferme durante l'animazione
+  let frozenAnchor = null;
   let wheelCooldown = false;
 
   function slotSize(){
@@ -466,7 +487,6 @@ function HalfColumn(opts){
   function centerY(){ return colEl.clientHeight / 2; }
   function isVertical(){ return document.body.classList.contains('vertical'); }
 
-  // crea elementi (rettangoli invariati)
   const items = data.map((p, i)=>{
     const card = document.createElement('div');
     card.className = 'card';
@@ -504,7 +524,6 @@ function HalfColumn(opts){
     positionControls();
   }
 
-  // calcola la posizione FISSA delle frecce/cta in base alla card centrale (finale)
   function computeAnchor(){
     const rootBox = rootEl.getBoundingClientRect();
     const colBox = colEl.getBoundingClientRect();
@@ -527,24 +546,23 @@ function HalfColumn(opts){
 
     let leftX;
     if(side === 'left'){
-      leftX = Math.max(6, centerLeft - upBtn.offsetWidth - arrowsGap);      // frecce a sinistra
+      leftX = Math.max(6, centerLeft - upBtn.offsetWidth - arrowsGap);
     }else{
-      leftX = Math.min(rootEl.clientWidth - upBtn.offsetWidth - 6, cardRight + arrowsGap); // frecce a destra
+      leftX = Math.min(rootEl.clientWidth - upBtn.offsetWidth - 6, cardRight + arrowsGap);
     }
 
     const upTop   = Math.max(6, centerTop - upBtn.offsetHeight - 8);
     const downTop = Math.min(rootEl.clientHeight - downBtn.offsetHeight - 6, centerTop + visH + 8);
 
-    // CTA (solo verticale)
     let ctaLeft = null, ctaTop = null;
     if(edgeCtaEl && isVertical()){
       edgeCtaEl.style.display = 'inline-flex';
       const ctaW = edgeCtaEl.offsetWidth || 84;
       const ctaH = edgeCtaEl.offsetHeight || 32;
       if(side === 'left'){
-        ctaLeft = Math.max(6, centerLeft - ctaW - 10);              // CTA a sinistra
+        ctaLeft = Math.max(6, centerLeft - ctaW - 10);
       }else{
-        ctaLeft = Math.min(rootEl.clientWidth - ctaW - 6, cardRight + 10); // CTA a destra
+        ctaLeft = Math.min(rootEl.clientWidth - ctaW - 6, cardRight + 10);
       }
       ctaTop  = Math.round(centerTop + (visH - ctaH)/2);
     }
@@ -586,14 +604,12 @@ function HalfColumn(opts){
 
   function updateArcButtons(){
     const atFirst = activeIndex === 0, atLast = activeIndex === data.length - 1;
-    arrows.up.disabled   = atFirst;  // ▲ su = precedente
-    arrows.down.disabled = atLast;   // ▼ giù = successivo
+    arrows.up.disabled   = atFirst;
+    arrows.down.disabled = atLast;
     [arrows.up, arrows.down].forEach(b=> b.style.display = data.length>1 ? '' : 'none');
   }
 
-  function getFlyDir(){
-    return (side==='left' ? 'right' : 'left');
-  }
+  function getFlyDir(){ return (side==='left' ? 'right' : 'left'); }
 
   function flyScreen(dir, img){
     return new Promise(resolve=>{
@@ -605,9 +621,9 @@ function HalfColumn(opts){
       const h = rootEl.clientHeight;
 
       let x0=0, y0=0;
-      if(dir==='left'){ x0 = -w; } 
+      if(dir==='left'){ x0 = -w; }
       if(dir==='right'){ x0 =  w; }
-      if(dir==='up'){ y0 =  h; } 
+      if(dir==='up'){ y0 =  h; }
       if(dir==='down'){ y0 = -h; }
 
       Object.assign(fly.style,{
@@ -632,13 +648,12 @@ function HalfColumn(opts){
 
     infoEls.infoBox?.classList.add('hidden');
 
-    // frecce/cta ferme
     frozenAnchor = computeAnchor();
     applyAnchor(frozenAnchor);
 
     activeIndex = target;
     updateArcButtons();
-    layout(); // i rettangoli si muovono, le frecce restano ferme
+    layout();
 
     const p = data[activeIndex];
     await Promise.all([ flyScreen(getFlyDir(), p.cover), preloadImage(p.cover) ]);
@@ -646,7 +661,7 @@ function HalfColumn(opts){
     updateInfo(true);
     infoEls.infoBox?.classList.remove('hidden');
 
-    frozenAnchor = null; // sblocco
+    frozenAnchor = null;
     positionControls();
 
     animating = false; document.body.classList.remove('nohover');
@@ -657,7 +672,6 @@ function HalfColumn(opts){
     goTo(i);
   };
 
-  // scroll: giù => successivo (+1), su => precedente (-1)
   function handleWheel(dir){ if (wheelCooldown || animating) return; wheelCooldown=true; document.body.classList.add('nohover'); step(dir); setTimeout(()=>{wheelCooldown=false; document.body.classList.remove('nohover');},260); }
   function attachWheel(el){
     if(!el) return;
@@ -669,7 +683,6 @@ function HalfColumn(opts){
   }
   attachWheel(colEl); attachWheel(colEl.parentElement); attachWheel(rootEl);
 
-  // FRECCE: ▲ = -1 (sopra), ▼ = +1 (sotto)
   arrows.up.addEventListener('click',   ()=> step(-1));
   arrows.down.addEventListener('click', ()=> step(+1));
 
@@ -695,17 +708,15 @@ const wrapper = byId('wrapper');
 const switchBtn = byId('switchBtn');
 let onRight = false;
 
-/* pannelli info (per nasconderli in verticale) */
 const infoBoxA = byId('infoA');
 const infoBoxB = byId('infoB');
 
 let halfA, halfB;
 
-/* verticale = quando l'ALTEZZA supera la LARGHEZZA */
 function isVerticalLayout(){ return innerHeight > innerWidth; }
 function updateSwitchLabel(){
   switchBtn.textContent = onRight ? 'Back to 3D Portfolio ←' : 'Concepts & Artworks →';
-  document.body.classList.toggle('on-right', onRight);   // guida l’allineamento nel footer
+  document.body.classList.toggle('on-right', onRight);
 }
 function toggleInfoVisibility(){
   const v = window.__isVertical;
@@ -721,7 +732,6 @@ function applyLayout(){
 
   document.body.classList.toggle('vertical', window.__isVertical);
 
-  /* sempre affiancate: usiamo solo .to-right */
   wrapper.classList.toggle('to-right', onRight);
 
   updateSwitchLabel();
@@ -735,7 +745,6 @@ function applyLayout(){
 }
 applyLayout();
 
-/* chiama applyLayout anche su resize/orientation */
 window.addEventListener('resize', applyLayout);
 window.addEventListener('orientationchange', applyLayout);
 
@@ -760,11 +769,9 @@ halfB = new HalfColumn({
   edgeCtaEl: byId('edgeCtaB')
 });
 
-/* Prima ricalibratura */
 window.dispatchEvent(new Event('resize'));
 applyLayout();
 
-/* ========= SWITCH (sempre sinistra/destra) ========= */
 function goNext(){
   onRight = true;
   wrapper.classList.add('to-right');
@@ -779,8 +786,6 @@ function goPrev(){
 }
 switchBtn.addEventListener('click', ()=> (onRight ? goPrev() : goNext()));
 
-/* ========= SWIPE ========= */
-/* Sempre: swipe orizzontale = cambia pagina; swipe verticale = cambia progetto */
 let tX=null,tY=null; const SWIPE_THRESH = 60;
 function currentHalf(){ return onRight ? halfB : halfA; }
 
@@ -798,7 +803,6 @@ document.addEventListener('touchmove', (e)=>{
 },{passive:true});
 document.addEventListener('touchend', ()=>{ tX=null; tY=null; });
 
-/* ========= Tastiera ========= */
 document.addEventListener('keydown', (e)=>{
   if(e.key === 'ArrowUp'){   e.preventDefault(); currentHalf().step(-1); }
   if(e.key === 'ArrowDown'){ e.preventDefault(); currentHalf().step(+1); }

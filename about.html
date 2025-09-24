@@ -17,14 +17,48 @@
 <link rel="manifest" href="/site.webmanifest">
 <meta name="theme-color" content="#0b0c10" />
 
+<!-- Crawling / snippet hints -->
+<meta name="robots" content="index,follow,max-snippet:160,max-image-preview:large,max-video-preview:-1">
+<meta name="googlebot" content="index,follow,max-snippet:160,max-image-preview:large,max-video-preview:-1">
+
 <!-- Open Graph / Twitter -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Gabriele Dallari">
 <meta property="og:title" content="About — Gabriele Dallari | 3D Generalist & Environment Artist">
 <meta property="og:description" content="Bio, competenze e CV di Gabriele Dallari. 3D Generalist & Environment/Technical Artist a Milano.">
 <meta property="og:url" content="https://gabrieledallari.art/about.html">
-<meta property="og:image" content="/images/og/home.jpg">
+<meta property="og:image" content="https://gabrieledallari.art/images/og/home.jpg">
+<meta property="og:locale" content="it_IT">
 <meta name="twitter:card" content="summary_large_image">
+
+<!-- Structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "name": "About — Gabriele Dallari",
+  "url": "https://gabrieledallari.art/about.html",
+  "description": "Bio e percorso di Gabriele Dallari, 3D Generalist & Environment/Technical Artist con base a Milano.",
+  "primaryImageOfPage": {
+    "@type": "ImageObject",
+    "url": "https://gabrieledallari.art/images/og/home.jpg"
+  },
+  "mainEntity": {
+    "@type": "Person",
+    "name": "Gabriele Dallari",
+    "jobTitle": "3D Generalist & Environment/Technical Artist",
+    "homeLocation": { "@type": "City", "name": "Milan, Italy" },
+    "alumniOf": { "@type": "CollegeOrUniversity", "name": "NABA — Nuova Accademia di Belle Arti" },
+    "url": "https://gabrieledallari.art/",
+    "image": "https://gabrieledallari.art/images/about/profile.png",
+    "sameAs": [
+      "https://www.linkedin.com/in/gabriele-dallari",
+      "https://www.instagram.com/gabbodallari",
+      "https://youtu.be/dKwzu5KsCe8"
+    ]
+  }
+}
+</script>
 
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
