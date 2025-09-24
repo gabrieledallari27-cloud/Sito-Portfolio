@@ -1,0 +1,96 @@
+/* ===== NAVBAR condivisa su tutte le pagine ===== */
+:root{
+  --ink:#e9e9ef;
+  --accent:#9ee7ff;
+  --border:rgba(255,255,255,.14);
+}
+
+/* Barra fissa in alto */
+.navbar{
+  position:fixed; inset:0 0 auto 0; z-index:60;
+  display:flex; align-items:center; justify-content:space-between;
+  gap:14px; padding:12px 20px;
+  background: linear-gradient(180deg, rgba(10,12,16,.78), rgba(10,12,16,.35) 55%, transparent);
+  backdrop-filter: blur(6px);
+  border-bottom:1px solid var(--border);
+  flex-wrap:nowrap;                 /* default: una riga */
+}
+
+/* Brand a sinistra: resta su UNA riga sempre */
+.brand{
+  display:flex; align-items:center; gap:12px; text-decoration:none; color:var(--ink);
+  flex:0 1 auto; min-width:0;
+}
+.brand-logo{ width:38px; height:38px; border-radius:10px; display:block; object-fit:contain; background:transparent; }
+.brand h1{
+  margin:0; font-family: "Bebas Neue", sans-serif; font-weight: 400;
+  font-size: clamp(22px, 2.2vw, 28px); line-height: 1; letter-spacing: .04em;
+  white-space:nowrap;               /* ✅ non va mai a capo */
+  overflow:hidden; text-overflow:ellipsis;
+}
+
+/* Links a destra: una sola riga */
+.nav{
+  margin-left:auto;
+  display:flex; align-items:center; justify-content:flex-end;
+  gap:clamp(8px,1.6vw,16px);
+  white-space:nowrap; flex-wrap:nowrap;
+  flex:1 1 auto; min-width:0;
+}
+.nav a{
+  color:var(--ink); text-decoration:none; padding:8px 10px; border-radius:10px; border:1px solid transparent;
+  transition: transform .15s ease, border-color .15s ease, box-shadow .2s ease, background .2s ease, color .2s ease;
+  font-family: "Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; font-weight: 400;
+  font-size:clamp(11px,1.9vw,14px);
+}
+.nav a:hover{ 
+  border-color: rgba(158,231,255,.35); 
+  box-shadow: 0 0 16px rgba(158,231,255,.25); 
+  transform: translateY(-1px); 
+  background: rgba(158,231,255,.08);
+}
+
+/* Compatta ulteriormente sui telefoni stretti */
+@media (max-width: 560px){
+  .nav{ gap:10px; }
+  .nav a{ font-size:12px; padding:8px 8px; }
+}
+@media (max-width: 440px){
+  .nav{ gap:8px; }
+  .nav a{ font-size:11px; padding:7px 7px; letter-spacing:0; }
+}
+@media (max-width: 380px){
+  .nav a{ font-size:10.5px; padding:6px 6px; }
+}
+@media (max-width: 340px){
+  .nav a{ font-size:10px; padding:5px 6px; }
+}
+
+/* ======= Ritmo in PORTRAIT (altezza > larghezza) ======= */
+/* In verticale: brand resta in alto a tutta larghezza; link vanno SOTTO, su una riga,
+   riempiendo tutta la larghezza con più distanziamento. */
+@media (orientation: portrait){
+  .navbar{
+    flex-wrap:wrap;                 /* consenti seconda riga */
+    row-gap:10px;
+    padding-bottom:10px;
+  }
+  .brand{
+    order:0;
+    width:100%;                     /* prima riga */
+    justify-content:flex-start;
+  }
+  .nav{
+    order:1;
+    width:100%;                     /* seconda riga */
+    justify-content: space-between; /* occupa tutta la larghezza */
+    gap:clamp(16px, 8vw, 64px);     /* più spaziati */
+  }
+}
+
+/* ===== Spacer universale per compensare la navbar fissa ===== */
+/* Inserisci <div class="nav-spacer" aria-hidden="true"></div> subito sotto l'include */
+.nav-spacer{ height:64px; }
+@media (orientation: portrait){
+  .nav-spacer{ height:92px; } /* quando la navbar va su due righe */
+}

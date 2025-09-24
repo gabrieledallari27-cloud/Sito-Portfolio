@@ -12,6 +12,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 
+<!-- ✅ Navbar condivisa -->
+<link rel="stylesheet" href="css/navbar.css" />
+
 <link rel="canonical" href="https://www.gabrieledallari.art/contact.html" />
 
 <style>
@@ -23,6 +26,12 @@
     --card-w: min(1100px, 94vw);
     --led-thickness: 3px;
     --danger:#ff6b6b;
+
+    /* Fallback per altezza navbar: usato finché JS non misura */
+    --nav-pt: 80px; /* default (1 riga) */
+  }
+  @media (orientation: portrait){
+    :root{ --nav-pt: 132px; } /* se la navbar va su 2 righe */
   }
 
   *{box-sizing:border-box}
@@ -37,6 +46,9 @@
     font-family: "Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     display:flex; flex-direction:column; min-height:100svh; overflow-x:hidden;
     -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+
+    /* ✅ spazio sotto navbar fissa: dinamico con fallback */
+    padding-top: var(--nav-h, var(--nav-pt));
   }
   main{ flex:1 0 auto; }
 
@@ -48,67 +60,12 @@
     mix-blend-mode:soft-light; opacity:.14;
   }
 
-  /* ===== NAVBAR ===== */
-  .navbar{
-    position:fixed; inset:0 0 auto 0; z-index:50;
-    display:flex; align-items:center; justify-content:space-between;
-    gap:14px; padding:12px 20px;
-    background: linear-gradient(180deg, rgba(10,12,16,.78), rgba(10,12,16,.35) 55%, transparent);
-    backdrop-filter: blur(6px);
-    border-bottom:1px solid rgba(158,231,255,.14);
-    flex-wrap:nowrap;                 /* resta su una riga */
-  }
-
-  /* Brand a sinistra: può andare a capo */
-  .brand{
-    display:flex; align-items:center; gap:12px;
-    text-decoration:none; color:var(--ink);
-    flex:0 1 auto;                    /* può stringersi */
-    min-width:0;                      /* consente il wrap del testo */
-  }
-  .brand-logo{ width:38px; height:38px; border-radius:10px; display:block; object-fit:contain; background:transparent; }
-  .brand h1{
-    margin:0; font-family:"Bebas Neue",sans-serif; font-weight:400;
-    font-size:clamp(22px,2.2vw,28px); line-height:1; letter-spacing:.04em;
-    white-space:normal;               /* ✅ può andare a capo */
-  }
-
-  /* Link a destra: UNA riga, senza overflow */
-  .nav{
-    margin-left:auto;
-    display:flex; align-items:center; justify-content:flex-end;
-    gap:clamp(8px,1.6vw,16px);
-    white-space:nowrap; flex-wrap:nowrap; /* ✅ non va a capo */
-    flex:1 1 auto; min-width:0;           /* occupa lo spazio rimanente */
-  }
-  .nav a{
-    color:var(--ink); text-decoration:none;
-    padding:8px 10px; border-radius:10px; border:1px solid transparent;
-    transition: transform .15s ease, border-color .15s ease, box-shadow .2s ease;
-    font-size:clamp(11px,1.9vw,14px);   /* riduce gradualmente */
-  }
-  .nav a:hover{ border-color: rgba(158,231,255,.35); box-shadow: 0 0 16px rgba(158,231,255,.25); transform: translateY(-1px); }
-
-  /* Compatta ulteriormente sui telefoni più stretti */
-  @media (max-width: 560px){
-    .nav{ gap:10px; }
-    .nav a{ font-size:12px; padding:8px 8px; }
-  }
-  @media (max-width: 440px){
-    .nav{ gap:8px; }
-    .nav a{ font-size:11px; padding:7px 7px; letter-spacing:0; }
-  }
-  @media (max-width: 380px){
-    .nav a{ font-size:10.5px; padding:6px 6px; }
-  }
-  @media (max-width: 340px){
-    .nav a{ font-size:10px; padding:5px 6px; }
-    .navbar{ padding:10px 14px; }
-    .brand h1{ font-size:20px; }      /* libera spazio se serve */
-  }
-
   /* ===== CARD CONTATTI (bordo LED con alone ciano) ===== */
-  .wrap{ margin-top:84px; padding: clamp(20px,5vw,60px) 20px; display:flex; justify-content:center; }
+  .wrap{
+    /* prima c’era margin-top:84px; ora NO (ci pensa il body) */
+    padding: clamp(20px,5vw,60px) 20px;
+    display:flex; justify-content:center;
+  }
   .contact-card{
     width: var(--card-w);
     background: transparent;
@@ -310,6 +267,40 @@
 
   <script src="js/partials.js"></script>
   <script>
+  // ===== Misura dinamica della navbar e aggiorna padding-top del body
+  (function(){
+    const root = document.documentElement;
+
+    function setNavHeight(){
+      const nb = document.querySelector('.navbar');
+      if(!nb) return;
+      const h = Math.ceil(nb.getBoundingClientRect().height);
+      root.style.setProperty('--nav-h', h + 'px');
+      document.body.style.paddingTop = h + 'px';
+    }
+
+    // Osserva l'inserimento del partial e i cambi dimensione
+    const mo = new MutationObserver(() => {
+      const nb = document.querySelector('.navbar');
+      if(nb){
+        setNavHeight();
+        const ro = new ResizeObserver(setNavHeight);
+        ro.observe(nb);
+      }
+    });
+    mo.observe(document.body, {childList:true, subtree:true});
+
+    window.addEventListener('load', setNavHeight);
+    window.addEventListener('resize', setNavHeight);
+    window.addEventListener('orientationchange', setNavHeight);
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(setNavHeight);
+    }
+
+    setTimeout(setNavHeight, 300);
+    setTimeout(setNavHeight, 1000);
+  })();
+
   // --- Validation helpers ---
   const form = document.getElementById('contactForm');
   const btn  = document.getElementById('submitBtn');

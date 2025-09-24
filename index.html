@@ -16,11 +16,12 @@
 
 <style>
   :root{
+    /* Palette in linea con la pagina portfolio */
     --bg:#0b0c10; 
     --ink:#e9e9ef; 
     --muted:#b9b9c4;
-    --accent:#9ee7ff;
-    --line:rgb(158,231,255);
+    --accent:#9ee7ff;          /* come nel portfolio */
+    --line:rgb(158,231,255);    /* bagliore/cornici coerenti */
     --border:rgba(255,255,255,.12);
 
     --glowS:0 0 22px rgba(158,231,255,.28), inset 0 0 10px rgba(255,255,255,.12);
@@ -33,9 +34,11 @@
     --tile-h: clamp(240px, 30vw, 420px);
     --tile-gap: 28px;
 
+    /* FONT STACKS */
     --font-display: "Bebas Neue", sans-serif;
     --font-sans: "Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 
+    /* Colori pulsanti scuri */
     --btn-bg:#12141a;
     --btn-ink:#e9e9ef;
     --btn-hover:#9ee7ff;
@@ -55,36 +58,27 @@
 
   /* ===== NAVBAR ===== */
   .navbar{
-    position:fixed; inset:0 0 auto 0; z-index:60;
+    position:fixed; inset:0 0 auto 0; z-index:60; /* sopra all'intro video */
     display:flex; align-items:center; justify-content:space-between;
     gap:14px; padding:12px 20px;
     background: linear-gradient(180deg, rgba(10,12,16,.78), rgba(10,12,16,.35) 55%, transparent);
     backdrop-filter: blur(6px);
     border-bottom:1px solid rgba(158,231,255,.14);
-    flex-wrap:nowrap;
-    min-width:0;
+    flex-wrap:nowrap;                 /* default: una riga */
   }
-  /* Brand a sinistra: va a capo e si riduce molto in piccolo */
+  /* Brand a sinistra: resta su UNA riga sempre */
   .brand{
     display:flex; align-items:center; gap:12px; text-decoration:none; color:var(--ink);
-    flex:0 1 auto; min-width:0; 
-    max-width:48%;                                /* meno spazio = più distanza dai link */
-    margin-right: clamp(10px, 2.4vw, 28px);       /* distanza costante dai link a destra */
+    flex:0 1 auto; min-width:0;
   }
-  .brand-logo{
-    width: clamp(22px, 4.6vw, 38px);
-    height: clamp(22px, 4.6vw, 38px);
-    border-radius:10px; display:block; object-fit:contain; background:transparent; flex:0 0 auto;
-  }
+  .brand-logo{ width:38px; height:38px; border-radius:10px; display:block; object-fit:contain; background:transparent; }
   .brand h1{
     margin:0; font-family: var(--font-display); font-weight: 400;
-    /* più elastico verso il basso per non rubare spazio ai link */
-    font-size: clamp(13px, 4.4vw, 28px);
-    line-height: 1.02;
-    letter-spacing: clamp(.01em, .25vw, .04em);
-    white-space:normal;                           /* GABRIELE / DALLARI su due righe se serve */
+    font-size: clamp(22px, 2.2vw, 28px); line-height: 1; letter-spacing: .04em;
+    white-space:nowrap;               /* ✅ non va mai a capo */
+    overflow:hidden; text-overflow:ellipsis;
   }
-  /* Links a destra: una sola riga sempre */
+  /* Links a destra: una sola riga */
   .nav{
     margin-left:auto;
     display:flex; align-items:center; justify-content:flex-end;
@@ -97,7 +91,6 @@
     transition: transform .15s ease, border-color .15s ease, box-shadow .2s ease, background .2s ease, color .2s ease;
     font-family: var(--font-sans); font-weight: 400;
     font-size:clamp(11px,1.9vw,14px);
-    letter-spacing: clamp(0em, .12vw, .02em);
   }
   .nav a:hover{ 
     border-color: rgba(158,231,255,.35); 
@@ -105,37 +98,48 @@
     transform: translateY(-1px); 
     background: rgba(158,231,255,.08);
   }
-
-  /* Compatta ulteriormente sui telefoni stretti */
+  /* Compatta ulteriormente sui telefoni stretti (landscape o portrait) */
   @media (max-width: 560px){
     .nav{ gap:10px; }
     .nav a{ font-size:12px; padding:8px 8px; }
-    .brand{ max-width:50%; }
   }
   @media (max-width: 440px){
     .nav{ gap:8px; }
     .nav a{ font-size:11px; padding:7px 7px; letter-spacing:0; }
-    .brand{ max-width:50%; }
-    .brand h1{ font-size: clamp(12px, 4.0vw, 20px); }
-    .brand-logo{ width: clamp(20px, 5.2vw, 32px); height: clamp(20px, 5.2vw, 32px); }
   }
   @media (max-width: 380px){
     .nav a{ font-size:10.5px; padding:6px 6px; }
-    .brand{ max-width:50%; }
-    .brand h1{ font-size: 12px; }
-    .brand-logo{ width: 20px; height: 20px; }
   }
   @media (max-width: 340px){
     .nav a{ font-size:10px; padding:5px 6px; }
     .navbar{ padding:10px 14px; }
-    .brand{ max-width:50%; }
-    .brand h1{ font-size: 11.5px; }
-    .brand-logo{ width: 18px; height: 18px; }
+    /* il brand resta in una riga con ellissi se manca spazio */
+  }
+
+  /* ======= NUOVO: in PORTRAIT (altezza > larghezza) ======= */
+  @media (orientation: portrait){
+    .navbar{
+      flex-wrap:wrap;                 /* consenti seconda riga */
+      row-gap:10px;
+      padding-bottom:10px;
+    }
+    .brand{
+      order:0;
+      width:100%;                     /* prima riga a tutta larghezza */
+      justify-content:flex-start;
+    }
+    .nav{
+      order:1;
+      width:100%;                     /* seconda riga a tutta larghezza */
+      justify-content: space-between; /* riempie lo schermo */
+      gap:clamp(16px, 8vw, 64px);     /* più distanziati in portrait */
+    }
+    /* I link restano della stessa dimensione (nessuna variazione font-size) */
   }
 
   /* ===== INTRO VIDEO OVERLAY ===== */
   .intro-overlay{
-    position:fixed; inset:0; z-index:40;
+    position:fixed; inset:0; z-index:40; /* sotto la navbar, sopra il resto */
     background:#000; display:grid; place-items:center;
     opacity:1; transition:opacity .5s ease;
   }
@@ -179,7 +183,7 @@
     box-shadow: 0 0 24px rgba(158,231,255,.55); border-radius:999px;
   }
 
-  /* ===== BUTTONS ===== */
+  /* ===== BUTTONS — dark default, accent on hover/focus ===== */
   .btn, .hero-btn{
     display:inline-flex; align-items:center; gap:10px; text-decoration:none; font-weight:800; letter-spacing:.03em;
     padding:12px 16px; border-radius:999px; 
@@ -259,8 +263,9 @@
   <!-- Include del partial navbar -->
   <div data-include="partials/navbar.html"></div>
 
-  <!-- INTRO VIDEO OVERLAY -->
+  <!-- INTRO VIDEO OVERLAY (navbar resta visibile sopra) -->
   <div id="introOverlay" class="intro-overlay" aria-label="Intro video">
+    <!-- Sostituisci il file con il tuo: media/intro.mp4 -->
     <video id="introVideo" src="media/intro.mp4" autoplay muted playsinline></video>
     <button id="introSkip" class="intro-skip" type="button" aria-label="Skip intro">Skip ▶</button>
   </div>
@@ -355,7 +360,7 @@
   <script src="js/partials.js"></script>
 
   <script>
-  /* Intro video */
+  /* Intro video: chiusura a fine riproduzione o via "Skip" + fallback */
   (function(){
     const overlay = document.getElementById('introOverlay');
     const video   = document.getElementById('introVideo');
@@ -367,13 +372,21 @@
       setTimeout(()=> overlay.remove(), 600);
     };
 
+    // chiudi alla fine o in caso di errore
     video.addEventListener('ended', endIntro, {once:true});
     video.addEventListener('error', endIntro, {once:true});
     skipBtn.addEventListener('click', endIntro);
 
+    // prova ad avviare; se l'autoplay è bloccato, chiudi l'intro
     const p = video.play();
-    if (p && typeof p.catch === 'function') p.catch(endIntro);
-    setTimeout(()=> { if (document.body.contains(overlay)) endIntro(); }, 15000);
+    if (p && typeof p.catch === 'function') {
+      p.catch(endIntro);
+    }
+
+    // fallback hard-timeout
+    setTimeout(()=> {
+      if (document.body.contains(overlay)) endIntro();
+    }, 15000);
   })();
 
   /* Ribbon loop + auto-active al centro */
@@ -383,7 +396,6 @@
     const tiles = Array.from(track.querySelectorAll('.tile'));
     const ids = [...new Set(tiles.map(t => t.dataset.id))];
     let speed = 60, offset = 0, segmentW = 0, running = true, last = performance.now();
-
     function computeSegmentWidth(){
       const first = tiles.find(t => t.dataset.id === ids[0]);
       const second = tiles.slice(tiles.indexOf(first)+1).find(t => t.dataset.id === ids[0]);
