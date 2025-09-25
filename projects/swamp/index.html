@@ -3,16 +3,41 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Catalina Swamp</title>
+
+<title>Abandoned PBY Catalina — Catalina Swamp</title>
+<meta name="description" content="Environment & Technical Art in Unreal Engine 5.2.1. Turntable, references and scene shots of an abandoned PBY Catalina in a misty swamp.">
+<link rel="canonical" href="https://gabrieledallari.art/projects/swamp/index.html">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Abandoned PBY Catalina — Catalina Swamp">
+<meta property="og:description" content="Environment & Technical Art in Unreal Engine 5.2.1. Turntable, references and scene shots.">
+<meta property="og:image" content="https://gabrieledallari.art/images/og/home.jpg">
+<meta property="og:url" content="https://gabrieledallari.art/projects/swamp/index.html">
+<meta name="twitter:card" content="summary_large_image">
+
+<!-- Montserrat -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;600;700;800&display=swap" rel="stylesheet">
+
 <style>
-  html,body{height:100%}
-  body{
-    margin:0; color:#fff; font-family: Arial, sans-serif;
-    display:flex; justify-content:center;
-    background:#000;
+  :root{
+    --page-max: 1280px;
+    --min-title: 22px;
+    --min-copy: 14px;
+    --heroPadFallback: clamp(24px, 8vh, 100px);
   }
 
-  /* ===== BACKGROUND IMAGE ===== */
+  *,*::before,*::after{ box-sizing:border-box }
+  html,body{ height:100% }
+  body{
+    margin:0; color:#fff;
+    font-family: "Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    font-weight: 400;
+    background:#000; overflow-x:hidden;
+  }
+
+  /* ===== BACKGROUND ===== */
   .bg-img{
     position:fixed; inset:0; z-index:-2;
     background:url('images/background2.png') center/cover no-repeat;
@@ -20,115 +45,104 @@
   }
   .bg-overlay{
     position:fixed; inset:0; z-index:-1;
-    background:rgba(0,0,0,0.35);
+    background:rgba(0,0,0,.35);
   }
 
-  /* ===== CONTAINER ===== */
-  .container{
-    width:100%; max-width:1280px; padding:0 20px 60px;
-    background: transparent;
+  /* ===== PAGE WRAP ===== */
+  .page{ display:flex; justify-content:center; padding:0 20px 60px; }
+  .container{ width:100%; max-width:var(--page-max); }
+
+  /* ===== BACK BUTTON ===== */
+  .back-btn{
+    position:fixed; top:16px; left:16px; z-index:5;
+    font-size:14px; font-weight:700; color:#fff; text-decoration:none;
+    background:rgba(18,20,26,.92); padding:8px 12px; border-radius:10px;
+    border:1px solid rgba(255,255,255,.14);
+    box-shadow:0 6px 18px rgba(0,0,0,.35);
+    transition: transform .15s ease, background .2s ease, color .2s ease;
   }
+  .back-btn:hover{ background:#9ee7ff; color:#0b0c10; transform: translateY(-1px); }
 
   /* ===== HERO ===== */
-  .hero{ position:relative; margin:32px 0 28px; overflow:visible; }
-  .hero-media{ position:relative; }
+  .hero{ position:relative; margin:72px 0 26px; }
+  .hero-media{
+    position:relative;
+    padding-bottom: var(--heroPad, var(--heroPadFallback));
+    background:#000; border-radius:10px; overflow:hidden;
+  }
   .hero-media img{
-    width:100%; height:auto; display:block;
+    width:100%; height:auto; display:block; border-radius:10px;
     filter: drop-shadow(0 30px 60px rgba(0,0,0,.75)) drop-shadow(0 8px 20px rgba(0,0,0,.55));
-    border-radius: 8px;
   }
 
   .hero-overlay{
     position:absolute; inset:0;
-    display:flex; flex-direction:column; justify-content:flex-end; gap:16px;
-    padding:28px 24px 18px;
-    pointer-events:none; /* di default disattivo i click sulla overlay */
+    display:flex; flex-direction:column; justify-content:flex-end;
+    align-items:center;                 /* ✅ centra orizzontalmente i figli */
+    padding: clamp(14px, 3.5vw, 28px) clamp(14px, 3.5vw, 24px);
+    pointer-events:none;
+  }
+
+  .overlay-content{
+    display:flex; flex-direction:column; gap:14px;
+    width:100%; max-width:min(980px, 96%); /* testo centrato nel contenitore */
   }
 
   .main-title{
-    margin:0 0 6px; font-size:2.4rem; line-height:1.1;
-    text-shadow:0 2px 10px rgba(0,0,0,.6);
+    margin:0 0 4px;
+    font-size: clamp(var(--min-title), 3.8vw, 38px);
+    line-height:1.12; text-shadow:0 2px 10px rgba(0,0,0,.6);
   }
   .intro{
-    max-width:980px; margin:0;
-    font-size:1rem; line-height:1.5;
-    color:#e9e9e9; text-shadow:0 2px 8px rgba(0,0,0,.55);
+    margin:0; max-width:min(980px, 96%);
+    font-size: clamp(var(--min-copy), 1.85vw, 18px);
+    line-height:1.55; color:#e9e9e9; text-shadow:0 2px 8px rgba(0,0,0,.55);
   }
 
-  /* ===== BACK BUTTON ===== */
-  .back-btn{
-    position:fixed; top:20px; left:20px; z-index:10;
-    font-size:16px; font-weight:600; color:#fff;
-    background:rgba(18,20,26,.92); padding:8px 14px; border-radius:8px;
-    border:1px solid rgba(255,255,255,.12); text-decoration:none;
-    box-shadow:0 4px 14px rgba(0,0,0,.35);
-    transition:background .2s ease, color .2s ease;
-  }
-  .back-btn:hover{ background:#9ee7ff; color:#0b0c10; }
-
-  /* ===== ICON BAR (come in The Golden Fall, ma più sobria) ===== */
+  /* ===== ICON BAR (sempre centrata rispetto alla hero) ===== */
   .icon-bar{
-    pointer-events:auto;                /* riattiva i click solo qui dentro */
-    display:flex; gap:18px; align-items:center; justify-content:center;
-    margin-top:8px;
+    pointer-events:auto;
+    display:flex; align-items:center; justify-content:center;
+    width:100%;
+    gap: clamp(10px, 2.2vw, 18px);
+    margin-top: 6px;                    /* distanza dal testo sopra */
   }
   .icon-link{
-    display:flex; flex-direction:column; align-items:center; gap:8px;
+    display:flex; flex-direction:column; align-items:center; gap:6px;
     text-decoration:none; color:#fff; outline:none;
     filter: grayscale(50%) brightness(.95); opacity:.95;
-    transition: transform .15s ease, filter .15s ease, opacity .15s ease;
+    transition: transform .15s ease, filter .15s ease, opacity .15s ease, color .15s ease;
   }
   .icon-link:hover, .icon-link:focus-visible{
     transform: translateY(-1px);
     filter: grayscale(0) brightness(1);
-    opacity:1;
-    color: rgb(212, 203, 121);
-    transition: transform .15s ease, filter .15s ease, opacity .15s ease;
+    opacity:1; color: rgb(212, 203, 121);
   }
-  .icon-link img{ width:90px; height:90px; object-fit:contain; display:block; }
-  .icon-link span{ font-size:.95rem; text-shadow:0 2px 6px rgba(0,0,0,.6) }
+  .icon-link img{ width: clamp(56px, 7.5vw, 90px); height:auto; display:block; }
+  .icon-link span{ font-size: clamp(12px, 1.4vw, 15px); text-shadow:0 2px 6px rgba(0,0,0,.6); }
 
-  /* ===== SEZIONI A COMPARSA ===== */
+  /* ===== SECTIONS (riquadri con ombra) ===== */
   .section{
-    position:relative;
-    margin-top:34px;
-    border:1px solid rgba(255,255,255,.12);
-    border-radius:10px;
-    background: rgba(12,12,14,.45);
-    box-shadow: 0 20px 50px rgba(0,0,0,.35);
+    position:relative; margin-top:28px;
+    border:1px solid rgba(255,255,255,.12); border-radius:18px;
+    background: rgba(12,12,14,.45); backdrop-filter: blur(4px);
+    box-shadow:
+      0 38px 110px rgba(0,0,0,.60),
+      0 0 42px rgba(158,231,255,.14);
     padding:18px;
+    --sec-pad: 18px;
   }
 
-  /* Box SOLO per le sezioni diverse dal video */
-  .section:not(#video){
-    padding: 18px;
-    border: 1px solid rgba(255,255,255,.12);
-    border-radius: 10px;
-    background: rgba(12,12,14,.45);
-    box-shadow: 0 20px 50px rgba(0,0,0,.35);
-    backdrop-filter: blur(4px);
-  }
+  /* Niente bleed: distanze simmetriche ai lati */
+  .fit-section{ width: 100%; margin-left: 0; margin-right: 0; }
+  .fit-section img{ width:100%; height:auto; display:block; box-sizing:border-box; }
 
-  /* Eccezione: sezione YouTube senza riquadro */
-  #video{
-    padding: 0;
-    border: 0;
-    border-radius: 0;
-    background: transparent;
-    box-shadow: none;
-    backdrop-filter: none;
-  }
+  /* Sezione video senza riquadro */
+  #video{ padding:0; border:0; border-radius:0; background:transparent; box-shadow:none; backdrop-filter:none; }
+  #video .video-embed{ border-radius:0; box-shadow:none; background:transparent; }
 
-  /* Player YouTube “piatto” */
-  #video .video-embed{
-    border-radius: 0;
-    box-shadow: none;
-    background: transparent; /* opzionale */
-  }
-
-  /* X di chiusura in alto a destra */
   .close-section-btn{
-    position:absolute; top:10px; right:10px;
+    position:absolute; top:10px; right:10px; z-index:1;
     width:36px; height:36px; border-radius:999px; border:1px solid rgba(255,255,255,.25);
     background: rgba(0,0,0,.55); color:#fff; cursor:pointer;
     display:grid; place-items:center; font-size:18px; line-height:1;
@@ -136,285 +150,240 @@
   }
   .close-section-btn:hover{ background: rgba(0,0,0,.75); transform: scale(1.05); }
 
-  /* Media helper */
-  *, *::before, *::after { box-sizing: border-box; }
-  img, video, canvas, svg { max-width: 100%; height: auto; display: block; }
+  img, video, canvas, svg { max-width:100%; height:auto; display:block; }
 
-  /* ——— Box statico stile "Project details" ——— */
+  .divider{ width:100%; height:1px; background: rgba(255,255,255,.12); margin: 24px 0; }
+
+  .video-embed{ position:relative; width:100%; aspect-ratio:16/9; background:#000; border-radius:8px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,.4); }
+  .video-embed iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+
+  .ref-single, .env-ref { margin: 0; }
+
+  .ref-single img,
+  .detail-stack img,
+  .env-ref img,
+  .env-grid img{
+    border:1px solid rgba(255,255,255,.12); border-radius:8px; background:#000;
+    box-shadow:0 12px 28px rgba(0,0,0,.35);
+  }
+
+  .detail-stack{ display:grid; gap:14px; margin-top:8px; }
+  .env-grid{ display:grid; gap:12px; grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .env-grid figure{ margin:0; }
+  @media (max-width:640px){ .env-grid{ grid-template-columns:1fr; } }
+
+  /* ===== PROJECT DETAILS ===== */
   .pd-box{
-    margin: 26px 0 80px;
-    border:1px solid rgba(255,255,255,.12);
-    border-radius:10px;
-    background: rgba(12,12,14,.45);
-    overflow:hidden;
-    box-shadow:0 20px 50px rgba(0,0,0,.35);
+    margin: 24px 0 80px;
+    border:1px solid rgba(255,255,255,.12); border-radius:18px;
+    background: rgba(12,12,14,.45); overflow:hidden;
     backdrop-filter: blur(4px);
+    box-shadow:
+      0 38px 110px rgba(0,0,0,.60),
+      0 0 42px rgba(158,231,255,.14);
   }
   .pd-box-header h3{
-    padding:14px 18px;
-    font-size: 1rem;
-    font-weight:700;
-    letter-spacing:.02em;
-    background: rgba(18,20,26,.65);
-    border-bottom:1px solid rgba(255,255,255,.08);
+    margin:0; padding:12px 16px; font-size: clamp(14px, 1.6vw, 16px); font-weight:700; letter-spacing:.02em;
+    background: rgba(18,20,26,.65); border-bottom:1px solid rgba(255,255,255,.08);
   }
-  .pd-box-content{
-    padding:18px;
-  }
+  .pd-box-content{ padding:14px 16px; }
 
-  /* ——— Loghi centrati, nessun effetto ——— */
   .software-logos{
-    display:flex; justify-content:center; align-items:center;
-    gap:28px; flex-wrap:wrap; padding:4px 0;
+    display:flex; justify-content:center; align-items:center; flex-wrap:nowrap;
+    gap: clamp(10px, 2.2vw, 28px);
+    transform: scale(var(--logosScale, 1));
+    transform-origin: center;
+    will-change: transform;
   }
   .software-logos img{
-    height:48px; width:auto; display:block;
-    border:0; box-shadow:none; background:transparent;
-    filter:none; transition:none; user-select:none; -webkit-user-drag:none;
+    height: clamp(28px, 4.6vw, 48px); width:auto; display:block;
+    border:0; background:transparent; user-select:none; -webkit-user-drag:none;
   }
-
-  .divider{ width:100%; height:1px; background: rgba(255,255,255,.12); margin: 28px 0; }
-
-  /* YouTube embed responsive */
-  .video-embed{
-    position: relative;
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    background: #000;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,.4);
-  }
-  .video-embed iframe{
-    position:absolute; inset:0; width:100%; height:100%;
-    border:0;
-  }
-
-  
-  /* Reference singola (full width, no crop) */
-  .ref-single img{
-    width:100%;
-    height:auto;
-    display:block;
-    border:1px solid rgba(255,255,255,.12);
-    border-radius:8px;
-    background:#000;
-    box-shadow:0 12px 28px rgba(0,0,0,.35);
-  }
-  .ref-single .caption{ margin-top:8px; color:#d7d7da; font-size:.9rem; }
-
-
-  .detail-stack{
-    display:grid; gap:14px; margin-top:8px;
-  }
-  .detail-stack img{
-    width:100%; height:auto; display:block;
-    border:1px solid rgba(255,255,255,.12);
-    border-radius:8px; background:#000;
-    box-shadow:0 12px 28px rgba(0,0,0,.35);
-  }
-
-  /* video non croppato, full-width del foglio */
-  .video-wrap{
-    position:relative; width:100%;
-    border:1px solid rgba(255,255,255,.12);
-    border-radius:8px; overflow:hidden;
-    background:#000; box-shadow:0 20px 50px rgba(0,0,0,.35);
-  }
-  .video-wrap video{
-    display:block; width:100%; height:auto; object-fit:contain;
-  }
-  /* ============= Environment media ============= */
-  .env-ref img{
-    width:100%; height:auto; display:block;
-    border:1px solid rgba(255,255,255,.12);
-    border-radius:8px; background:#000;
-    box-shadow:0 12px 28px rgba(0,0,0,.35);
-  }
-  .env-ref .caption{ margin-top:8px; color:#d7d7da; font-size:.9rem; }
-
-  /* Griglia 4 scatti (2x2, responsive) */
-  .env-grid{
-    display:grid; gap:12px;
-    grid-template-columns: repeat(2, minmax(0,1fr));
-  }
-  .env-grid figure{ margin:0; }
-  .env-grid img{
-    width:100%; height:auto; display:block;
-    border:1px solid rgba(255,255,255,.12);
-    border-radius:8px; background:#000;
-    box-shadow:0 10px 24px rgba(0,0,0,.3);
-  }
-
-  /* Mobile: una colonna */
-  @media (max-width:640px){
-    .env-grid{ grid-template-columns: 1fr; }
-  }
-
-
 </style>
 </head>
- <link rel="canonical" href="https://gabrieledallari.art/">
- <meta name="description" content="3D Artist — Environment & Technical Art. Portfolio e showreel.">
 
- <meta property="og:type" content="website">
- <meta property="og:title" content="Gabriele Dallari — 3D Artist">
- <meta property="og:description" content="Environment & Technical Art. Portfolio e showreel.">
- <meta property="og:image" content="https://gabrieledallari.art/images/og/home.jpg">
- <meta property="og:url" content="https://gabrieledallari.art/">
-
- <meta name="twitter:card" content="summary_large_image">
 <body>
-  <!-- SFONDO A TUTTO SCHERMO -->
-  <div class="bg-img"></div>
-  <div class="bg-overlay"></div>
+  <!-- SFONDO -->
+  <div class="bg-img" aria-hidden="true"></div>
+  <div class="bg-overlay" aria-hidden="true"></div>
 
-  <!-- BOTTONE BACK -->
+  <!-- BACK -->
   <a href="../../portfolio.html" class="back-btn">← Back</a>
 
-  <!-- CONTENUTO -->
-  <div class="container">
-    <!-- HERO -->
-    <header class="hero" id="hero">
-      <div class="hero-media">
-        <img src="images/header-image.png" alt="Catalina Swamp" class="header-image">
-      </div>
-      <div class="hero-overlay">
-        <h1 class="main-title">Abandoned PBY Catalina</h1>
-        <p class="intro">
-          Solo project developed during my university studies, created in <strong>Unreal Engine 5.2.1</strong> with full environment design, lighting and set dressing.
-          The environment is built around a <em>Consolidated PBY Catalina amphibious aircraft</em> abandoned in a misty swamp.
-        </p>
+  <!-- PAGE -->
+  <div class="page">
+    <div class="container">
 
-        <!-- ICON BAR: SOTTO testo, SOPRA l'immagine (overlay cliccabile) -->
-        <nav class="icon-bar" aria-label="Sections">
-          <a href="#" class="icon-link" data-target="plane">
-            <img src="images/icons/plane.png" alt="Plane icon"><span>Plane</span>
-          </a>
-          <a href="#" class="icon-link" data-target="environment">
-            <img src="images/icons/swamp.png" alt="Environment icon"><span>Environment</span>
-          </a>
-        </nav>
-      </div>
-    </header>
-
-    <!-- SEZIONI (nascoste finché non clicchi un’icona) -->
-    <section class="section" id="plane" data-toggle="true" hidden>
-      <button class="close-section-btn" aria-label="Close section" onclick="hideAll()">×</button>
-      <h2>Plane</h2>
-
-      <!-- 1) REFERENCE -->
-      <h3>Reference</h3>
-      <figure class="ref-single">
-        <img src="images/plane/reference.png" alt="PBY Catalina reference">
-        <!-- opzionale -->
-        <!-- <figcaption class="caption">Consolidated PBY Catalina – reference</figcaption> -->
-      </figure>
-
-      <div class="divider"></div>
-
-      <!-- 2) DETAILS (2 immagini una sotto l’altra) -->
-      <h3>Details</h3>
-      <div class="detail-stack">
-        <img src="images/plane/detail-01.jpg" alt="Wing & engine detail">
-        <img src="images/plane/detail-02.jpg" alt="Hull & cockpit detail">
-      </div>
-
-      <div class="divider"></div>
-
-      <!-- 3) TURNTABLE 360° -->
-      <h3>Turntable (360°)</h3>
-      <p class="subtitle">Low-poly → high-poly details → textures → textures + foliage</p>
-      <div class="video-wrap">
-            <!-- <video src="images/turntable.mp4" controls preload="metadata"></video> -->
-            <video src="images/turntable.mp4" controls preload="metadata"></video>
-      </div>
-    </section>
-
-
-    <section class="section" id="environment" data-toggle="true" hidden>
-      <button class="close-section-btn" aria-label="Close section" onclick="hideAll()">×</button>
-      <h2 style="margin:0 0 10px;">Environment</h2>
-      <p class="subtitle" style="margin:.25rem 0 1rem;color:#cfcfcf">Lighting, set dressing and atmosphere in Unreal Engine.</p>
-      <!-- Contenuti a tua scelta -->
-      <!-- Reference (singola) -->
-      <h3>Reference</h3>
-      <figure class="env-ref">
-        <img src="images/environment/reference.png" alt="Catalina Swamp — reference">
-        <!-- opzionale -->
-        <!-- <figcaption class="caption">Misty swamp lighting & mood reference</figcaption> -->
-      </figure>
-
-      <div class="divider"></div>
-
-      <!-- Scene shots (4 immagini) -->
-      <h3>Scene shots</h3>
-      <div class="env-grid">
-        <figure><img src="images/environment/shot-02.png" alt="Scene shot 02"></figure>
-        <figure><img src="images/environment/shot-04.png" alt="Scene shot 03"></figure>
-        <figure><img src="images/environment/shot-03.png" alt="Scene shot 04"></figure>
-        <figure><img src="images/environment/shot-05.png" alt="Scene shot 05"></figure>
-      </div>
-
-    </section>
-
-    <section class="section" id="video">
-      <h2 style="margin:0 0 10px;">Full Video</h2>
-      <div class="video-embed">
-        <iframe
-          src="https://www.youtube.com/embed/your_video_id"
-          title="Catalina Swamp – Full Video"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen
-          referrerpolicy="strict-origin-when-cross-origin">
-        </iframe>
-      </div>
-    </section>
-
-    <section class="pd-box" id="software" role="region" aria-labelledby="software-title">
-      <div class="pd-box-header">
-        <h3 id="software-title" style="margin:0;">Software used</h3>
-      </div>
-      <div class="pd-box-content">
-        <div class="software-logos">
-          <img src="images/logos/maya.svg" alt="Autodesk Maya">
-          <img src="images/logos/zbrush.svg" alt="Maxon ZBrush" style="filter: brightness(0) invert(1);">
-          <img src="images/logos/photoshop.svg" alt="Adobe Photoshop">
-          <img src="images/logos/substance.svg" alt="Substance Painter">
-          <img src="images/logos/unreal.svg" alt="Unreal Engine" style="filter: brightness(0) invert(1);">
-          <!-- aggiungi altri loghi se vuoi -->
+      <!-- HERO -->
+      <header class="hero" id="hero">
+        <div class="hero-media" id="heroMedia">
+          <img src="images/header-image.png" alt="Catalina Swamp">
         </div>
-      </div>
-    </section>
 
+        <div class="hero-overlay" id="heroOverlay">
+          <div class="overlay-content" id="overlayContent">
+            <h1 class="main-title">Abandoned PBY Catalina</h1>
+            <p class="intro">
+              Solo project developed during my university studies, created in <strong>Unreal Engine 5.2.1</strong> with full environment design, lighting and set dressing.
+              The environment is built around a <em>Consolidated PBY Catalina amphibious aircraft</em> abandoned in a misty swamp.
+            </p>
+          </div>
+
+          <!-- ✅ ora è fuori da overlay-content, centrata sull’intera hero -->
+          <nav class="icon-bar" id="iconBar" aria-label="Sections">
+            <a href="#" class="icon-link" data-target="plane">
+              <img src="images/icons/plane.png" alt="Plane icon"><span>Plane</span>
+            </a>
+            <a href="#" class="icon-link" data-target="environment">
+              <img src="images/icons/swamp.png" alt="Environment icon"><span>Environment</span>
+            </a>
+          </nav>
+        </div>
+      </header>
+
+      <!-- SEZIONI -->
+      <section class="section" id="plane" data-toggle="true" hidden>
+        <button class="close-section-btn" aria-label="Close section" onclick="hideAll()">×</button>
+        <h2>Plane</h2>
+
+        <h3>Reference</h3>
+        <figure class="ref-single fit-section">
+          <img src="images/plane/reference.png" alt="PBY Catalina reference">
+        </figure>
+
+        <div class="divider"></div>
+
+        <h3>Details</h3>
+        <div class="detail-stack">
+          <img src="images/plane/detail-01.jpg" alt="Wing & engine detail">
+          <img src="images/plane/detail-02.jpg" alt="Hull & cockpit detail">
+        </div>
+
+        <div class="divider"></div>
+
+        <h3>Turntable (360°)</h3>
+        <p class="subtitle" style="color:#cfcfcf;margin:.25rem 0 1rem;">Low-poly → high-poly details → textures → textures + foliage</p>
+        <div class="video-wrap">
+          <video src="images/turntable.mp4" controls preload="metadata"></video>
+        </div>
+      </section>
+
+      <section class="section" id="environment" data-toggle="true" hidden>
+        <button class="close-section-btn" aria-label="Close section" onclick="hideAll()">×</button>
+        <h2 style="margin:0 0 10px;">Environment</h2>
+        <p class="subtitle" style="margin:.25rem 0 1rem;color:#cfcfcf">Lighting, set dressing and atmosphere in Unreal Engine.</p>
+
+        <h3>Reference</h3>
+        <figure class="env-ref fit-section">
+          <img src="images/environment/reference.png" alt="Catalina Swamp — reference">
+        </figure>
+
+        <div class="divider"></div>
+
+        <h3>Scene shots</h3>
+        <div class="env-grid">
+          <figure><img src="images/environment/shot-02.png" alt="Scene shot 02"></figure>
+          <figure><img src="images/environment/shot-04.png" alt="Scene shot 03"></figure>
+          <figure><img src="images/environment/shot-03.png" alt="Scene shot 04"></figure>
+          <figure><img src="images/environment/shot-05.png" alt="Scene shot 05"></figure>
+        </div>
+      </section>
+
+      <section class="section" id="video">
+        <h2 style="margin:0 0 10px;">Full Video</h2>
+        <div class="video-embed">
+          <iframe
+            src="https://www.youtube.com/embed/your_video_id"
+            title="Catalina Swamp – Full Video"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+            referrerpolicy="strict-origin-when-cross-origin">
+          </iframe>
+        </div>
+      </section>
+
+      <section class="pd-box" id="software" role="region" aria-labelledby="software-title">
+        <div class="pd-box-header">
+          <h3 id="software-title">Software used</h3>
+        </div>
+        <div class="pd-box-content">
+          <div class="software-logos" id="logosRow">
+            <img src="images/logos/maya.svg" alt="Autodesk Maya">
+            <img src="images/logos/zbrush.svg" alt="Maxon ZBrush" style="filter: brightness(0) invert(1);">
+            <img src="images/logos/photoshop.svg" alt="Adobe Photoshop">
+            <img src="images/logos/substance.svg" alt="Substance Painter">
+            <img src="images/logos/unreal.svg" alt="Unreal Engine" style="filter: brightness(0) invert(1);">
+          </div>
+        </div>
+      </section>
+
+    </div>
   </div>
 
   <script>
-    // All'avvio: nessuna sezione visibile
+    // ===== Toggle sezioni
     window.addEventListener('load', hideAll);
-
-    // Click sulle icone: mostra la sezione corrispondente
     document.querySelectorAll('.icon-link').forEach(link=>{
       link.addEventListener('click', e=>{
         e.preventDefault();
-        const id = link.dataset.target;
-        showSection(id);
+        showSection(link.dataset.target);
       });
     });
 
     function hideAll(){
       document.querySelectorAll('.section[data-toggle]').forEach(s => s.hidden = true);
       window.scrollTo({top:0, behavior:'smooth'});
+      fitRows();
+      adjustHeroPad();
     }
-
     function showSection(id){
-      document.querySelectorAll('.section[data-toggle]').forEach(s => {
-        s.hidden = (s.id !== id);
-      });
-      // scroll appena sotto la hero
+      document.querySelectorAll('.section[data-toggle]').forEach(s => s.hidden = (s.id !== id));
       const hero = document.getElementById('hero');
       const y = hero.getBoundingClientRect().bottom + window.scrollY + 10;
       window.scrollTo({ top: y, behavior:'smooth' });
+      fitRows();
+      adjustHeroPad();
+    }
+
+    // ===== Mantieni i LOGHI su UNA RIGA (scala se serve)
+    function fitOneRow(el, minScale = 0.7){
+      if(!el) return;
+      el.style.setProperty('--logosScale', 1);
+      const need = el.scrollWidth;
+      const have = el.clientWidth;
+      if (need <= have) return;
+      const s = Math.max(minScale, have / need);
+      el.style.setProperty('--logosScale', s);
+    }
+    function fitRows(){ fitOneRow(document.getElementById('logosRow'), 0.7); }
+
+    // ===== Letterbox inferiore dinamico della HERO (titolo + intro + icone)
+    function adjustHeroPad(){
+      const media   = document.getElementById('heroMedia');
+      const content = document.getElementById('overlayContent');
+      const icons   = document.getElementById('iconBar');
+      if(!media || !content) return;
+
+      const portrait = window.innerHeight > window.innerWidth;
+      let pad = 0;
+
+      if (portrait) {
+        const contentH = content.getBoundingClientRect().height;
+        const iconsH   = icons ? icons.getBoundingClientRect().height : 0;
+        const extra    = 8;
+        const maxPad   = Math.floor(window.innerHeight * 0.36);
+        const minPad   = 24;
+        pad = Math.max(minPad, Math.min(maxPad, Math.ceil(contentH + iconsH + extra)));
+      }
+
+      media.style.setProperty('--heroPad', pad + 'px');
+    }
+
+    window.addEventListener('load', () => { fitRows(); adjustHeroPad(); });
+    window.addEventListener('resize', () => { fitRows(); adjustHeroPad(); }, {passive:true});
+    window.addEventListener('orientationchange', () => { fitRows(); adjustHeroPad(); });
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => { fitRows(); adjustHeroPad(); });
     }
   </script>
 </body>

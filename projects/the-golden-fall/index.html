@@ -4,283 +4,49 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The Golden Fall</title>
+
+  <!-- Montserrat (pesi standard) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+
   <style>
+    :root{
+      --page-max: 1280px;
+      --min-title: 22px;
+      --min-copy: 14px;
+
+      /* letterbox inferiore di fallback (se JS non gira) */
+      --heroPadFallback: clamp(24px, 8vh, 100px);
+    }
+
     /* ====== PAGE BACKGROUND ====== */
+    *,*::before,*::after{box-sizing:border-box}
     html,body{height:100%}
     body{
-      margin:0; font-family: Arial, sans-serif; color:#fff;
+      margin:0;
+      font-family:"Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:#fff;
       display:flex; justify-content:center;
-      background: #000 url("images/background.png") center/cover no-repeat fixed;
+      background:#000 url("images/background.png") center/cover no-repeat fixed;
+      overflow-x:hidden;
     }
 
-    .subtitle {
-      font-size: 0.9em;        /* testo più piccolo */
-      color: #777;             /* colore più tenue */
-      margin-top: -5px;        /* avvicina al titolo */
-      margin-bottom: 15px;     /* spazio sotto */
-      font-style: italic;      /* facoltativo, corsivo */
+    .subtitle{
+      font-size:.9em;
+      color:#777;
+      margin-top:-5px; margin-bottom:15px;
+      font-style:italic;
     }
 
-    /* ====== CONTAINER (transparent) ====== */
+    /* ====== CONTAINER ====== */
     .container{
-      width:100%; max-width:1280px; padding:0 20px 60px;
-      background: transparent; /* foglio trasparente */
+      width:100%; max-width:var(--page-max);
+      padding:0 20px 60px;
+      background:transparent;
     }
 
-    /* ====== HERO (header image con overlay) ====== */
-    .hero {
-      position: relative;
-      margin: 32px 0 28px;
-      overflow: visible;
-    }
-
-    .hero-media {
-      position: relative;
-    }
-
-    .hero-media img {
-      width: 100%;
-      height: auto;
-      display: block;
-      background: transparent; /* Assicura che non ci sia riempimento */
-      filter: drop-shadow(0 30px 60px rgba(0,0,0,.45)) drop-shadow(0 8px 20px rgba(0,0,0,.35));
-    }
-
-    /* Ombra che segue i bordi del PNG */
-    .hero-media::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.65); /* colore e opacità dell’ombra */
-      filter: blur(24px); /* morbidezza dell’ombra */
-      transform: translateY(10px); /* spostamento verso il basso */
-      -webkit-mask-image: url("images/header-image.png");
-      -webkit-mask-repeat: no-repeat;
-      -webkit-mask-position: center;
-      -webkit-mask-size: contain;
-     mask-image: url("images/header-image.png");
-      mask-repeat: no-repeat;
-      mask-position: center;
-      mask-size: contain;
-      pointer-events: none; /* non blocca i click */
-    }
-
-    /* overlay per testi e icone */
-    .hero-overlay{
-      position:absolute; inset:0;
-      display:flex; flex-direction:column; justify-content:flex-end; gap:16px;
-      padding:28px 24px 18px;
-    }
-
-    .main-title{ margin:0 0 6px; font-size:2.4rem; line-height:1.1; text-shadow:0 2px 10px rgba(0,0,0,.6); border-bottom: 2px solid #ccc; display: inline-block; padding-bottom: 5px;}
-    .intro{
-      max-width:980px; margin:0;
-      font-size:1rem; line-height:1.5;
-      color:#e9e9e9; text-shadow:0 2px 8px rgba(0,0,0,.55);
-    }
-
-    /* ====== ICON BAR (in basso sulla hero) ====== */
-    .icon-bar{
-      display:flex; gap:18px; align-items:center; justify-content:center;
-      margin-top:18px; padding-top:12px;
-    }
-    .icon-link{
-      display:flex; flex-direction:column; align-items:center; gap:8px;
-      text-decoration:none; color:#fff; outline:none;
-      transform-origin:center; transition: transform .18s ease, filter .18s ease, opacity .18s ease;
-      filter: grayscale(70%) brightness(.85); opacity:.9;
-    }
-    .icon-link:hover, .icon-link:focus-visible{
-      transform: translateY(-2px) scale(1.06);
-      filter: grayscale(0) brightness(1);
-      opacity:1;
-      color: gold;
-    }
-    .icon-link img{ width:90px; height:90px; object-fit:contain; display:block; }
-    .icon-link span{ font-size:.95rem; text-shadow:0 2px 6px rgba(0,0,0,.6) }
-
-    /* ====== SECTIONS ====== */
-    .section{ position:relative; margin-top:34px; }
-    .gallery-main{ width:100%; height:auto; margin:16px 0 10px; border:1px solid #333; border-radius:8px; }
-    .divider-full{ width:100%; height:1px; background: rgba(255,255,255,.12); margin: 28px 0; }
-    .divider{ width:50%; height:1px; background: rgba(255,255,255,.12); margin: 0 auto; margin-top: 10px;}
-    .divider-2{ width:50%; height:1px; background: rgba(255,255,255,.12); margin: 0 auto;}
-    .divider-title{ width:50%; height:1px; background: rgba(255,255,255,.12); margin: 0 auto;}
-
-    .foliage-roots-row {
-      display: flex;
-      gap: 10px; /* spazio tra le immagini */
-      margin-top: 20px;
-    }
-
-    .foliage-roots-row img {
-      width: 100%;
-      max-width: calc(25% - 10px); /* 4 immagini in una riga */
-      height: auto;
-      border: 1px solid #333;
-      border-radius: 4px;
-    }
-    
-
-
-    /* ====== CLOSE BUTTON (in alto a destra, X centrata) ====== */
-    .close-section-btn{
-      position:absolute; top:10px; right:10px;
-      width:36px; height:36px; border-radius:999px; border:1px solid rgba(255,255,255,.25);
-      background: rgba(0,0,0,.55); color:#fff; cursor:pointer;
-      display:grid; place-items:center; font-size:18px; line-height:1;
-      transition: background .18s ease, transform .12s ease;
-    }
-    .close-section-btn:hover{ background: rgba(0,0,0,.75); transform: scale(1.05); }
-
-    /* ====== POPUP (lasciato com’era) ====== */
-    /* ====== POPUP ====== */
-    .popup{
-      position: fixed; top:50%; left:50%; transform: translate(-50%,-50%);
-      background:#111; color:#fff;
-      padding:24px; border:1px solid #444; display:none;
-      z-index:1000; width:auto; max-width:86vw; max-height:82vh;
-      overflow:auto; text-align:center; border-radius:10px;
-      box-shadow: 0 20px 60px rgba(0,0,0,.6);
-    }
-    .popup.active{ display:block; }
-
-    /* versione “grande” per interior/exterior */
-    .popup.big{
-      max-width:98vw;          /* più largo */
-      max-height:92vh;         /* più alto */
-      padding:28px;            /* un filo più di respiro */
-      border-width: 0;         /* look più pulito (opzionale) */
-    }
-
-    /* immagini dentro al popup */
-    .popup img{
-      max-width:100%;
-      height:auto;
-      max-height:70vh;         /* default */
-      margin-top:10px; border-radius:6px;
-    }
-
-    /* quando il popup è grande, consenti alle immagini di sfruttare più altezza */
-    .popup.big img{
-      max-height:140vh;
-    }
-
-    .overlay{
-      position:fixed; inset:0; background: rgba(0,0,0,.6); display:none; z-index:999;
-    }
-    .overlay.active{ display:block; }
-
-    /* thumbnails */
-    .thumbnails{ display:flex; gap:10px; flex-wrap:wrap; justify-content:center; align-items:center; }
-    .thumbnails img{
-      max-height:80px; width:auto; cursor:pointer; border:2px solid transparent;
-      transition: border-color .2s, filter .2s, transform .2s;
-      filter: grayscale(80%) brightness(1.2);
-    }
-    .thumbnails img:hover, .thumbnails img:focus-visible, .thumbnails img.active{
-      border-color: gold; filter: grayscale(0) brightness(1); transform: scale(1.15);
-    }
-
-    /* hotspot */
-    .hotspot-container{ position:relative; display:inline-block; }
-    .hotspot-number{
-      position:absolute; background: oklch(89.073% 0.18324 96.195 / 0.7); color:#000; padding:4px 8px;
-      border-radius:50%; cursor:pointer; font-size:16px; transition: transform .2s, background .2s;
-    }
-    .hotspot-number:hover, .hotspot-number.selected{ color:#fff; transform: scale(1.3); background: rgba(0,0,0,.9); }
-
-    /* headings */
-    h2, h3{ font-weight:600; margin: 0 0 10px; }
-
-    .video-embed{
-      position: relative;
-      width: 100%;
-      max-width: 1280px; /* opzionale */
-      aspect-ratio: 16 / 9;
-      background: #000;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0,0,0,.4);
-    }
-    .video-embed iframe{
-      position:absolute; inset:0; width:100%; height:100%;
-    }
-
-    /* ====== Concept & Blockout (Exterior) ====== */
-    /* Stepper */
-    .stepper{display:flex;gap:14px;align-items:center;margin:6px 0 18px}
-    .stepper-dot{width:10px;height:10px;border-radius:50%;background:#777}
-    .stepper-dot.active{background:#fff}
-    .stepper-line{flex:1;height:2px;background:#444}
-
-    /* Concept cards */
-    .concept-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:18px}
-    .concept-card{border:1px solid #333;border-radius:8px;overflow:hidden;background:#0d0d0d}
-    .concept-card img{display:block;max-width:auto;max-height:526px;object-fit:contain;filter:grayscale(25%);background: #000;}
-
-
-    /* Blockout overview + details */
-    .blockout-layout{display:grid;grid-template-columns:1.1fr 1fr;gap:24px;align-items:center;margin-bottom:8px}
-    @media (max-width: 980px){.blockout-layout{grid-template-columns:1fr; align-items: start;}}
-
-    .blockout-left img{width:100%;max-width:1000px;border:1px solid #333;border-radius:8px;display:block}
-    .blockout-left .caption{margin-top:8px;color:#cfcfcf;font-size:.9rem}
-
-    .blockout-right{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
-    @media (max-width: 720px){.blockout-right{grid-template-columns:1fr}}
-    
-
-    .detail-card{
-      border:1px solid #333;
-      border-radius:8px;
-      overflow:hidden;
-      background:#0a0a0a;
-      cursor:default;
-    }
-    .detail-card img{
-      display:block;
-      width:120%;
-      height:auto;
-      object-fit:cover;
-      /* immagine fissa, nessun effetto hover */
-      filter:none;
-    }
-
-    /* Grid dei render (cover statiche) */
-    .render-grid{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:16px;
-      margin:12px 0 6px;
-    }
-    @media (max-width: 900px){ .render-grid{ grid-template-columns:repeat(2,1fr); } }
-    @media (max-width: 560px){ .render-grid{ grid-template-columns:1fr; } }
-
-    .render-card{
-      border:1px solid #333; border-radius:8px; overflow:hidden; background:#0a0a0a;
-      cursor:pointer; transition:transform .16s ease, box-shadow .2s ease;
-    }
-    .render-card:hover{ transform:translateY(-2px); box-shadow:0 10px 24px rgba(0,0,0,.25); }
-    .render-card img{ display:block; width:100%; height:200px; object-fit:cover; filter:grayscale(35%); }
-    .render-card figcaption{ padding:8px 10px; font-size:.9rem; color:#ddd; text-align:center; }
-
-    /* Popup: area gallery con thumbs */
-    .popup .gallery-main{
-      width:100%; height:auto; border:1px solid #333; border-radius:8px;
-    }
-    .popup .thumbs{
-      display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:12px;
-    }
-    .popup .thumbs img{
-      height:72px; width:auto; border:2px solid transparent; cursor:pointer;
-      filter:grayscale(70%) brightness(1.05); transition:transform .15s, border-color .15s, filter .15s;
-      border-radius:6px;
-    }
-    .popup .thumbs img:hover, .popup .thumbs img.active{
-      border-color:gold; filter:grayscale(0) brightness(1); transform:scale(1.05);
-    }
-    /* ===== Back to Portfolio ===== */
+    /* ====== BACK BUTTON ====== */
     .back-btn{
       position:fixed; top:18px; left:18px; z-index:1000;
       display:inline-flex; align-items:center; gap:8px;
@@ -293,96 +59,396 @@
     }
     .back-btn:hover{ background:#9ee7ff; color:#0b0c10; transform:translateY(-1px); }
 
-    /* ——— Box statico stile "Project details" ——— */
-  .pd-box{
-    margin: 26px 0 80px;
-    border:1px solid rgba(255,255,255,.12);
-    border-radius:10px;
-    background: rgba(12,12,14,.45);
-    overflow:hidden;
-    box-shadow:0 20px 50px rgba(0,0,0,.35);
-    backdrop-filter: blur(4px);
-  }
-  .pd-box-header h3{
-    padding:14px 18px;
-    font-size: 1rem;
-    font-weight:700;
-    letter-spacing:.02em;
-    background: rgba(18,20,26,.65);
-    border-bottom:1px solid rgba(255,255,255,.08);
-  }
-  .pd-box-content{
-    padding:18px;
-  }
+    /* ====== HERO (header image con overlay) ====== */
+    .hero{ position:relative; margin:72px 0 26px; }
+    .hero-media{
+      position:relative;
+      /* ⚫️ Estensione nera sotto (letterbox) */
+      padding-bottom: var(--heroPad, var(--heroPadFallback));
+      background:#000; border-radius:10px; overflow:hidden;
+    }
+    .hero-media img{
+      width:100%; height:auto; display:block; border-radius:10px;
+      filter: drop-shadow(0 30px 60px rgba(0,0,0,.45)) drop-shadow(0 8px 20px rgba(0,0,0,.35));
+      background:transparent;
+    }
+    /* Ombra morbida che segue i bordi del PNG */
+    .hero-media::after{
+      content:"";
+      position:absolute; inset:0;
+      background:rgba(0,0,0,.65);
+      filter:blur(24px);
+      transform:translateY(10px);
+      -webkit-mask-image:url("images/header-image.png");
+      -webkit-mask-repeat:no-repeat;
+      -webkit-mask-position:center;
+      -webkit-mask-size:contain;
+              mask-image:url("images/header-image.png");
+              mask-repeat:no-repeat;
+              mask-position:center;
+              mask-size:contain;
+      pointer-events:none;
+    }
 
-  /* ——— Loghi centrati, nessun effetto ——— */
-  .software-logos{
-    display:flex; justify-content:center; align-items:center;
-    gap:28px; flex-wrap:wrap; padding:4px 0;
-  }
-  .software-logos img{
-    height:48px; width:auto; display:block;
-    border:0; box-shadow:none; background:transparent;
-    filter:none; transition:none; user-select:none; -webkit-user-drag:none;
-  }
+    .hero-overlay{
+      position:absolute; inset:0;
+      display:flex; flex-direction:column; justify-content:flex-end;
+      padding: clamp(14px,3.5vw,28px) clamp(14px,3.5vw,24px);
+      pointer-events:none;
+    }
+    /* wrapper misurato in JS */
+    .overlay-content{
+      display:flex; flex-direction:column; gap:14px;
+      width:100%; max-width:min(980px,96%);
+      pointer-events:auto; /* per rendere cliccabili i link delle icone */
+      margin: 0 auto; /* centra il contenuto overlay */
+    }
+
+    .main-title{
+      margin:0 0 6px;
+      font-size: clamp(var(--min-title), 3.8vw, 38px);
+      line-height:1.12;
+      text-shadow:0 2px 10px rgba(0,0,0,.6);
+      border-bottom:2px solid #ccc; display:inline-block; padding-bottom:5px;
+      font-weight:700;
+    }
+    .intro{
+      margin:0; max-width:min(980px,96%);
+      font-size: clamp(var(--min-copy), 1.85vw, 18px);
+      line-height:1.55; color:#e9e9e9; text-shadow:0 2px 8px rgba(0,0,0,.55);
+      font-weight:400;
+    }
+
+    /* ====== ICON BAR ====== */
+    .icon-bar{
+      display:flex; align-items:center; justify-content:center;
+      gap: clamp(10px, 2.2vw, 18px);
+      margin-top:18px; padding-top:12px;
+      align-self:center;                 /* resta centrata sempre */
+      margin-left:auto; margin-right:auto; /* forza centratura orizzontale */
+    }
+    .icon-link{
+      display:flex; flex-direction:column; align-items:center; gap:8px;
+      text-decoration:none; color:#fff; outline:none;
+      transform-origin:center; transition: transform .18s ease, filter .18s ease, opacity .18s ease, color .18s ease;
+      filter: grayscale(70%) brightness(.85); opacity:.9;
+      font-weight:600;
+    }
+    .icon-link:hover, .icon-link:focus-visible{
+      transform: translateY(-2px) scale(1.06);
+      filter: grayscale(0) brightness(1);
+      opacity:1; color: gold;
+    }
+    .icon-link img{ width: clamp(56px, 7.5vw, 90px); height:auto; object-fit:contain; display:block; }
+    .icon-link span{ font-size: clamp(12px, 1.4vw, 15px); text-shadow:0 2px 6px rgba(0,0,0,.6) }
+
+    /* ====== SECTIONS ====== */
+    .section{ position:relative; margin-top:34px; }
+    .gallery-main{ width:100%; height:auto; margin:16px 0 10px; border:1px solid #333; border-radius:8px; background:#000; display:block; }
+    .divider-full{ width:100%; height:1px; background: rgba(255,255,255,.12); margin: 28px 0; }
+    .divider{ width:50%; height:1px; background: rgba(255,255,255,.12); margin: 10px auto 0; }
+    .divider-2{ width:50%; height:1px; background: rgba(255,255,255,.12); margin: 0 auto; }
+    .divider-title{ width:50%; height:1px; background: rgba(255,255,255,.12); margin: 0 auto; }
+
+    .foliage-roots-row{ display:flex; gap:10px; margin-top:20px; }
+    .foliage-roots-row img{
+      width:100%; max-width:calc(25% - 10px); height:auto;
+      border:1px solid #333; border-radius:4px; display:block; background:#000;
+    }
+
+    /* ====== CLOSE BUTTON (per sezioni/popup) ====== */
+    .close-section-btn{
+      width:36px; height:36px; border-radius:999px; border:1px solid rgba(255,255,255,.25);
+      background: rgba(0,0,0,.55); color:#fff; cursor:pointer;
+      display:grid; place-items:center; font-size:18px; line-height:1;
+      transition: background .18s ease, transform .12s ease;
+    }
+    .close-section-btn:hover{ background: rgba(0,0,0,.75); transform: scale(1.05); }
+
+    /* ====== POPUP ====== */
+    /* DOPO: */
+    .popup{
+      position: relative;            /* niente più fixed: lo centra l’overlay */
+      margin: 0;
+      background:#111; color:#fff;
+      padding:24px; border:1px solid #444; display:none;
+      z-index:1000;
+      box-sizing: border-box;
+      width: min(
+        var(--page-max),
+        calc(100vw - 40px - env(safe-area-inset-left) - env(safe-area-inset-right))
+      );
+      max-height: calc(100dvh - 40px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+      overflow:auto; text-align:center; border-radius:10px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.6);
+    }
+    .popup.active{ display:block; }
+    .popup.big{
+      /* stessa larghezza/altezza, solo padding diverso */
+      width: min(
+        var(--page-max),
+        calc(100vw - 40px - env(safe-area-inset-left) - env(safe-area-inset-right))
+      );
+      max-height: calc(100dvh - 40px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+      padding:28px; border-width:0;
+    }
+
+    /* PRIMA (tua):
+    .popup > img#popup-img{
+      max-width:100%; height:auto; max-height:70vh; margin-top:10px; border-radius:6px; display:block;
+    }
+    */
+
+    /* DOPO (riempie e centra davvero) */
+    .popup > img#popup-img{
+      display: block;
+      width: 100%;          /* occupa tutta la larghezza del popup */
+      height: auto;
+      max-width: none;      /* non restare alla larghezza nativa */
+      max-height: calc(100dvh - 160px); /* spazio per titolo + bottone */
+      margin: 10px auto 0;  /* centrata anche se più piccola in altezza */
+      border-radius: 6px;
+    }
 
 
+    /* DOPO: */
+    .overlay{
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: rgba(0,0,0,.6);
+      display: none;                 /* attivo solo con .active */
+      /* padding per margini e notch */
+      padding:
+        calc(20px + env(safe-area-inset-top))
+        calc(20px + env(safe-area-inset-right))
+        calc(20px + env(safe-area-inset-bottom))
+        calc(20px + env(safe-area-inset-left));
+    }
+    .overlay.active{
+      display: grid;                 /* centra il figlio (#popup) */
+      place-items: center;
+    }
+
+
+    /* Thumbnails generiche (fuori dal popup) */
+    .thumbnails{ display:flex; gap:10px; flex-wrap:wrap; justify-content:center; align-items:center; }
+    .thumbnails img{
+      max-height:80px; width:auto; cursor:pointer; border:2px solid transparent;
+      transition: border-color .2s, filter .2s, transform .2s;
+      filter: grayscale(80%) brightness(1.2);
+      border-radius:6px;
+    }
+    .thumbnails img:hover, .thumbnails img:focus-visible, .thumbnails img.active{
+      border-color: gold; filter: grayscale(0) brightness(1); transform: scale(1.15);
+    }
+
+    /* headings */
+    h2,h3{ font-weight:700; margin:0 0 10px; }
+
+    .video-embed{
+      position:relative; width:100%; max-width:1280px; aspect-ratio:16/9;
+      background:#000; border-radius:8px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,.4);
+    }
+    .video-embed iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+
+    /* ====== Concept & Blockout (Exterior) ====== */
+    .stepper{display:flex;gap:14px;align-items:center;margin:6px 0 18px}
+    .stepper-dot{width:10px;height:10px;border-radius:50%;background:#777}
+    .stepper-dot.active{background:#fff}
+    .stepper-line{flex:1;height:2px;background:#444}
+
+    /* Triptych sempre a 3 colonne, con soglia minima e scroll orizzontale quando serve */
+    .concept-row{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(260px, 1fr));
+      gap:16px;
+      margin-bottom:18px;
+      overflow-x: auto;           /* evita che si schiaccino troppo: scroll orizzontale sotto i ~820px */
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 4px;        /* spazio per la scrollbar su alcuni OS */
+      scrollbar-gutter: stable;
+    }
+
+    .concept-card{
+      border:1px solid #333; border-radius:8px; overflow:hidden; background:#000;
+      display:flex; align-items:center; justify-content:center; padding:8px;
+    }
+    .concept-card img{
+      width:100%; height:auto; /* niente height fissa, niente object-fit che schiaccia */
+      display:block;
+    }
+
+    /* Mantiene sempre due colonne; se lo schermo è troppo stretto, scorre in orizzontale senza cambiare layout */
+    .blockout-layout{
+      display:grid;
+      grid-template-columns: minmax(360px, 1.1fr) minmax(340px, 1fr);
+      gap:24px;
+      align-items:center;
+      margin-bottom:8px;
+      overflow-x:auto;                 /* impedisce il “collasso” in una colonna */
+      -webkit-overflow-scrolling:touch;
+      scrollbar-gutter: stable;
+    }
+
+
+    .blockout-left img{width:100%;max-width:1000px;border:1px solid #333;border-radius:8px;display:block;background:#000}
+    .blockout-left .caption{margin-top:8px;color:#cfcfcf;font-size:.9rem}
+
+   /* Mantieni sempre 2 colonne per i dettagli; se serve, scroll orizzontale interno */
+    .blockout-right{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(220px, 1fr));
+      gap:16px;
+      overflow-x:auto;
+      -webkit-overflow-scrolling:touch;
+    }
+
+    .detail-card img{
+      display:block;
+      width:100%;
+      height:auto;
+      object-fit:cover;
+      background:#000;
+    }
+
+    .detail-card img{display:block;width:120%;height:auto;object-fit:cover;background:#000}
+
+    /* Grid dei render */
+    .render-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:12px 0 6px}
+    @media (max-width:900px){.render-grid{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:560px){.render-grid{grid-template-columns:1fr}}
+
+    .render-card{
+      border:1px solid #333; border-radius:8px; overflow:hidden; background:#0a0a0a;
+      cursor:pointer; transition:transform .16s ease, box-shadow .2s ease;
+    }
+    .render-card:hover{ transform:translateY(-2px); box-shadow:0 10px 24px rgba(0,0,0,.25); }
+    .render-card img{ display:block; width:100%; height:200px; object-fit:cover; filter:grayscale(35%); background:#000 }
+    .render-card figcaption{ padding:8px 10px; font-size:.9rem; color:#ddd; text-align:center; }
+
+    /* Popup: area gallery con thumbs (specifico per non “rompere” i CSS generici) */
+    .popup .gallery-main{ width:100%; height:auto; border:1px solid #333; border-radius:8px; background:#000; }
+    .popup .thumbs{ display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:12px; }
+    .popup .thumbs img{
+      height:72px !important; width:auto !important; max-height:none !important;
+      border:2px solid transparent; cursor:pointer;
+      filter:grayscale(70%) brightness(1.05);
+      transition:transform .15s, border-color .15s, filter .15s;
+      border-radius:6px;
+    }
+    .popup .thumbs img:hover, .popup .thumbs img.active{
+      border-color:gold; filter:grayscale(0) brightness(1); transform:scale(1.05);
+    }
+    /* ===== Popup più grandi su schermi stretti ===== */
+    @media (max-width: 900px){
+      .popup{
+        max-height: 92dvh;       /* usa l'altezza dinamica mobile */
+        padding: 16px;           /* riduci padding per guadagnare area utile */
+      }
+      .popup.big{
+        max-height: 96dvh;       /* prima 92vh */
+        padding: 12px;           /* più contenuto visibile */
+        border-width: 0;
+      }
+      /* Immagine singola dentro al popup semplice */
+      .popup > img#popup-img{
+        max-height: calc(92dvh - 80px);  /* più alta su mobile */
+      }
+      /* Immagine principale delle gallerie */
+      .popup .gallery-main{
+        max-height: calc(96dvh - 140px); /* lascia spazio a titolo + thumbs + bottone */
+      }
+      /* Thumbs un filo più compatte per lasciare spazio all'immagine grande */
+      .popup .thumbs img{
+        height: 64px !important;
+      }
+    }
+
+
+    /* ——— Project details ——— */
+    .pd-box{
+      margin:26px 0 80px; border:1px solid rgba(255,255,255,.12); border-radius:10px;
+      background:rgba(12,12,14,.45); overflow:hidden;
+      box-shadow:0 20px 50px rgba(0,0,0,.35); backdrop-filter:blur(4px);
+    }
+    .pd-box-header h3{
+      margin:0; padding:14px 18px; font-size:1rem; font-weight:700; letter-spacing:.02em;
+      background:rgba(18,20,26,.65); border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .pd-box-content{ padding:18px; }
+
+    .software-logos{
+      display:flex; justify-content:center; align-items:center; gap:28px; flex-wrap:wrap; padding:4px 0;
+    }
+    .software-logos img{
+      height:48px; width:auto; display:block; border:0; background:transparent; user-select:none; -webkit-user-drag:none;
+    }
+
+    /* ====== ✅ HOTSPOT (ripristino numerini + click) ====== */
+    .hotspot-container{ position:relative; }
+    .hotspot-number{
+      position:absolute;
+      transform: translate(-50%,-50%);
+      width:28px; height:28px;
+      display:grid; place-items:center;
+      border-radius:999px;
+      background:rgba(0,0,0,.75);
+      color:#fff; border:1px solid rgba(255,255,255,.35);
+      font-weight:700; font-size:14px;
+      cursor:pointer; z-index:5;
+      transition: transform .14s ease, background .14s ease, box-shadow .14s ease;
+      user-select:none;
+    }
+    .hotspot-number:hover{ transform:translate(-50%,-50%) scale(1.06); background:#111; box-shadow:0 6px 14px rgba(0,0,0,.35); }
+    .hotspot-number.selected{ background:gold; color:#111; border-color:gold; }
 
   </style>
 </head>
- <link rel="canonical" href="https://gabrieledallari.art/">
- <meta name="description" content="3D Artist — Environment & Technical Art. Portfolio e showreel.">
 
- <meta property="og:type" content="website">
- <meta property="og:title" content="Gabriele Dallari — 3D Artist">
- <meta property="og:description" content="Environment & Technical Art. Portfolio e showreel.">
- <meta property="og:image" content="https://gabrieledallari.art/images/og/home.jpg">
- <meta property="og:url" content="https://gabrieledallari.art/">
-
- <meta name="twitter:card" content="summary_large_image">
 <body>
   <a href="../../portfolio.html" class="back-btn">← Back</a>
   <div class="container">
 
     <!-- ====== HERO ====== -->
     <header class="hero" id="hero">
-      <div class="hero-media">
+      <div class="hero-media" id="heroMedia">
         <img src="images/header-image.png" alt="Header image" />
       </div>
-      <div class="hero-overlay">
-        <h1 class="main-title">THE GOLDEN FALL</h1>
-        <p class="intro">
-          This group project was developed during my university studies with the goal of creating a short narrative film featuring motion capture animation. 
-          Set in a fantasy world inspired by <strong>Mayan mythology</strong>, the story follows a powerful god who turns people into gold.
-        </p>
-        <p>
-          My role focused primarily on <strong>Technical Art</strong>, including software management such as <strong>Unreal Engine</strong>, 
-         <strong>environment design</strong> and <strong>set dressing</strong>, <strong>foliage management</strong>, and the development of <strong>smart materials</strong> in <em>Substance Painter</em>.
-        </p>
+      <div class="hero-overlay" id="heroOverlay">
+        <div class="overlay-content" id="overlayContent">
+          <h1 class="main-title">THE GOLDEN FALL</h1>
+          <p class="intro">
+            This group project was developed during my university studies with the goal of creating a short narrative film featuring motion capture animation. 
+            Set in a fantasy world inspired by <strong>Mayan mythology</strong>, the story follows a powerful god who turns people into gold.
+          </p>
+          <p class="intro">
+            My role focused primarily on <strong>Technical Art</strong>, including software management such as <strong>Unreal Engine</strong>, 
+            <strong>environment design</strong> and <strong>set dressing</strong>, <strong>foliage management</strong>, and the development of <strong>smart materials</strong> in <em>Substance Painter</em>.
+          </p>
 
-        
-
-        <!-- ICONE IN BASSO SULL’IMMAGINE -->
-        <nav class="icon-bar" aria-label="Sections">
-          <a href="#" class="icon-link" data-target="making-of">
-            <img src="images/icons/interior.png" alt="Interior icon"><span>Interior</span>
-          </a>
-          <a href="#" class="icon-link" data-target="making-of-exterior">
-            <img src="images/icons/exterior.png" alt="Exterior icon"><span>Exterior</span>
-          </a>
-          <a href="#" class="icon-link" data-target="landscape">
-            <img src="images/icons/landscape.png" alt="Landscape icon"><span>Landscape</span>
-          </a>
-          <a href="#" class="icon-link" data-target="foliage">
-            <img src="images/icons/foliage.png" alt="Foliage icon"><span>Foliage</span>
-          </a>
-        </nav>
+          <!-- ICONE -->
+          <nav class="icon-bar" aria-label="Sections">
+            <a href="#" class="icon-link" data-target="making-of">
+              <img src="images/icons/interior.png" alt="Interior icon"><span>Interior</span>
+            </a>
+            <a href="#" class="icon-link" data-target="making-of-exterior">
+              <img src="images/icons/exterior.png" alt="Exterior icon"><span>Exterior</span>
+            </a>
+            <a href="#" class="icon-link" data-target="landscape">
+              <img src="images/icons/landscape.png" alt="Landscape icon"><span>Landscape</span>
+            </a>
+            <a href="#" class="icon-link" data-target="foliage">
+              <img src="images/icons/foliage.png" alt="Foliage icon"><span>Foliage</span>
+            </a>
+          </nav>
+        </div>
       </div>
     </header>
 
     <!-- ====== SECTIONS (mostrate su click icona) ====== -->
     <section class="section" id="making-of" data-toggle="true" hidden>
-      <button class="close-section-btn" aria-label="Close section" onclick="hideAll()">×</button>
+      <button class="close-section-btn" aria-label="Close section" onclick="hideAll()" style="position:absolute;top:10px;right:10px;">×</button>
       <h2>Making Of – Interior</h2>
 
       <h3>References</h3>
@@ -400,10 +466,10 @@
 
       <h3>Assets & Materials</h3>
       <p class="subtitle">
-        <strong>3D assets</strong> modeled in <strong>Maya</strong>, with high-detail sculpts created in <strong>ZBrush</strong> and baked into <strong>normal maps</strong> in <strong>Substance Painter</strong>. Base <strong>smart materials</strong> created in <strong>Substance Painter</strong> and refined by <strong>texture artists</strong> to achieve the final <strong> look</strong> in <strong>Unreal Engine</strong>.
+        <strong>3D assets</strong> modeled in <strong>Maya</strong>, with high-detail sculpts created in <strong>ZBrush</strong> and baked into <strong>normal maps</strong> in <strong>Substance Painter</strong>. Base <strong>smart materials</strong> created in <strong>Substance Painter</strong> and refined by <strong>texture artists</strong> to achieve the final <strong>look</strong> in <strong>Unreal Engine</strong>.
       </p>
 
-      <p style="text-align: center; font-style: italic; margin-bottom: 15px; color: gold;">
+      <p style="text-align:center;font-style:italic;margin-bottom:15px;color:gold;">
         Select a number to view the corresponding asset details.
       </p>
 
@@ -435,110 +501,84 @@
       </div>
       <div class="divider-full"></div>
 
-      <!-- ====== dentro #making-of (INTERIOR) ====== -->
-    <h3>In-Engine Renders</h3>
-    <div class="render-grid">
-      <figure class="render-card" onclick="openGallery('int_corridor1')">
-        <img src="images/interior-renders/corridor1-3.jpg" alt="Interior render – Corridor 1">
-        <figcaption>Corridor 1</figcaption>
-      </figure>
+      <!-- In-Engine renders -->
+      <h3>In-Engine Renders</h3>
+      <div class="render-grid">
+        <figure class="render-card" onclick="openGallery('int_corridor1')">
+          <img src="images/interior-renders/corridor1-3.jpg" alt="Interior render – Corridor 1">
+          <figcaption>Corridor 1</figcaption>
+        </figure>
 
-      <figure class="render-card" onclick="openGallery('int_corridor2')">
-        <img src="images/interior-renders/corridor2-3.jpg" alt="Interior render – Corridor 2">
-        <figcaption>Corridor 2</figcaption>
-      </figure>
+        <figure class="render-card" onclick="openGallery('int_corridor2')">
+          <img src="images/interior-renders/corridor2-3.jpg" alt="Interior render – Corridor 2">
+          <figcaption>Corridor 2</figcaption>
+        </figure>
 
-      <figure class="render-card" onclick="openGallery('int_corridor3')">
-        <img src="images/interior-renders/corridor3-3.jpg" alt="Interior render – Corridor 3">
-        <figcaption>Corridor 3</figcaption>
-      </figure>
+        <figure class="render-card" onclick="openGallery('int_corridor3')">
+          <img src="images/interior-renders/corridor3-3.jpg" alt="Interior render – Corridor 3">
+          <figcaption>Corridor 3</figcaption>
+        </figure>
 
-      <figure class="render-card" onclick="openGallery('int_fountain')">
-        <img src="images/interior-renders/fountain-3.jpg" alt="Interior render – Fountain">
-        <figcaption>Fountain</figcaption>
-      </figure>
+        <figure class="render-card" onclick="openGallery('int_fountain')">
+          <img src="images/interior-renders/fountain-3.jpg" alt="Interior render – Fountain">
+          <figcaption>Fountain</figcaption>
+        </figure>
 
-      <figure class="render-card" onclick="openGallery('int_pool')">
-        <img src="images/interior-renders/pool-3.jpg" alt="Interior render – Pool">
-        <figcaption>Pool</figcaption>
-      </figure>
+        <figure class="render-card" onclick="openGallery('int_pool')">
+          <img src="images/interior-renders/pool-3.jpg" alt="Interior render – Pool">
+          <figcaption>Pool</figcaption>
+        </figure>
 
-      <figure class="render-card" onclick="openGallery('int_entrance')">
-        <img src="images/interior-renders/entrance-3.jpg" alt="Interior render – Entrance">
-        <figcaption>Entrance</figcaption>
-      </figure>
-      
-    </div>
-    <div class="divider-full"></div>
-      
+        <figure class="render-card" onclick="openGallery('int_entrance')">
+          <img src="images/interior-renders/entrance-3.jpg" alt="Interior render – Entrance">
+          <figcaption>Entrance</figcaption>
+        </figure>
+      </div>
+      <div class="divider-full"></div>
     </section>
 
     <section class="section" id="making-of-exterior" data-toggle="true" hidden>
-      <button class="close-section-btn" aria-label="Close section" onclick="hideAll()">×</button>
+      <button class="close-section-btn" aria-label="Close section" onclick="hideAll()" style="position:absolute;top:10px;right:10px;">×</button>
       <h2>Making Of – Exterior</h2>
 
       <h3>References</h3>
+      <!-- layout invariato, scala tutto insieme -->
       <img src="images/exterior-moodboard.png" alt="Moodboard Exterior" class="gallery-main" />
 
       <div class="divider-full"></div>
 
       <!-- Concept -->
       <h3>Concept – from sketch to final</h3>
-      <p class="subtitle">
-        Exterior temple concept art created in <strong>Photoshop</strong>, from initial sketches to the final design.
-      </p>
+      <p class="subtitle">Exterior temple concept art created in <strong>Photoshop</strong>, from initial sketches to the final design.</p>
       <div class="stepper" aria-hidden="true">
         <span class="stepper-dot active"></span><span class="stepper-line"></span>
         <span class="stepper-dot"></span><span class="stepper-line"></span>
         <span class="stepper-dot"></span>
       </div>
 
+      <!-- ✅ Triptych che scala (3 colonne sempre, niente “barrette” alte) -->
       <div class="concept-row">
-        <figure class="concept-card">
-          <img src="images/exterior-concept-sketch.jpg" alt="Exterior concept – sketch" loading="lazy">
-
-        </figure>
-        <figure class="concept-card">
-          <img src="images/exterior-concept-wip.jpg" alt="Exterior concept – first pass" loading="lazy">
-
-        </figure>
-        <figure class="concept-card">
-          <img src="images/exterior-concept-final.jpg" alt="Exterior concept – final" loading="lazy">
-
-        </figure>
+        <figure class="concept-card"><img src="images/exterior-concept-sketch.jpg" alt="Exterior concept – sketch" loading="lazy"></figure>
+        <figure class="concept-card"><img src="images/exterior-concept-wip.jpg" alt="Exterior concept – first pass" loading="lazy"></figure>
+        <figure class="concept-card"><img src="images/exterior-concept-final.jpg" alt="Exterior concept – final" loading="lazy"></figure>
       </div>
 
       <div class="divider-full"></div>
 
       <!-- Blockout -->
       <h3>Blockout – overview & details</h3>
-      <p class="subtitle">
-        Initial exterior scene layout, modeled in <strong>Maya</strong> and rendered with <strong>Arnold</strong>.
-      </p>
+      <p class="subtitle">Initial exterior scene layout, modeled in <strong>Maya</strong> and rendered with <strong>Arnold</strong>.</p>
       <div class="blockout-layout">
-        <!-- Sinistra: overview sticky -->
         <div class="blockout-left">
           <img src="images/exterior-blockout-overview.jpg" alt="Exterior blockout overview" loading="lazy">
           <p class="caption">Blockout overview</p>
         </div>
 
-        <!-- Destra -->
         <div class="blockout-right">
-          <figure class="detail-card">
-            <img src="images/exterior-blockout-detail-01-thumb.jpg" alt="Detail 01 – Entrance massing" loading="lazy">
-          </figure>
-
-          <figure class="detail-card">
-            <img src="images/exterior-blockout-detail-02-thumb.jpg" alt="Detail 02 – Column rhythm" loading="lazy">
-          </figure>
-
-          <figure class="detail-card">
-            <img src="images/exterior-blockout-detail-03-thumb.jpg" alt="Detail 03 – Stairs proportion" loading="lazy">
-          </figure>
-
-          <figure class="detail-card">
-            <img src="images/exterior-blockout-detail-04-thumb.jpg" alt="Detail 04 – Relief sizing" loading="lazy">
-          </figure>
+          <figure class="detail-card"><img src="images/exterior-blockout-detail-01-thumb.jpg" alt="Detail 01 – Entrance massing" loading="lazy"></figure>
+          <figure class="detail-card"><img src="images/exterior-blockout-detail-02-thumb.jpg" alt="Detail 02 – Column rhythm" loading="lazy"></figure>
+          <figure class="detail-card"><img src="images/exterior-blockout-detail-03-thumb.jpg" alt="Detail 3 – Stairs proportion" loading="lazy"></figure>
+          <figure class="detail-card"><img src="images/exterior-blockout-detail-04-thumb.jpg" alt="Detail 4 – Relief sizing" loading="lazy"></figure>
         </div>
       </div>
 
@@ -547,12 +587,10 @@
       <!-- Assets & Materials (hotspots) -->
       <h3>Assets & Materials</h3>
       <p class="subtitle">
-        <strong>3D assets</strong> modeled in <strong>Maya</strong>, with high-detail sculpts created in <strong>ZBrush</strong> and baked into <strong>normal maps</strong> in <strong>Substance Painter</strong>. Base <strong>smart materials</strong> created in <strong>Substance Painter</strong> and refined by <strong>texture artists</strong> to achieve the final <strong> look</strong> in <strong>Unreal Engine</strong>.
+        <strong>3D assets</strong> modeled in <strong>Maya</strong>, with high-detail sculpts created in <strong>ZBrush</strong> and baked into <strong>normal maps</strong> in <strong>Substance Painter</strong>. Base <strong>smart materials</strong> created in <strong>Substance Painter</strong> and refined by <strong>texture artists</strong> to achieve the final <strong>look</strong> in <strong>Unreal Engine</strong>.
       </p>
 
-      <p style="text-align: center; font-style: italic; margin-bottom: 15px; color: gold;">
-        Select a number to view the corresponding asset details.
-      </p>
+      <p style="text-align:center;font-style:italic;margin-bottom:15px;color:gold;">Select a number to view the corresponding asset details.</p>
 
       <div class="hotspot-container">
         <img id="exteriorScene" src="images/exterior-scene.png" alt="Exterior Scene" class="gallery-main" />
@@ -571,56 +609,47 @@
 
       <div class="divider-full"></div>
 
-      <!-- ====== dentro #making-of-exterior (EXTERIOR) ====== -->
-    <h3>In-Engine Renders</h3>
-    <div class="render-grid">
-      <figure class="render-card" onclick="openGallery('ext_entrance_in')">
-        <img src="images/exterior-renders/entrance-in-3.jpg" alt="Exterior render – Entrance In">
-        <figcaption>Entrance In</figcaption>
-      </figure>
+      <!-- In-Engine renders (exterior) -->
+      <h3>In-Engine Renders</h3>
+      <div class="render-grid">
+        <figure class="render-card" onclick="openGallery('ext_entrance_in')">
+          <img src="images/exterior-renders/entrance-in-3.jpg" alt="Exterior render – Entrance In">
+          <figcaption>Entrance In</figcaption>
+        </figure>
 
-      <figure class="render-card" onclick="openGallery('ext_entrance_out')">
-        <img src="images/exterior-renders/entrance-out-3.jpg" alt="Exterior render – Entrance Out">
-        <figcaption>Entrance Out</figcaption>
-      </figure>
+        <figure class="render-card" onclick="openGallery('ext_entrance_out')">
+          <img src="images/exterior-renders/entrance-out-3.jpg" alt="Exterior render – Entrance Out">
+          <figcaption>Entrance Out</figcaption>
+        </figure>
 
-      <figure class="render-card" onclick="openGallery('ext_long_shot')">
-        <img src="images/exterior-renders/long-shot-3.jpg" alt="Exterior render – Long Shot">
-        <figcaption>Long Shot</figcaption>
-      </figure>
+        <figure class="render-card" onclick="openGallery('ext_long_shot')">
+          <img src="images/exterior-renders/long-shot-3.jpg" alt="Exterior render – Long Shot">
+          <figcaption>Long Shot</figcaption>
+        </figure>
+      </div>
 
-    </div>
-
-    <div class="divider-full"></div>
-
-
+      <div class="divider-full"></div>
     </section>
 
-
     <section class="section" id="landscape" data-toggle="true" hidden>
-      <button class="close-section-btn" aria-label="Close section" onclick="hideAll()">×</button>
+      <button class="close-section-btn" aria-label="Close section" onclick="hideAll()" style="position:absolute;top:10px;right:10px;">×</button>
       <h2>Landscape</h2>
-      
+
       <h3>References</h3>
       <img src="images/landscape-moodboard.png" alt="Moodboard Landscape" class="gallery-main" />
 
       <div class="divider-full"></div>
 
       <h3>Procedural Mountain</h3>
-      <p class="subtitle">
-        Mountains height-maps generated in <strong>Gaea</strong> and used to create landscape in <strong>Unreal Engine</strong>.
-      </p>
+      <p class="subtitle">Mountains height-maps generated in <strong>Gaea</strong> and used to create landscape in <strong>Unreal Engine</strong>.</p>
       <img src="images/landscape-mountain-1.png" alt="Mountain Landscape" class="gallery-main" />
       <img src="images/landscape-mountain-2.png" alt="Mountain Landscape" class="gallery-main" />
       <img src="images/landscape-mountain-3.png" alt="Mountain Landscape" class="gallery-main" />
 
       <div class="divider-full"></div>
 
-
       <h3>Scene Composition</h3>
-      <p class="subtitle">
-        Scene composition in <strong>Unreal Engine</strong>.
-      </p>
+      <p class="subtitle">Scene composition in <strong>Unreal Engine</strong>.</p>
       <img id="landMain" src="images/landscape-3.png" alt="Landscape Main" class="gallery-main" />
       <div class="thumbnails" id="landThumbs">
         <img src="images/landscape-1.png" alt="Landscape 1" />
@@ -633,12 +662,12 @@
       <img src="images/landscape-start.png" alt="Landscape Start" class="gallery-main" />
 
       <div class="divider-full"></div>
-
     </section>
 
     <section class="section" id="foliage" data-toggle="true" hidden>
-      <button class="close-section-btn" aria-label="Close section" onclick="hideAll()">×</button>          
+      <button class="close-section-btn" aria-label="Close section" onclick="hideAll()" style="position:absolute;top:10px;right:10px;">×</button>
       <h2>Foliage</h2>
+
       <h3>References</h3>
       <img src="images/foliage-moodboard.png" alt="Moodboard Foliage" class="gallery-main" />
 
@@ -691,15 +720,11 @@
       <div class="divider"></div>
 
       <img src="images/foliage-main-bush1.png" alt="Foliage Bush1" class="gallery-main" />
-      <div class="thumbnails">
-        <img src="images/foliage-bush1-1.png" onclick="openPopup('popup-foliage-bush1-1')">
-      </div>
+      <div class="thumbnails"><img src="images/foliage-bush1-1.png" onclick="openPopup('popup-foliage-bush1-1')"></div>
       <div class="divider"></div>
 
       <img src="images/foliage-main-bush2.png" alt="Foliage Bush2" class="gallery-main" />
-      <div class="thumbnails">
-        <img src="images/foliage-bush2-1.png" onclick="openPopup('popup-foliage-bush2-1')">
-      </div>
+      <div class="thumbnails"><img src="images/foliage-bush2-1.png" onclick="openPopup('popup-foliage-bush2-1')"></div>
       <div class="divider"></div>
 
       <img src="images/foliage-main-palm1.png" alt="Foliage Palm1" class="gallery-main" />
@@ -714,7 +739,7 @@
       </div>
       <div class="divider"></div>
 
-      <img src="images/foliage-main-palm2.png" alt="Foliage Palm1" class="gallery-main" />
+      <img src="images/foliage-main-palm2.png" alt="Foliage Palm2" class="gallery-main" />
       <div class="thumbnails">
         <img src="images/foliage-palm2-1.png" onclick="openPopup('popup-foliage-palm2-1')">
         <img src="images/foliage-palm2-2.png" onclick="openPopup('popup-foliage-palm2-2')">
@@ -766,15 +791,13 @@
         <img src="images/foliage-plant3-6.png" onclick="openPopup('popup-foliage-plant3-6')">
         <img src="images/foliage-plant3-7.png" onclick="openPopup('popup-foliage-plant3-7')">
         <img src="images/foliage-plant3-8.png" onclick="openPopup('popup-foliage-plant3-8')">
-        <img src="images/foliage-plant3-8.png" onclick="openPopup('popup-foliage-plant3-9')">
+        <img src="images/foliage-plant3-9.png" onclick="openPopup('popup-foliage-plant3-9')">
         <img src="images/foliage-plant3-10.png" onclick="openPopup('popup-foliage-plant3-10')">
       </div>
       <div class="divider"></div>
 
       <img src="images/foliage-main-tree.png" alt="Foliage Tree" class="gallery-main" />
-      <div class="thumbnails">
-        <img src="images/foliage-tree-1.png" onclick="openPopup('popup-foliage-tree-1')">
-      </div>
+      <div class="thumbnails"><img src="images/foliage-tree-1.png" onclick="openPopup('popup-foliage-tree-1')"></div>
       <div class="divider"></div>
 
       <img src="images/foliage-main-trees.png" alt="Foliage Trees" class="gallery-main" />
@@ -809,7 +832,6 @@
         <iframe
           src="https://www.youtube.com/embed/your_video_id" 
           title="The Golden Fall - Full Video"
-          frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowfullscreen
           referrerpolicy="strict-origin-when-cross-origin"></iframe>
@@ -829,68 +851,60 @@
           <img src="images/logos/speedtree.svg" alt="SpeedTree" style="filter: brightness(0) invert(1);">
           <img src="images/logos/gaea.svg" alt="Gaea">
           <img src="images/logos/unreal.svg" alt="Unreal Engine" style="filter: brightness(0) invert(1);">
-
-          <!-- aggiungi altri loghi se vuoi -->
         </div>
       </div>
     </section>
 
-
-    <!-- Popup + overlay (riusati) -->
-    <div class="overlay" id="overlay" onclick="closePopup()"></div>
-    <div class="popup" id="popup">
-      <h3 id="popup-title">Asset Detail</h3>
-      <p id="popup-desc">Images and description about the asset go here.</p>
-      <img id="popup-img" src="" alt="Popup Image" />
-      <button class="close-section-btn" style="position:static;margin:16px auto 0" onclick="closePopup()">×</button>
+    <!-- Popup + overlay -->
+    <div class="overlay" id="overlay" onclick="if(event.target===this) closePopup()">
+      <div class="popup" id="popup" role="dialog" aria-modal="true">
+        <h3 id="popup-title">Asset Detail</h3>
+        <p id="popup-desc"></p>
+        <img id="popup-img" src="" alt="Popup Image" />
+        <button class="close-section-btn" style="position:static;margin:16px auto 0" onclick="closePopup()">×</button>
+      </div>
     </div>
+
 
   </div>
 
   <script>
-    // all’avvio: nessuna sezione mostrata
+    // ===== Toggle sezioni (come Swamp)
     window.addEventListener('load', hideAll);
-
-    // click icone: mostra sezione
     document.querySelectorAll('.icon-link').forEach(link=>{
       link.addEventListener('click', e=>{
         e.preventDefault();
-        const id = link.dataset.target;
-        showSection(id);
+        showSection(link.dataset.target);
       });
     });
 
     function updateVideoVisibility(){
-      const anyOpen = Array.from(document.querySelectorAll('.section[data-toggle]'))
-        .some(s => !s.hidden);
+      const anyOpen = Array.from(document.querySelectorAll('.section[data-toggle]')).some(s => !s.hidden);
       const video = document.getElementById('video');
-      if (video) video.hidden = anyOpen;   // se c’è qualcosa aperto = nascondi video
+      if (video) video.hidden = anyOpen;
     }
-
     function hideAll(){
       document.querySelectorAll('.section[data-toggle]').forEach(s => s.hidden = true);
-      updateVideoVisibility();              // nessuna aperta => mostra video
+      updateVideoVisibility();
       window.scrollTo({top:0, behavior:'smooth'});
+      adjustHeroPad();
     }
-
     function showSection(id){
-      document.querySelectorAll('.section[data-toggle]').forEach(s => {
-        s.hidden = (s.id !== id);
-      });
-      updateVideoVisibility();              // c’è una sezione aperta => nascondi video
+      document.querySelectorAll('.section[data-toggle]').forEach(s => s.hidden = (s.id !== id));
+      updateVideoVisibility();
       const hero = document.getElementById('hero');
       const y = hero.getBoundingClientRect().bottom + window.scrollY + 10;
       window.scrollTo({ top: y, behavior:'smooth' });
+      adjustHeroPad();
     }
 
-
-    // Hotspot states
+    // ===== Hotspot states
     function activateHotspot(elem){
-      elem.closest('.hotspot-container').querySelectorAll('.hotspot-number').forEach(h=>h.classList.remove('selected'));
+      elem.closest('.hotspot-container')?.querySelectorAll('.hotspot-number').forEach(h=>h.classList.remove('selected'));
       elem.classList.add('selected');
     }
 
-    // Popup data (ridotto: aggiungi le tue voci)
+    // ===== Popup data (solo immagini: title/desc opzionali)
     const popupData = {
       'popup-interior-base': { img: "images/popup-base.png" },
       'popup-interior-portal': { img: "images/popup-portal.png" },
@@ -991,31 +1005,25 @@
     const pop = document.getElementById('popup');
 
     function openPopup(id){
-      const data = popupData[id]; if(!data) return;
+      const data = popupData[id];
+      if(!data) return;
 
-      // Ricreo il contenuto "default" del popup ogni volta
       pop.innerHTML = `
-        <h3 id="popup-title">Asset Detail</h3>
-        <p id="popup-desc"></p>
-        <img id="popup-img" src="" alt="Popup Image" />
+        <h3 id="popup-title">${data.title ?? 'Asset Detail'}</h3>
+        <p id="popup-desc">${data.desc ?? ''}</p>
+        <img id="popup-img" src="${data.img}" alt="Popup Image" />
         <button class="close-section-btn" style="position:static;margin:16px auto 0" onclick="closePopup()">×</button>
       `;
-
-      pop.querySelector('#popup-title').textContent = data.title;
-      pop.querySelector('#popup-desc').textContent = data.desc;
-      pop.querySelector('#popup-img').src = data.img;
-
-      // grande solo per interior/exterior
       pop.classList.toggle('big', id.startsWith('popup-exterior') || id.startsWith('popup-interior'));
-
       overlay.classList.add('active');
       pop.classList.add('active');
     }
     function closePopup(){
       overlay.classList.remove('active');
       pop.classList.remove('active');
-      pop.classList.remove('big');        // reset dimensione per la prossima apertura
+      pop.classList.remove('big');
     }
+
     // Hover hotspot: swap immagine principale
     document.querySelectorAll('.hotspot-number').forEach(h=>{
       const container = h.closest('.hotspot-container');
@@ -1046,7 +1054,7 @@
       });
     })('landMain','#landThumbs');
 
-    /* ===== Galleries per i render ===== */
+    /* ===== Galleries per i render (popup con thumbs) ===== */
     const galleries = {
       // INTERIOR
       int_corridor1: [
@@ -1059,7 +1067,7 @@
         "images/interior-renders/corridor2-2.jpg",
         "images/interior-renders/corridor2-3.jpg"
       ],
-       int_corridor3: [
+      int_corridor3: [
         "images/interior-renders/corridor3-1.jpg",
         "images/interior-renders/corridor3-2.jpg",
         "images/interior-renders/corridor3-3.jpg"
@@ -1069,12 +1077,12 @@
         "images/interior-renders/fountain-2.jpg",
         "images/interior-renders/fountain-3.jpg"
       ],
-       int_pool: [
+      int_pool: [
         "images/interior-renders/pool-1.jpg",
         "images/interior-renders/pool-2.jpg",
         "images/interior-renders/pool-3.jpg"
       ],
-       int_entrance: [
+      int_entrance: [
         "images/interior-renders/entrance-1.jpg",
         "images/interior-renders/entrance-2.jpg",
         "images/interior-renders/entrance-3.jpg"
@@ -1098,12 +1106,10 @@
       ]
     };
 
-    /* ===== Apri gallery nel popup con main + thumbnails ===== */
     function openGallery(key, startIndex = 0){
       const imgs = galleries[key];
-      if(!imgs || !imgs.length) return;
+      if(!imgs?.length) return;
 
-      // Ricreo il contenuto della gallery direttamente nel popup
       pop.innerHTML = `
         <h3 id="popup-title">Gallery</h3>
         <p id="popup-desc"></p>
@@ -1127,14 +1133,33 @@
         thumbs.appendChild(t);
       });
 
-      pop.classList.add('big');          // la gallery la mostriamo in grande
+      pop.classList.add('big');
       overlay.classList.add('active');
       pop.classList.add('active');
     }
 
+    // ===== Letterbox inferiore dinamico della HERO (come Swamp)
+    function adjustHeroPad(){
+      const media = document.getElementById('heroMedia');
+      const content = document.getElementById('overlayContent');
+      if(!media || !content) return;
 
-    
+      const portrait = window.innerHeight > window.innerWidth;
+      let pad = 0;
+      if (portrait) {
+        const contentH = content.getBoundingClientRect().height; // titolo + paragrafi + icone
+        const extra = 8;
+        const maxPad = Math.floor(window.innerHeight * 0.36);
+        const minPad = 24;
+        pad = Math.max(minPad, Math.min(maxPad, Math.ceil(contentH + extra)));
+      }
+      media.style.setProperty('--heroPad', pad + 'px');
+    }
 
+    window.addEventListener('load', adjustHeroPad);
+    window.addEventListener('resize', adjustHeroPad, {passive:true});
+    window.addEventListener('orientationchange', adjustHeroPad);
+    if (document.fonts && document.fonts.ready) { document.fonts.ready.then(adjustHeroPad); }
   </script>
 </body>
 </html>
