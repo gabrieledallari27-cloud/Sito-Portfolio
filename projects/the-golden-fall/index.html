@@ -15,6 +15,7 @@
       --page-max: 1280px;
       --min-title: 22px;
       --min-copy: 14px;
+      --hero-radius: 42px;              /* aumenta qui quanto vuoi (es. 18–22px) */
 
       /* letterbox inferiore di fallback (se JS non gira) */
       --heroPadFallback: clamp(24px, 8vh, 100px);
@@ -65,10 +66,10 @@
       position:relative;
       /* ⚫️ Estensione nera sotto (letterbox) */
       padding-bottom: var(--heroPad, var(--heroPadFallback));
-      background:#000; border-radius:10px; overflow:hidden;
+      background:#000; border-radius:var(--hero-radius); overflow:hidden;
     }
     .hero-media img{
-      width:100%; height:auto; display:block; border-radius:10px;
+      width:100%; height:auto; display:block; border-radius:inherit;
       filter: drop-shadow(0 30px 60px rgba(0,0,0,.45)) drop-shadow(0 8px 20px rgba(0,0,0,.35));
       background:transparent;
     }
@@ -79,6 +80,7 @@
       background:rgba(0,0,0,.65);
       filter:blur(24px);
       transform:translateY(10px);
+      border-radius: inherit;
       -webkit-mask-image:url("images/header-image.png");
       -webkit-mask-repeat:no-repeat;
       -webkit-mask-position:center;
@@ -109,7 +111,6 @@
       font-size: clamp(var(--min-title), 3.8vw, 38px);
       line-height:1.12;
       text-shadow:0 2px 10px rgba(0,0,0,.6);
-      border-bottom:2px solid #ccc; display:inline-block; padding-bottom:5px;
       font-weight:700;
     }
     .intro{
@@ -165,26 +166,30 @@
     }
     .close-section-btn:hover{ background: rgba(0,0,0,.75); transform: scale(1.05); }
 
-    /* ====== POPUP ====== */
-    /* DOPO: */
+    /* POPUP base: centra, ma NON forza la larghezza (shrink to content) */
     .popup{
-      position: relative;            /* niente più fixed: lo centra l’overlay */
+      position: relative;
       margin: 0;
       background:#111; color:#fff;
-      padding:24px; border:1px solid #444; display:none;
-      z-index:1000;
-      box-sizing: border-box;
-      width: min(
+      padding:24px; border:1px solid #444;
+      z-index:1000; box-sizing:border-box;
+      /* shrink-to-fit, ma con un tetto */
+      width:auto;
+      max-width: min(
         var(--page-max),
         calc(100vw - 40px - env(safe-area-inset-left) - env(safe-area-inset-right))
       );
+      /* limite di altezza per non uscire dalla viewport */
       max-height: calc(100dvh - 40px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
       overflow:auto; text-align:center; border-radius:10px;
       box-shadow: 0 20px 60px rgba(0,0,0,.6);
+      display:none;                    /* attivo con .active */
     }
-    .popup.active{ display:block; }
+    .popup.active{ display:inline-block; }  /* shrink-to-fit e centrato dall’overlay */
+
+    /* Versione grande (gallerie): qui invece vogliamo full width contenuta */
     .popup.big{
-      /* stessa larghezza/altezza, solo padding diverso */
+      display:block;
       width: min(
         var(--page-max),
         calc(100vw - 40px - env(safe-area-inset-left) - env(safe-area-inset-right))
@@ -192,6 +197,7 @@
       max-height: calc(100dvh - 40px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
       padding:28px; border-width:0;
     }
+
 
     /* PRIMA (tua):
     .popup > img#popup-img{
@@ -202,9 +208,9 @@
     /* DOPO (riempie e centra davvero) */
     .popup > img#popup-img{
       display: block;
-      width: 100%;          /* occupa tutta la larghezza del popup */
+      width: auto;          /* occupa tutta la larghezza del popup */
       height: auto;
-      max-width: none;      /* non restare alla larghezza nativa */
+      max-width: 100%;      /* non restare alla larghezza nativa */
       max-height: calc(100dvh - 160px); /* spazio per titolo + bottone */
       margin: 10px auto 0;  /* centrata anche se più piccola in altezza */
       border-radius: 6px;
@@ -225,10 +231,14 @@
         calc(20px + env(safe-area-inset-bottom))
         calc(20px + env(safe-area-inset-left));
     }
+    /* 1) l'overlay diventa scrollabile quando è attivo */
     .overlay.active{
-      display: grid;                 /* centra il figlio (#popup) */
-      place-items: center;
+      display: grid;
+      justify-items: center;   /* centrato orizzontalmente */
+      align-items: start;      /* parte dall’alto, così può “crescere” */
+      overflow: auto;          /* mostra la scrollbar se il popup è più alto della viewport */
     }
+
 
 
     /* Thumbnails generiche (fuori dal popup) */
@@ -1014,7 +1024,6 @@
         <img id="popup-img" src="${data.img}" alt="Popup Image" />
         <button class="close-section-btn" style="position:static;margin:16px auto 0" onclick="closePopup()">×</button>
       `;
-      pop.classList.toggle('big', id.startsWith('popup-exterior') || id.startsWith('popup-interior'));
       overlay.classList.add('active');
       pop.classList.add('active');
     }

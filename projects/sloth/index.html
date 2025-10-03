@@ -4,23 +4,39 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Sloth Guardian</title>
+
+<!-- Montserrat (stile The Golden Fall) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+
 <style>
+  :root{
+    --title-min: 24px;
+    --title-max: 44px;
+    --copy-min: 14px;
+    --copy-max: 18px;
+    /* fallback del letterbox se JS non gira */
+    --heroPadFallback: clamp(24px, 8vh, 100px);
+  }
+
   html,body{height:100%}
   body{
-    margin:0; color:#fff; font-family: Arial, sans-serif;
+    margin:0; color:#fff;
+    font-family:"Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     display:flex; justify-content:center;
     background:#000;
   }
 
-  .subtitle {
-    font-size: 0.9em;        /* testo più piccolo */
-    color: #777;             /* colore più tenue */
-    margin-top: -5px;        /* avvicina al titolo */
-    margin-bottom: 15px;     /* spazio sotto */
-    font-style: italic;      /* facoltativo, corsivo */
+  .subtitle{
+    font-size: clamp(12px, 1.5vw, 14px);
+    color:#bdbdc2;
+    margin-top:-4px;
+    margin-bottom:12px;
+    font-style:italic;
   }
 
-  /* ===== BACKGROUND IMAGE ===== */
+  /* ===== BACKGROUND (facoltativo) ===== */
   .bg-img{
     position:fixed; inset:0; z-index:-2;
     background:url('images/background.png') center/cover no-repeat;
@@ -39,27 +55,48 @@
 
   /* ===== HERO ===== */
   .hero{ position:relative; margin:32px 0 28px; overflow:visible; }
-  .hero-media{ position:relative; }
+
+  /* Il letterbox nero in basso si ottiene con padding-bottom variabile */
+  .hero-media{
+    position:relative;
+    padding-bottom: var(--heroPad, var(--heroPadFallback)); /* JS imposta --heroPad */
+    background:#000;           /* “pezzo nero” sotto */
+    border-radius:12px;
+    overflow:hidden;
+  }
   .hero-media img{
     width:100%; height:auto; display:block;
-    /* drop-shadow che rispetta la trasparenza del PNG */
     filter: drop-shadow(0 30px 60px rgba(0,0,0,.75)) drop-shadow(0 8px 20px rgba(0,0,0,.55));
-    border-radius: 8px;
+    border-radius:12px;
   }
+
+  /* Testi sempre ancorati in basso al riquadro */
   .hero-overlay{
     position:absolute; inset:0;
-    display:flex; flex-direction:column; justify-content:flex-end; gap:16px;
-    padding:28px 24px 80px;
+    display:flex; flex-direction:column; justify-content:flex-end;
+    padding: clamp(14px,3.5vw,28px) clamp(14px,3.5vw,24px);
     pointer-events:none;
   }
+  .overlay-content{
+    pointer-events:auto;
+    width:100%;
+    max-width:min(980px,96%);
+    margin:0 auto;
+    display:flex; flex-direction:column; gap:14px;
+  }
+
   .main-title{
-    margin:0 0 6px; font-size:2.4rem; line-height:1.1;
+    margin:0 0 10px;
+    font-size: clamp(var(--title-min), 4.2vw, var(--title-max));
+    line-height:1.12; font-weight:700;
     text-shadow:0 2px 10px rgba(0,0,0,.6);
+    display:inline-block; padding-bottom:6px;
   }
   .intro{
-    max-width:980px; margin:0;
-    font-size:1rem; line-height:1.5;
-    color:#e9e9e9; text-shadow:0 2px 8px rgba(0,0,0,.55);
+    max-width:min(980px,96%); margin:0;
+    font-size: clamp(var(--copy-min), 1.9vw, var(--copy-max));
+    line-height:1.55; color:#e9e9e9;
+    text-shadow:0 2px 8px rgba(0,0,0,.55);
   }
 
   /* ===== BACK BUTTON ===== */
@@ -77,12 +114,9 @@
   *, *::before, *::after { box-sizing: border-box; }
   img, video, canvas, svg { max-width: 100%; height: auto; display: block; }
 
-  /* Fai andare i media alla larghezza del foglio (container) */
+  /* Figure */
   .figure { width: 100%; max-width: none; margin: 0; }
   .figure img { width: 100%; height: auto; }
-
-  
-
 
   /* ===== PROJECT DETAILS ===== */
   .pd{
@@ -120,9 +154,9 @@
     margin:.35rem 0 0; font-size:.9rem; color:#d7d7da; opacity:.9;
   }
 
-  /* ===== Before/After verticale (immagini SOVRAPPOSTE e FERME) ===== */
+  /* ===== Before/After ===== */
   .ba-wrap{
-    --cut: 50%; /* percentuale da sinistra (0% = sopra tutta nascosta; 100% = tutta visibile) */
+    --cut: 50%;
     position: relative;
     width: 100%;
     aspect-ratio: auto;
@@ -131,35 +165,28 @@
     border:1px solid rgba(255,255,255,.12);
     box-shadow: 0 20px 50px rgba(0,0,0,.35);
     background:#000;
-    touch-action: none; /* evita scroll mentre trascini su mobile */
-    max-width: none; margin-inline: 0; /* Se vuoi limitare lo slider a 960px */
+    touch-action: none;
   }
-  /* Immagini ferme, full-bleed, sovrapposte */
   .ba-img{
     position:absolute; inset:0;
     width:100%; height:100%;
     object-fit:cover; object-position:center;
   }
-  /* Pannello superiore tagliato: mostra solo a destra della linea */
   .ba-top{
     position:absolute; inset:0;
     clip-path: polygon(var(--cut) 0, 100% 0, 100% 100%, var(--cut) 100%);
   }
-  /* Linea/handle = SLIDER */
   .ba-handle{
     position:absolute; top:0; bottom:0; left:var(--cut);
-    /* area cliccabile più larga, linea al centro */
     width: 28px; margin-left: -14px;
     cursor: col-resize; z-index:3;
   }
-  /* linea visiva al centro dell’area cliccabile */
   .ba-handle::before{
     content:""; position:absolute; top:0; bottom:0; left:50%;
     transform: translateX(-50%);
     width:2px; background: #41ffb3;
     box-shadow: 0 0 10px #149964;
   }
-  /* piccoli “grip” per feedback (opzionale) */
   .ba-handle::after{
     content:""; position:absolute; top:50%; left:50%;
     transform: translate(-50%,-50%);
@@ -170,32 +197,29 @@
     pointer-events: none;
   }
 
-  /* Video NON croppato, full-width del foglio */
+  /* ===== Video ===== */
   .video-wrap{
     position: relative;
     width: 100%;
-    /* rimuovo l'aspect-ratio fisso */
-    aspect-ratio: auto;             /* <-- override del 16/9 */
+    aspect-ratio: auto;
     border-radius: 8px;
     overflow: hidden;
     border:1px solid rgba(255,255,255,.12);
     box-shadow: 0 20px 50px rgba(0,0,0,.35);
     background:#000;
   }
-
   .video-wrap video{
-    /* niente absolute, niente inset, niente height:100% */
     position: static;
     display: block;
-    width: 100%;      /* = larghezza foglio (container) */
-    height: auto;     /* mantiene il ratio reale, nessun crop */
-    object-fit: contain; /* (ridondante con height:auto, ma ok) */
-    background:#000;  /* bande pulite se serve */
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    background:#000;
   }
 
   .divider{ width:100%; height:1px; background: rgba(255,255,255,.12); margin: 28px 0; }
 
-  /* ——— Box statico stile "Project details" ——— */
+  /* ===== Project details box ===== */
   .pd-box{
     margin: 26px 0 80px;
     border:1px solid rgba(255,255,255,.12);
@@ -213,145 +237,121 @@
     background: rgba(18,20,26,.65);
     border-bottom:1px solid rgba(255,255,255,.08);
   }
-  .pd-box-content{
-    padding:18px;
-  }
+  .pd-box-content{ padding:18px; }
 
-  /* ——— Loghi centrati, nessun effetto ——— */
+  /* ===== Software logos ===== */
   .software-logos{
     display:flex; justify-content:center; align-items:center;
     gap:28px; flex-wrap:wrap; padding:4px 0;
   }
   .software-logos img{
     height:48px; width:auto; display:block;
-    border:0; box-shadow:none; background:transparent;
+    background:transparent;
     filter:none; transition:none; user-select:none; -webkit-user-drag:none;
   }
-
-
 </style>
 </head>
- <link rel="canonical" href="https://gabrieledallari.art/">
- <meta name="description" content="3D Artist — Environment & Technical Art. Portfolio e showreel.">
 
- <meta property="og:type" content="website">
- <meta property="og:title" content="Gabriele Dallari — 3D Artist">
- <meta property="og:description" content="Environment & Technical Art. Portfolio e showreel.">
- <meta property="og:image" content="https://gabrieledallari.art/images/og/home.jpg">
- <meta property="og:url" content="https://gabrieledallari.art/">
+<link rel="canonical" href="https://gabrieledallari.art/">
+<meta name="description" content="3D Artist — Environment & Technical Art. Portfolio e showreel.">
 
- <meta name="twitter:card" content="summary_large_image">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Gabriele Dallari — 3D Artist">
+<meta property="og:description" content="Environment & Technical Art. Portfolio e showreel.">
+<meta property="og:image" content="https://gabrieledallari.art/images/og/home.jpg">
+<meta property="og:url" content="https://gabrieledallari.art/">
+
+<meta name="twitter:card" content="summary_large_image">
 <body>
-  <!-- SFONDO A TUTTO SCHERMO -->
   <div class="bg-img"></div>
   <div class="bg-overlay"></div>
 
-  <!-- BOTTONE BACK -->
   <a href="../../portfolio.html" class="back-btn">← Back</a>
 
-  <!-- CONTENUTO -->
   <div class="container">
     <!-- HERO -->
     <header class="hero" id="hero">
-      <div class="hero-media">
+      <div class="hero-media" id="heroMedia">
         <img src="images/header-image.png" alt="Sloth Guardian" class="header-image">
       </div>
-      <div class="hero-overlay">
-        <h1 class="main-title">Sloth Guardian</h1>
-        <p class="intro">
-          For this solo university project focused on <strong>creature design</strong>, I created
-          a forest guardian — a wooden and earthen <em>sloth</em> carrying a large willow on its back.
-          The concept merges the sloth’s lifelong bond to its tree with the idea of a protective spirit of nature.
-        </p>
-        <p>
-          Modeling, texturing and rendering in <strong>ZBrush</strong>. Final compositing in <strong>Photoshop</strong>
-        </p>
+      <div class="hero-overlay" id="heroOverlay">
+        <div class="overlay-content" id="overlayContent">
+          <h1 class="main-title">Sloth Guardian</h1>
+          <p class="intro">
+            For this solo university project focused on <strong>creature design</strong>, I created
+            a forest guardian — a wooden and earthen <em>sloth</em> carrying a large willow on its back.
+            The concept merges the sloth’s lifelong bond to its tree with the idea of a protective spirit of nature.
+          </p>
+          <p class="intro">
+            Modeling, texturing and rendering in <strong>ZBrush</strong>. Final compositing in <strong>Photoshop</strong>.
+          </p>
+        </div>
       </div>
     </header>
 
-    <!-- PROJECT DETAILS (chiuso di default) -->
+    <!-- PROJECT DETAILS -->
     <details class="pd">
       <summary>Project details</summary>
       <div class="pd-content">
 
-        <!-- Concept & References -->
-        <section class="pd-section" id="concept & references">
+        <section class="pd-section" id="concept">
           <h3>References</h3>
           <figure class="figure">
             <p class="subtitle">
               Early exploration began with a personal concept—a tree trunk morphing into a sloth—which I later abandoned in favor of a cleaner silhouette that better reinforced the guardian’s presence.
             </p>
-            <img src="images/reference.png">
+            <img src="images/reference.png" alt="Concept references">
           </figure>
         </section>
 
         <div class="divider"></div>
 
-        <!-- Prospettive -->
         <section class="pd-section" id="views">
           <h3>Perspective views</h3>
           <div class="views">
-            <img src="images/perspective.png">
+            <img src="images/perspective.png" alt="Perspective views">
           </div>
         </section>
 
         <div class="divider"></div>
 
-        <!-- Before / After: VERTICALE, immagini sovrapposte e ferme -->
         <section class="pd-section" id="compare">
           <h3>Without / with textures</h3>
-
-          <p style="text-align: center; font-style: italic; margin-bottom: 15px; color: #41ffb3;">Drag the vertical line to reveal the textured version beneath.</p>
-
+          <p style="text-align: center; font-style: italic; margin-bottom: 15px; color: #41ffb3;">
+            Drag the vertical line to reveal the textured version beneath.
+          </p>
           <div class="ba-wrap" data-ba>
-            <!-- sotto: CON textures (sempre piena) -->
             <img class="ba-img" src="images/sloth-no-textures.png" alt="With textures">
-
-            <!-- sopra: SENZA textures, tagliata a sinistra della linea -->
             <div class="ba-top">
               <img class="ba-img" src="images/sloth-with-textures.png" alt="Without textures">
             </div>
-
-            <!-- LINEA/SLIDER (draggable) -->
             <span class="ba-handle" role="slider" aria-label="Reveal divider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"></span>
           </div>
-
-          
         </section>
 
         <div class="divider"></div>
 
-        <!-- Compositing -->
         <section class="pd-section" id="compositing">
           <h3>Compositing</h3>
-
-          <p class="subtitle">
-            Final frame rendered in <strong>ZBrush</strong> and composited in <strong>Photoshop</strong>.
-          </p>
-
+          <p class="subtitle">Final frame rendered in <strong>ZBrush</strong> and composited in <strong>Photoshop</strong>.</p>
           <figure class="figure">
-            <!-- Sostituisci il percorso con il tuo file -->
             <img src="images/compositing.png" alt="Final compositing in Photoshop">
           </figure>
-
         </section>
 
         <div class="divider"></div>
 
-        <!-- Turntable -->
         <section class="pd-section" id="turntable">
           <h3>Turntable (360°)</h3>
           <p class="subtitle">
             Stages shown (in order): Low-poly → High-poly detailing → Texturing → Texturing + foliage.
           </p>
           <div class="video-wrap">
-            <!-- <video src="images/turntable.mp4" controls preload="metadata"></video> -->
             <video src="images/turntable.mp4" controls preload="metadata"></video>
           </div>
         </section>
-
       </div>
-    </details> <!-- fine Project details -->
+    </details>
 
     <section class="pd-box" id="software" role="region" aria-labelledby="software-title">
       <div class="pd-box-header">
@@ -361,52 +361,40 @@
         <div class="software-logos">
           <img src="images/logos/zbrush.svg" alt="Maxon ZBrush" style="filter: brightness(0) invert(1);">
           <img src="images/logos/photoshop.svg" alt="Adobe Photoshop">
-          <!-- aggiungi altri loghi se vuoi -->
         </div>
       </div>
     </section>
-
-
   </div>
 
   <script>
-    // Slider = la linea (handle). Immagini ferme; cambiamo solo il "taglio" con --cut.
+    // ===== Slider before/after =====
     document.querySelectorAll('[data-ba]').forEach((wrap)=>{
-      const topPanel = wrap.querySelector('.ba-top');
       const handle   = wrap.querySelector('.ba-handle');
-
-      let cut = 50; // 0..100
+      let cut = 50;
       const apply = () => {
         wrap.style.setProperty('--cut', cut + '%');
         handle.setAttribute('aria-valuenow', String(Math.round(cut)));
       };
       apply();
 
-      // Funzione per aggiornare il cut in base a una X
       const setFromClientX = (clientX) => {
         const rect = wrap.getBoundingClientRect();
         let pct = ((clientX - rect.left) / rect.width) * 100;
         pct = Math.max(0, Math.min(100, pct));
-        cut = pct;
-        apply();
+        cut = pct; apply();
       };
 
-      // Pointer Events (mouse + touch + pen)
       let dragging = false;
-
       handle.addEventListener('pointerdown', (e)=>{
         dragging = true;
         handle.setPointerCapture(e.pointerId);
         setFromClientX(e.clientX);
         e.preventDefault();
       });
-
       handle.addEventListener('pointermove', (e)=>{
         if(!dragging) return;
-        setFromClientX(e.clientX);
-        e.preventDefault();
+        setFromClientX(e.clientX); e.preventDefault();
       });
-
       const endDrag = (e)=>{
         if(!dragging) return;
         dragging = false;
@@ -414,17 +402,42 @@
       };
       handle.addEventListener('pointerup', endDrag);
       handle.addEventListener('pointercancel', endDrag);
-      document.addEventListener('pointerup', endDrag); // safety fuori area
+      document.addEventListener('pointerup', endDrag);
 
       const probeImg = wrap.querySelector('.ba-top img') || wrap.querySelector('img');
-      const setAR = ()=>{
-        if (probeImg.naturalWidth && probeImg.naturalHeight) {
+      const setAR = ()=>{ if (probeImg.naturalWidth && probeImg.naturalHeight) {
           wrap.style.aspectRatio = `${probeImg.naturalWidth} / ${probeImg.naturalHeight}`;
-        }
-      };
+      }};
       if (probeImg.complete) setAR();
       else probeImg.addEventListener('load', setAR);
     });
+
+    // ===== Letterbox dinamico dell'header (ancora titolo+descrizione in basso) =====
+    function adjustHeroPad(){
+      const media   = document.getElementById('heroMedia');
+      const content = document.getElementById('overlayContent');
+      if(!media || !content) return;
+
+      // calcola quanto "pezzo nero" serve sotto per contenere i testi
+      const portrait = window.innerHeight > window.innerWidth;
+      let pad = 0;
+      if (portrait) {
+        const contentH = content.getBoundingClientRect().height;
+        const extra = 8; // piccolo margine
+        const maxPad = Math.floor(window.innerHeight * 0.36);
+        const minPad = 24;
+        pad = Math.max(minPad, Math.min(maxPad, Math.ceil(contentH + extra)));
+      } else {
+        // su schermi larghi basta un padding basso
+        pad = 24;
+      }
+      media.style.setProperty('--heroPad', pad + 'px');
+    }
+
+    window.addEventListener('load', adjustHeroPad);
+    window.addEventListener('resize', adjustHeroPad, {passive:true});
+    window.addEventListener('orientationchange', adjustHeroPad);
+    if (document.fonts && document.fonts.ready) { document.fonts.ready.then(adjustHeroPad); }
   </script>
 </body>
 </html>
