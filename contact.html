@@ -13,11 +13,11 @@
 <link rel="alternate icon" href="/favicon.ico">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 
-<!-- PWA manifest -->
+<!-- PWA -->
 <link rel="manifest" href="/site.webmanifest">
 <meta name="theme-color" content="#0b0c10" />
 
-<!-- SEO / Social -->
+<!-- Social -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Gabriele Dallari">
 <meta property="og:title" content="Contact — Gabriele Dallari | 3D Generalist & Environment Artist">
@@ -26,65 +26,36 @@
 <meta property="og:image" content="https://gabrieledallari.art/images/og/home.jpg">
 <meta name="twitter:card" content="summary_large_image">
 
-<!-- Structured data -->
-<script type="application/ld+json">
-{
-  "@context":"https://schema.org",
-  "@graph":[
-    {
-      "@type":"ContactPage",
-      "name":"Contact — Gabriele Dallari",
-      "url":"https://gabrieledallari.art/contact.html",
-      "description":"Contatta Gabriele Dallari per collaborazioni e informazioni.",
-      "inLanguage":"en"
-    },
-    {
-      "@type":"Person",
-      "name":"Gabriele Dallari",
-      "url":"https://gabrieledallari.art/",
-      "jobTitle":"3D Generalist & Environment/Technical Artist",
-      "email":"mailto:gabrieledallari.art@gmail.com",
-      "sameAs":[
-        "mailto:gabrieledallari.art@gmail.com",
-        "https://www.linkedin.com/in/gabriele-dallari",
-        "https://www.instagram.com/gabbodallari",
-        "https://www.youtube.com/watch?v=dKwzu5KsCe8"
-      ]
-    }
-  ]
-}
-</script>
-
-<!-- Fonts -->
+<!-- Fonts & Navbar -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
-
-<!-- Navbar condivisa -->
 <link rel="stylesheet" href="css/navbar.css" />
 
 <style>
   :root{
     --bg:#0b0c10; --ink:#e9eaef; --muted:#b9b9c4;
     --line:#9ee7ff; --accent:#9ee7ff; --border:rgba(255,255,255,.12);
-    --card-w: min(1100px, 94vw);
-    --led-thickness: 3px; --danger:#ff6b6b;
-    --nav-pt: 80px;
+    --card-w:min(1100px,94vw); --led-thickness:3px; --danger:#ff6b6b;
+    --nav-pt:80px;
   }
-  @media (orientation: portrait){ :root{ --nav-pt: 132px; } }
+  @media (orientation:portrait){ :root{ --nav-pt:132px; } }
 
-  *{box-sizing:border-box}
-  html,body{height:100%}
-
+  *{ box-sizing:border-box }
+  html,body{ height:100% }
   body{
     margin:0; color:var(--ink);
-    background: linear-gradient(180deg, rgba(10,12,16,.78), rgba(10,12,16,.62)), url("images/contact/bg.webp") center / cover fixed no-repeat, #07070a;
-    font-family: "Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    background:
+      linear-gradient(180deg, rgba(10,12,16,.78), rgba(10,12,16,.62)),
+      url("images/contact/bg.webp") center/cover fixed no-repeat,
+      #07070a;
+    font-family:"Montserrat",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
     display:flex; flex-direction:column; min-height:100svh; overflow-x:hidden;
-    -webkit-font-smoothing: antialiased;
-    padding-top: var(--nav-h, var(--nav-pt));
+    -webkit-font-smoothing:antialiased;
+    padding-top:var(--nav-h,var(--nav-pt));
   }
   main{ flex:1 0 auto; }
+
   .vfx-grain{
     position:fixed; inset:0; pointer-events:none; z-index:0;
     background-image:url("images/vfx/film_grain_512.png");
@@ -92,62 +63,69 @@
     mix-blend-mode:soft-light; opacity:.14;
   }
 
-  .wrap{ padding: clamp(20px,5vw,60px) 20px; display:flex; justify-content:center; }
+  .wrap{ padding:clamp(20px,5vw,60px) 20px; display:flex; justify-content:center; }
   .contact-card{
-    width: var(--card-w);
-    border: var(--led-thickness) solid rgba(255,255,255,.95);
-    border-radius: 20px;
-    box-shadow: 0 0 38px rgba(158,231,255,.45), 0 0 0 1px rgba(255,255,255,.35) inset, inset 0 0 12px rgba(255,255,255,.08);
-    padding: clamp(18px, 4vw, 40px);
-    background: transparent;
+    width:var(--card-w);
+    background:transparent;
+    border:var(--led-thickness) solid rgba(255,255,255,.95);
+    border-radius:20px;
+    box-shadow:0 0 38px rgba(158,231,255,.45),
+               0 0 0 1px rgba(255,255,255,.35) inset,
+               inset 0 0 12px rgba(255,255,255,.08);
+    padding:clamp(18px,4vw,40px);
   }
 
-  .grid{ display:grid; grid-template-columns: 1fr 1.1fr; gap: clamp(18px, 4vw, 40px); }
-  @media (max-width: 900px){ .grid{ grid-template-columns: 1fr; } }
+  .grid{ display:grid; grid-template-columns:1fr 1.1fr; gap:clamp(18px,4vw,40px); }
+  @media (max-width:900px){ .grid{ grid-template-columns:1fr; } }
 
   .left-col{ display:flex; align-items:center; }
   .contact-title{
-    margin:0; font-family:"Bebas Neue",sans-serif; font-weight:400;
+    margin:0; width:100%;
+    font-family:"Bebas Neue",sans-serif; font-weight:400;
     font-size:clamp(64px,12vw,220px); line-height:.9;
     text-shadow:0 0 3px rgba(0,0,0,.4);
   }
 
   form{ width:100%; }
-  .row{ display:grid; grid-template-columns: 1fr 1fr; gap:14px; }
+  .row{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
   @media (max-width:700px){ .row{ grid-template-columns:1fr; } }
-  label{ font-size:.85rem; color:var(--muted); margin:12px 0 6px; display:block; }
-  input, textarea{
+  label{ display:block; font-size:.85rem; color:var(--muted); margin:12px 0 6px; }
+  input,textarea{
     width:100%; color:var(--ink); background:transparent; border:none; outline:none;
     border-bottom:2px solid rgba(255,255,255,.22);
-    padding:10px 4px 12px; font:400 1rem/1.4 "Montserrat", sans-serif;
-    transition:border-color .2s ease, box-shadow .2s ease;
+    padding:10px 4px 12px;
+    font:400 1rem/1.4 "Montserrat",sans-serif;
+    transition:border-color .2s, box-shadow .2s;
   }
-  input:focus, textarea:focus{
-    border-bottom-color:var(--line); box-shadow:0 6px 20px -8px rgba(158,231,255,.35);
-  }
+  input:focus,textarea:focus{ border-bottom-color:var(--line); box-shadow:0 6px 20px -8px rgba(158,231,255,.35); }
   textarea{ min-height:140px; resize:vertical; }
 
-  .field.invalid input, .field.invalid textarea{ border-bottom-color: var(--danger); }
+  .field.invalid input, .field.invalid textarea{ border-bottom-color:var(--danger); }
   .error{ color:var(--danger); font-size:.82rem; margin-top:6px; display:none; }
   .field.invalid .error{ display:block; }
 
   .actions{ display:flex; gap:12px; margin-top:18px; flex-wrap:wrap; align-items:center; }
   .btn{
-    border:1px solid var(--border); border-radius:999px;
+    appearance:none; border:1px solid var(--border); cursor:pointer;
     color:var(--ink); background:rgba(18,20,26,.92);
-    padding:12px 18px; font-weight:700; letter-spacing:.02em;
-    transition:.2s ease; cursor:pointer;
+    padding:12px 18px; border-radius:999px; font-weight:700; letter-spacing:.02em;
+    transition:transform .15s, background .2s, color .2s, box-shadow .2s, filter .2s;
   }
-  .btn:hover{ background:var(--accent); color:#0b0c10; transform:scale(1.03); }
+  .btn:hover, .btn:focus-visible{
+    background:var(--accent); color:#0b0c10; transform:translateY(-1px) scale(1.03);
+    box-shadow:0 0 26px rgba(158,231,255,.45), inset 0 0 10px rgba(255,255,255,.18);
+  }
   .btn[disabled]{ opacity:.6; cursor:not-allowed; }
 
   .note{ color:var(--muted); font-size:.9rem; }
   .recaptcha{ margin-top:14px; }
 </style>
 </head>
-
 <body>
+
+  <!-- Navbar -->
   <div data-include="partials/navbar.html"></div>
+
   <div class="vfx-grain" aria-hidden="true"></div>
 
   <main class="wrap">
@@ -157,21 +135,25 @@
           <h1 class="contact-title">LET’S<br>GET IN<br>TOUCH</h1>
         </div>
 
-        <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field"
-              action="/contact-success.html" id="contactForm" novalidate aria-live="polite">
+        <!-- ✅ Netlify: form statico, nessun JS submit -->
+        <form name="contact" method="POST"
+              data-netlify="true" netlify-honeypot="bot-field"
+              action="/contact-success.html" id="contactForm" novalidate>
+
+          <!-- nascosti necessari -->
           <input type="hidden" name="form-name" value="contact">
           <input type="text" name="bot-field" style="display:none" aria-hidden="true">
-          <input type="hidden" name="message_to_owner" id="message_to_owner">
+          <input type="hidden" name="subject" value="New portfolio contact">
 
           <div class="row">
             <div class="field" id="fName">
               <label for="fullName">Full name *</label>
-              <input id="fullName" name="fullName" type="text" required aria-required="true">
+              <input id="fullName" name="fullName" type="text" required aria-required="true" autocomplete="name">
               <div class="error">Please enter your name and surname.</div>
             </div>
             <div class="field" id="fEmail">
               <label for="email">Email *</label>
-              <input id="email" name="email" type="email" required aria-required="true">
+              <input id="email" name="email" type="email" required aria-required="true" autocomplete="email" inputmode="email">
               <div class="error">Please enter a valid email address.</div>
             </div>
           </div>
@@ -182,7 +164,9 @@
             <div class="error">Please write at least 20 characters.</div>
           </div>
 
+          <!-- ✅ reCAPTCHA di Netlify -->
           <div class="recaptcha" data-netlify-recaptcha="true"></div>
+          <noscript><p class="note">Please enable JavaScript to submit the form.</p></noscript>
 
           <div class="actions">
             <button class="btn" type="submit" id="submitBtn" disabled>Send</button>
@@ -193,104 +177,63 @@
     </section>
   </main>
 
+  <!-- Footer mini -->
   <footer class="site-footer" role="contentinfo">
-    <div class="footer-inner">
-      <nav class="socials" aria-label="Social links">
+    <div class="footer-inner" style="max-width:980px;margin:0 auto;padding:14px 16px;display:flex;justify-content:center;">
+      <nav class="socials" aria-label="Social links" style="display:flex;gap:14px;">
         <a href="mailto:gabrieledallari.art@gmail.com" aria-label="Email">✉️</a>
-        <a href="https://www.linkedin.com/in/gabriele-dallari" target="_blank" aria-label="LinkedIn">in</a>
-        <a href="https://www.instagram.com/gabbodallari" target="_blank" aria-label="Instagram">IG</a>
+        <a href="https://www.linkedin.com/in/gabriele-dallari" target="_blank" rel="noopener" aria-label="LinkedIn">in</a>
+        <a href="https://www.instagram.com/gabbodallari" target="_blank" rel="noopener" aria-label="Instagram">IG</a>
       </nav>
     </div>
   </footer>
 
   <script src="/js/partials.js?v=v5" defer></script>
   <script>
-  const form = document.getElementById('contactForm');
-  const btn  = document.getElementById('submitBtn');
-
-  const fields = {
-    fullName: {
-      el: document.getElementById('fullName'),
-      wrap: document.getElementById('fName'),
-      test(v){ return v.trim().split(/\s+/).length >= 2; }
-    },
-    email: {
-      el: document.getElementById('email'),
-      wrap: document.getElementById('fEmail'),
-      test(v){ return /^\S+@\S+\.\S+$/.test(v.trim()); }
-    },
-    message: {
-      el: document.getElementById('message'),
-      wrap: document.getElementById('fMessage'),
-      test(v){ return v.trim().length >= 20; }
-    }
-  };
-
-  function validateAll(){
-    let ok = true;
-    for (const key in fields){
-      const f = fields[key];
-      const valid = f.test(f.el.value);
-      f.wrap.classList.toggle('invalid', !valid);
-      ok = ok && valid;
-    }
-    btn.disabled = !ok;
-    return ok;
-  }
-
-  Object.values(fields).forEach(({el}) => el.addEventListener('input', validateAll));
-  validateAll();
-
-  function encodeForm(data){
-    return Object.keys(data).map(k => encodeURIComponent(k) + '=' + encodeURIComponent(data[k])).join('&');
-  }
-
-  form.addEventListener('submit', async e => {
-    e.preventDefault();
-    if (!validateAll()) return;
-
-    btn.disabled = true;
-    btn.textContent = 'Sending…';
-
-    let recaptchaToken = '';
-    if (window.grecaptcha) {
-      recaptchaToken = grecaptcha.getResponse();
-      if (!recaptchaToken) {
-        alert('Please check the reCAPTCHA.');
-        btn.disabled = false;
-        btn.textContent = 'Send';
-        return;
+    // Spazio sotto navbar fissa
+    (function(){
+      const root = document.documentElement;
+      function setNavHeight(){
+        const nb = document.querySelector('.navbar');
+        if(!nb) return;
+        const h = Math.ceil(nb.getBoundingClientRect().height);
+        root.style.setProperty('--nav-h', h + 'px');
+        document.body.style.paddingTop = h + 'px';
       }
-    }
-
-    const payload = {
-      'form-name': 'contact',
-      'fullName': fields.fullName.el.value,
-      'email': fields.email.el.value,
-      'message': fields.message.el.value,
-      'g-recaptcha-response': recaptchaToken
-    };
-
-    try {
-      const resp = await fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: encodeForm(payload)
+      const mo = new MutationObserver(() => {
+        const nb = document.querySelector('.navbar');
+        if(nb){
+          setNavHeight();
+          const ro = new ResizeObserver(setNavHeight);
+          ro.observe(nb);
+        }
       });
+      mo.observe(document.body, {childList:true, subtree:true});
+      window.addEventListener('load', setNavHeight);
+      window.addEventListener('resize', setNavHeight);
+      window.addEventListener('orientationchange', setNavHeight);
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(setNavHeight);
+      setTimeout(setNavHeight, 300); setTimeout(setNavHeight, 1000);
+    })();
 
-      if (resp.ok) {
-        window.location.href = '/contact-success.html';
-      } else {
-        alert('There was a problem sending the form. Please try again.');
-        btn.disabled = false;
-        btn.textContent = 'Send';
-      }
-    } catch (err) {
-      alert('Network error. Please try again.');
-      btn.disabled = false;
-      btn.textContent = 'Send';
+    // Abilita/disabilita bottone in base alla validazione lato client (non blocca l’invio Netlify)
+    const btn = document.getElementById('submitBtn');
+    const fields = {
+      fullName: document.getElementById('fullName'),
+      email: document.getElementById('email'),
+      message: document.getElementById('message')
+    };
+    function valid(){
+      const okName = fields.fullName.value.trim().split(/\s+/).length >= 2;
+      const okMail = /^\S+@\S+\.\S+$/.test(fields.email.value.trim());
+      const okMsg  = fields.message.value.trim().length >= 20;
+      document.getElementById('fName').classList.toggle('invalid', !okName);
+      document.getElementById('fEmail').classList.toggle('invalid', !okMail);
+      document.getElementById('fMessage').classList.toggle('invalid', !okMsg);
+      btn.disabled = !(okName && okMail && okMsg);
     }
-  });
+    Object.values(fields).forEach(el => el.addEventListener('input', valid));
+    valid();
   </script>
 </body>
 </html>
