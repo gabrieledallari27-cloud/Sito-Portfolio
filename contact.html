@@ -406,11 +406,13 @@
   validateAll();
 
   // Prepara la mail automatica e blocca invio se invalid
-  form.addEventListener('submit', function (e) {
-    if (!validateAll()) { e.preventDefault(); return; }
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    if (!validateAll()) return;
+
+    // (facoltativo) auto-messaggio per te
     const name = (fields.fullName.el.value || '').trim();
     const msg  = (fields.message.el.value || '').trim();
-
     const auto = `Ciao Gabriele,
 Ti contatto per avere informazioni sul tuo servizio.
 
@@ -421,13 +423,34 @@ ${name}`;
 
     btn.disabled = true;
     btn.textContent = 'Sending…';
-  });
 
-  // feedback opzionale se torni con ?sent=1
-  const successMsg = document.getElementById('successMsg');
-  if (new URLSearchParams(location.search).get('sent') === '1') {
-    successMsg.style.display = 'block';
-  }
-  </script>
+    try {
+      // Costruisci la payload come Netlify si aspetta
+      const fd = new FormData(form);
+
+      // POST alla stessa pagina (Netlify intercetta il form)
+      const resp = await fetch('/', {
+        method: 'POST',
+        body: fd,
+      });
+
+      if (resp.ok) {
+        // Redirigo io, in modo affidabile
+        window.location.href = '/contact-success.html';
+      } else {
+        // fallback: mostra messaggio inline e riabilita il bottone
+        console.error('Form submit failed', resp.status);
+        btn.disabled = false;
+        btn.textContent = 'Send';
+        alert('There was a problem sending the form. Please try again.');
+      }
+    } catch (err) {
+      console.error(err);
+      btn.disabled = false;
+      btn.textContent = 'Send';
+      alert('Network error. Please try again.');
+    }
+  });
+</script>
 </body>
 </html>
