@@ -119,6 +119,35 @@
 
   .note{ color:var(--muted); font-size:.9rem; }
   .recaptcha{ margin-top:14px; }
+
+  /* ===== FOOTER (icone cerchiate, come nelle altre pagine) ===== */
+  .site-footer{
+    flex-shrink:0;
+    border-top:1px solid rgba(255,255,255,.12);
+    background: linear-gradient(180deg, rgba(10,12,16,.35), rgba(10,12,16,.12));
+    backdrop-filter: blur(4px);
+  }
+  .footer-inner{
+    max-width: 980px; margin: 0 auto; padding: 14px 16px;
+    display:flex; justify-content:center;
+  }
+  .socials{ display:flex; align-items:center; gap:14px; }
+  .socials a{
+    width:44px; height:44px; display:grid; place-items:center;
+    border:1px solid rgba(255,255,255,.12); border-radius:999px;
+    color:#e9eaef; background:rgba(18,20,26,.70);
+    box-shadow:0 8px 22px rgba(0,0,0,.35);
+    text-decoration:none;
+    transition: transform .15s ease, background .2s ease, color .2s ease, border-color .2s ease, box-shadow .2s ease;
+  }
+  .socials a:hover, .socials a:focus-visible{
+    background:#9ee7ff; color:#0b0c10; border-color: rgba(158,231,255,.6);
+    box-shadow: 0 0 22px rgba(158,231,255,.35), inset 0 0 10px rgba(255,255,255,.18);
+    transform: translateY(-1px) scale(1.06);
+    outline:none;
+  }
+  .socials svg{ width:22px; height:22px; stroke-width:1.8; }
+  .socials svg *{ vector-effect:non-scaling-stroke; }
 </style>
 </head>
 <body>
@@ -133,14 +162,14 @@
       <div class="grid">
         <div class="left-col">
           <h1 class="contact-title">LET’S<br>GET IN<br>TOUCH</h1>
-        </div> 
+        </div>
 
-        <!-- ✅ Netlify: form statico, nessun JS submit -->
+        <!-- Netlify form statico -->
         <form name="contact" method="POST"
               data-netlify="true" netlify-honeypot="bot-field"
               action="/contact-success.html" id="contactForm" novalidate>
 
-          <!-- nascosti necessari -->
+          <!-- hidden necessari -->
           <input type="hidden" name="form-name" value="contact">
           <input type="text" name="bot-field" style="display:none" aria-hidden="true">
           <input type="hidden" name="subject" value="New portfolio contact">
@@ -164,7 +193,7 @@
             <div class="error">Please write at least 20 characters.</div>
           </div>
 
-          <!-- ✅ reCAPTCHA di Netlify -->
+          <!-- reCAPTCHA di Netlify -->
           <div class="recaptcha" data-netlify-recaptcha="true"></div>
           <noscript><p class="note">Please enable JavaScript to submit the form.</p></noscript>
 
@@ -177,13 +206,12 @@
     </section>
   </main>
 
-    <!-- ✅ Footer via partial condiviso -->
-    <div data-include="partials/footer.html"></div>
-
+  <!-- Footer via partial -->
+  <div data-include="partials/footer.html"></div>
 
   <script src="/js/partials.js?v=v5" defer></script>
   <script>
-    // Spazio sotto navbar fissa
+    // Padding dinamico sotto la navbar fissa
     (function(){
       const root = document.documentElement;
       function setNavHeight(){
@@ -209,7 +237,7 @@
       setTimeout(setNavHeight, 300); setTimeout(setNavHeight, 1000);
     })();
 
-    // Abilita/disabilita bottone in base alla validazione lato client (non blocca l’invio Netlify)
+    // Abilita/disabilita il bottone in base a una semplice validazione lato client
     const btn = document.getElementById('submitBtn');
     const fields = {
       fullName: document.getElementById('fullName'),
