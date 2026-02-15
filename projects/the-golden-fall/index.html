@@ -29,7 +29,7 @@
       font-family:"Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       color:#fff;
       display:flex; justify-content:center;
-      background:#000 url("images/background.png") center/cover no-repeat fixed;
+      background:#000 url("images/background.webp") center/cover no-repeat fixed;
       overflow-x:hidden;
     }
 
@@ -209,12 +209,6 @@
       padding:28px; border-width:0;
     }
 
-
-    /* PRIMA (tua):
-    .popup > img#popup-img{
-      max-width:100%; height:auto; max-height:70vh; margin-top:10px; border-radius:6px; display:block;
-    }
-    */
 
     /* DOPO (riempie e centra davvero) */
     .popup > img#popup-img{
@@ -448,7 +442,7 @@
     <!-- ====== HERO ====== -->
     <header class="hero" id="hero">
       <div class="hero-media" id="heroMedia">
-        <img src="images/header-image.png" alt="Header image" />
+        <img src="images/header-image.webp" alt="Header image" />
       </div>
       <div class="hero-overlay" id="heroOverlay">
         <div class="overlay-content" id="overlayContent">
@@ -465,16 +459,16 @@
           <!-- ICONE -->
           <nav class="icon-bar" aria-label="Sections">
             <a href="#" class="icon-link" data-target="making-of">
-              <img src="images/icons/interior.png" alt="Interior icon"><span>Interior</span>
+              <img src="images/icons/interior.webp" alt="Interior icon"><span>Interior</span>
             </a>
             <a href="#" class="icon-link" data-target="making-of-exterior">
-              <img src="images/icons/exterior.png" alt="Exterior icon"><span>Exterior</span>
+              <img src="images/icons/exterior.webp" alt="Exterior icon"><span>Exterior</span>
             </a>
             <a href="#" class="icon-link" data-target="landscape">
-              <img src="images/icons/landscape.png" alt="Landscape icon"><span>Landscape</span>
+              <img src="images/icons/landscape.webp" alt="Landscape icon"><span>Landscape</span>
             </a>
             <a href="#" class="icon-link" data-target="foliage">
-              <img src="images/icons/foliage.png" alt="Foliage icon"><span>Foliage</span>
+              <img src="images/icons/foliage.webp" alt="Foliage icon"><span>Foliage</span>
             </a>
           </nav>
         </div>
@@ -487,7 +481,7 @@
       <h2>Making Of – Interior</h2>
 
       <h3>References</h3>
-      <img src="images/interior-moodboard.png" alt="Moodboard Interior" class="gallery-main" />
+      <img src="images/interior-moodboard.webp" alt="Moodboard Interior" class="gallery-main" />
 
       <div class="divider-full"></div>
 
@@ -495,7 +489,7 @@
       <p class="subtitle">
         Initial interior scene layout, modeled in <strong>Maya</strong> and rendered with <strong>Arnold</strong>.
       </p>
-      <img src="images/interior-blockout.png" alt="Blockout Interior" class="gallery-main" />
+      <img src="images/interior-blockout.webp" alt="Blockout Interior" class="gallery-main" />
 
       <div class="divider-full"></div>
 
@@ -509,29 +503,29 @@
       </p>
 
       <div class="hotspot-container">
-        <img id="interiorScene2" src="images/interior-scene-1.png" alt="Interior Scene 1" class="gallery-main" />
+        <img id="interiorScene2" src="images/interior-scene-1.webp" alt="Interior Scene 1" class="gallery-main" />
         <div class="hotspot-number" style="top:48%;left:46%;"
-             data-hover-img="images/interior-portal-highlight.png"
+             data-hover-img="images/interior-portal-highlight.webp"
              onclick="activateHotspot(this);openPopup('popup-interior-portal')">1</div>
       </div>
       <div class="divider-2"></div>
 
       <div class="hotspot-container">
-        <img id="interiorScene" src="images/interior-scene-2.png" alt="Interior Scene 2" class="gallery-main" />
+        <img id="interiorScene" src="images/interior-scene-2.webp" alt="Interior Scene 2" class="gallery-main" />
         <div class="hotspot-number" style="top:67%;left:58%;"
-             data-hover-img="images/interior-base-highlight.png"
+             data-hover-img="images/interior-base-highlight.webp"
              onclick="activateHotspot(this);openPopup('popup-interior-base')">1</div>
         <div class="hotspot-number" style="top:46%;left:52%;"
-             data-hover-img="images/interior-sculpture-highlight.png"
+             data-hover-img="images/interior-sculpture-highlight.webp"
              onclick="activateHotspot(this);openPopup('popup-interior-sculpture')">2</div>
         <div class="hotspot-number" style="top:37.5%;left:45%;"
-             data-hover-img="images/interior-stairs1-highlight.png"
+             data-hover-img="images/interior-stairs1-highlight.webp"
              onclick="activateHotspot(this);openPopup('popup-interior-stairs1')">3</div>
         <div class="hotspot-number" style="top:64.5%;left:32%;"
-             data-hover-img="images/interior-stairs2-highlight.png"
+             data-hover-img="images/interior-stairs2-highlight.webp"
              onclick="activateHotspot(this);openPopup('popup-interior-stairs2')">4</div>
         <div class="hotspot-number" style="top:25%;left:64%;"
-             data-hover-img="images/interior-fountain-highlight.png"
+             data-hover-img="images/interior-fountain-highlight.webp"
              onclick="activateHotspot(this);openPopup('popup-interior-fountain')">5</div>
       </div>
       <div class="divider-full"></div>
@@ -578,7 +572,7 @@
 
       <h3>References</h3>
       <!-- layout invariato, scala tutto insieme -->
-      <img src="images/exterior-moodboard.png" alt="Moodboard Exterior" class="gallery-main" />
+      <img src="images/exterior-moodboard.webp" alt="Moodboard Exterior" class="gallery-main" />
 
       <div class="divider-full"></div>
 
@@ -628,18 +622,18 @@
       <p style="text-align:center;font-style:italic;margin-bottom:15px;color:gold;">Select a number to view the corresponding asset details.</p>
 
       <div class="hotspot-container">
-        <img id="exteriorScene" src="images/exterior-scene.png" alt="Exterior Scene" class="gallery-main" />
-        <div class="hotspot-number" style="top:68%;left:49.5%;" data-hover-img="images/exterior-arch-highlight.png" onclick="activateHotspot(this);openPopup('popup-exterior-arch')">1</div>
-        <div class="hotspot-number" style="top:90%;left:64%;" data-hover-img="images/exterior-bottom-rocks-highlight.png" onclick="activateHotspot(this);openPopup('popup-exterior-bottom-rocks')">2</div>
-        <div class="hotspot-number" style="top:80%;left:49.5%;" data-hover-img="images/exterior-central-wall-highlight.png" onclick="activateHotspot(this);openPopup('popup-exterior-central-wall')">3</div>
-        <div class="hotspot-number" style="top:79%;left:55%;" data-hover-img="images/exterior-columns-highlight.png" onclick="activateHotspot(this);openPopup('popup-exterior-columns')">4</div>
-        <div class="hotspot-number" style="top:76.5%;left:45%;" data-hover-img="images/exterior-entrance-highlight.png" onclick="activateHotspot(this);openPopup('popup-exterior-entrance')">5</div>
-        <div class="hotspot-number" style="top:55.5%;left:49.5%;" data-hover-img="images/exterior-relief-highlight.png" onclick="activateHotspot(this);openPopup('popup-exterior-relief')">6</div>
-        <div class="hotspot-number" style="top:79%;left:23.5%;" data-hover-img="images/exterior-side-walls-highlight.png" onclick="activateHotspot(this);openPopup('popup-exterior-side-walls')">7</div>
-        <div class="hotspot-number" style="top:90%;left:49.5%;" data-hover-img="images/exterior-stairs-highlight.png" onclick="activateHotspot(this);openPopup('popup-exterior-stairs')">8</div>
-        <div class="hotspot-number" style="top:39%;left:49.5%;" data-hover-img="images/exterior-stelae-highlight.png" onclick="activateHotspot(this);openPopup('popup-exterior-stelae')">9</div>
-        <div class="hotspot-number" style="top:82%;left:37%;" data-hover-img="images/exterior-water-slide-highlight.png" onclick="activateHotspot(this);openPopup('popup-exterior-water-slide')">10</div>
-        <div class="hotspot-number" style="top:30%;left:25%;" data-hover-img="images/exterior-mountain-highlight.png" onclick="activateHotspot(this);openPopup('popup-exterior-mountain')">11</div>
+        <img id="exteriorScene" src="images/exterior-scene.webp" alt="Exterior Scene" class="gallery-main" />
+        <div class="hotspot-number" style="top:68%;left:49.5%;" data-hover-img="images/exterior-arch-highlight.webp" onclick="activateHotspot(this);openPopup('popup-exterior-arch')">1</div>
+        <div class="hotspot-number" style="top:90%;left:64%;" data-hover-img="images/exterior-bottom-rocks-highlight.webp" onclick="activateHotspot(this);openPopup('popup-exterior-bottom-rocks')">2</div>
+        <div class="hotspot-number" style="top:80%;left:49.5%;" data-hover-img="images/exterior-central-wall-highlight.webp" onclick="activateHotspot(this);openPopup('popup-exterior-central-wall')">3</div>
+        <div class="hotspot-number" style="top:79%;left:55%;" data-hover-img="images/exterior-columns-highlight.webp" onclick="activateHotspot(this);openPopup('popup-exterior-columns')">4</div>
+        <div class="hotspot-number" style="top:76.5%;left:45%;" data-hover-img="images/exterior-entrance-highlight.webp" onclick="activateHotspot(this);openPopup('popup-exterior-entrance')">5</div>
+        <div class="hotspot-number" style="top:55.5%;left:49.5%;" data-hover-img="images/exterior-relief-highlight.webp" onclick="activateHotspot(this);openPopup('popup-exterior-relief')">6</div>
+        <div class="hotspot-number" style="top:79%;left:23.5%;" data-hover-img="images/exterior-side-walls-highlight.webp" onclick="activateHotspot(this);openPopup('popup-exterior-side-walls')">7</div>
+        <div class="hotspot-number" style="top:90%;left:49.5%;" data-hover-img="images/exterior-stairs-highlight.webp" onclick="activateHotspot(this);openPopup('popup-exterior-stairs')">8</div>
+        <div class="hotspot-number" style="top:39%;left:49.5%;" data-hover-img="images/exterior-stelae-highlight.webp" onclick="activateHotspot(this);openPopup('popup-exterior-stelae')">9</div>
+        <div class="hotspot-number" style="top:82%;left:37%;" data-hover-img="images/exterior-water-slide-highlight.webp" onclick="activateHotspot(this);openPopup('popup-exterior-water-slide')">10</div>
+        <div class="hotspot-number" style="top:30%;left:25%;" data-hover-img="images/exterior-mountain-highlight.webp" onclick="activateHotspot(this);openPopup('popup-exterior-mountain')">11</div>
       </div>
 
       <div class="divider-full"></div>
@@ -671,30 +665,30 @@
       <h2>Landscape</h2>
 
       <h3>References</h3>
-      <img src="images/landscape-moodboard.png" alt="Moodboard Landscape" class="gallery-main" />
+      <img src="images/landscape-moodboard.webp" alt="Moodboard Landscape" class="gallery-main" />
 
       <div class="divider-full"></div>
 
       <h3>Procedural Mountain</h3>
       <p class="subtitle">Mountains height-maps generated in <strong>Gaea</strong> and used to create landscape in <strong>Unreal Engine</strong>.</p>
-      <img src="images/landscape-mountain-1.png" alt="Mountain Landscape" class="gallery-main" />
-      <img src="images/landscape-mountain-2.png" alt="Mountain Landscape" class="gallery-main" />
-      <img src="images/landscape-mountain-3.png" alt="Mountain Landscape" class="gallery-main" />
+      <img src="images/landscape-mountain-1.webp" alt="Mountain Landscape" class="gallery-main" />
+      <img src="images/landscape-mountain-2.webp" alt="Mountain Landscape" class="gallery-main" />
+      <img src="images/landscape-mountain-3.webp" alt="Mountain Landscape" class="gallery-main" />
 
       <div class="divider-full"></div>
 
       <h3>Scene Composition</h3>
       <p class="subtitle">Scene composition in <strong>Unreal Engine</strong>.</p>
-      <img id="landMain" src="images/landscape-3.png" alt="Landscape Main" class="gallery-main" />
+      <img id="landMain" src="images/landscape-3.webp" alt="Landscape Main" class="gallery-main" />
       <div class="thumbnails" id="landThumbs">
-        <img src="images/landscape-1.png" alt="Landscape 1" />
-        <img src="images/landscape-2.png" alt="Landscape 2" />
-        <img src="images/landscape-3.png" alt="Landscape 3" class="active"/>
+        <img src="images/landscape-1.webp" alt="Landscape 1" />
+        <img src="images/landscape-2.webp" alt="Landscape 2" />
+        <img src="images/landscape-3.webp" alt="Landscape 3" class="active"/>
       </div>
 
       <div class="divider-full"></div>
 
-      <img src="images/landscape-start.png" alt="Landscape Start" class="gallery-main" />
+      <img src="images/landscape-start.webp" alt="Landscape Start" class="gallery-main" />
 
       <div class="divider-full"></div>
     </section>
@@ -704,7 +698,7 @@
       <h2>Foliage</h2>
 
       <h3>References</h3>
-      <img src="images/foliage-moodboard.png" alt="Moodboard Foliage" class="gallery-main" />
+      <img src="images/foliage-moodboard.webp" alt="Moodboard Foliage" class="gallery-main" />
 
       <div class="divider-full"></div>
 
@@ -714,10 +708,10 @@
       </p>
 
       <div class="foliage-roots-row">
-        <img src="images/roots1.png" alt="Roots 1">
-        <img src="images/roots2.png" alt="Roots 2">
-        <img src="images/roots3.png" alt="Roots 3">
-        <img src="images/roots4.png" alt="Roots 4">
+        <img src="images/roots1.webp" alt="Roots 1">
+        <img src="images/roots2.webp" alt="Roots 2">
+        <img src="images/roots3.webp" alt="Roots 3">
+        <img src="images/roots4.webp" alt="Roots 4">
       </div>
 
       <div class="divider-full"></div>
@@ -727,136 +721,136 @@
         Collection of vegetation assets used in the scene, created in <strong>SpeedTree</strong> or <strong>Maya</strong>, with foliage components prepared in <strong>Photoshop</strong> and integrated into <strong>Unreal Engine</strong>.
       </p>
 
-      <img src="images/foliage-main-moss.png" alt="Foliage Moss" class="gallery-main" />
+      <img src="images/foliage-main-moss.webp" alt="Foliage Moss" class="gallery-main" />
       <div class="thumbnails">
-        <img src="images/foliage-moss-1.png" onclick="openPopup('popup-foliage-moss-1')">
-        <img src="images/foliage-moss-2.png" onclick="openPopup('popup-foliage-moss-2')">
-        <img src="images/foliage-moss-3.png" onclick="openPopup('popup-foliage-moss-3')">
-        <img src="images/foliage-moss-4.png" onclick="openPopup('popup-foliage-moss-4')">
-        <img src="images/foliage-moss-5.png" onclick="openPopup('popup-foliage-moss-5')">
-        <img src="images/foliage-moss-6.png" onclick="openPopup('popup-foliage-moss-6')">
-        <img src="images/foliage-moss-7.png" onclick="openPopup('popup-foliage-moss-7')">
-        <img src="images/foliage-moss-8.png" onclick="openPopup('popup-foliage-moss-8')">
+        <img src="images/foliage-moss-1.webp" onclick="openPopup('popup-foliage-moss-1')">
+        <img src="images/foliage-moss-2.webp" onclick="openPopup('popup-foliage-moss-2')">
+        <img src="images/foliage-moss-3.webp" onclick="openPopup('popup-foliage-moss-3')">
+        <img src="images/foliage-moss-4.webp" onclick="openPopup('popup-foliage-moss-4')">
+        <img src="images/foliage-moss-5.webp" onclick="openPopup('popup-foliage-moss-5')">
+        <img src="images/foliage-moss-6.webp" onclick="openPopup('popup-foliage-moss-6')">
+        <img src="images/foliage-moss-7.webp" onclick="openPopup('popup-foliage-moss-7')">
+        <img src="images/foliage-moss-8.webp" onclick="openPopup('popup-foliage-moss-8')">
       </div>
       <div class="divider"></div>
 
-      <img src="images/foliage-main-grass.png" alt="Foliage Grass" class="gallery-main" />
+      <img src="images/foliage-main-grass.webp" alt="Foliage Grass" class="gallery-main" />
       <div class="thumbnails">
-        <img src="images/foliage-grass-1.png" onclick="openPopup('popup-foliage-grass-1')">
-        <img src="images/foliage-grass-2.png" onclick="openPopup('popup-foliage-grass-2')">
-        <img src="images/foliage-grass-3.png" onclick="openPopup('popup-foliage-grass-3')">
-        <img src="images/foliage-grass-4.png" onclick="openPopup('popup-foliage-grass-4')">
-        <img src="images/foliage-grass-5.png" onclick="openPopup('popup-foliage-grass-5')">
-        <img src="images/foliage-grass-6.png" onclick="openPopup('popup-foliage-grass-6')">
-        <img src="images/foliage-grass-7.png" onclick="openPopup('popup-foliage-grass-7')">
-        <img src="images/foliage-grass-8.png" onclick="openPopup('popup-foliage-grass-8')">
-        <img src="images/foliage-grass-9.png" onclick="openPopup('popup-foliage-grass-9')">
+        <img src="images/foliage-grass-1.webp" onclick="openPopup('popup-foliage-grass-1')">
+        <img src="images/foliage-grass-2.webp" onclick="openPopup('popup-foliage-grass-2')">
+        <img src="images/foliage-grass-3.webp" onclick="openPopup('popup-foliage-grass-3')">
+        <img src="images/foliage-grass-4.webp" onclick="openPopup('popup-foliage-grass-4')">
+        <img src="images/foliage-grass-5.webp" onclick="openPopup('popup-foliage-grass-5')">
+        <img src="images/foliage-grass-6.webp" onclick="openPopup('popup-foliage-grass-6')">
+        <img src="images/foliage-grass-7.webp" onclick="openPopup('popup-foliage-grass-7')">
+        <img src="images/foliage-grass-8.webp" onclick="openPopup('popup-foliage-grass-8')">
+        <img src="images/foliage-grass-9.webp" onclick="openPopup('popup-foliage-grass-9')">
       </div>
       <div class="divider"></div>
 
-      <img src="images/foliage-main-bush1.png" alt="Foliage Bush1" class="gallery-main" />
-      <div class="thumbnails"><img src="images/foliage-bush1-1.png" onclick="openPopup('popup-foliage-bush1-1')"></div>
+      <img src="images/foliage-main-bush1.webp" alt="Foliage Bush1" class="gallery-main" />
+      <div class="thumbnails"><img src="images/foliage-bush1-1.webp" onclick="openPopup('popup-foliage-bush1-1')"></div>
       <div class="divider"></div>
 
-      <img src="images/foliage-main-bush2.png" alt="Foliage Bush2" class="gallery-main" />
-      <div class="thumbnails"><img src="images/foliage-bush2-1.png" onclick="openPopup('popup-foliage-bush2-1')"></div>
+      <img src="images/foliage-main-bush2.webp" alt="Foliage Bush2" class="gallery-main" />
+      <div class="thumbnails"><img src="images/foliage-bush2-1.webp" onclick="openPopup('popup-foliage-bush2-1')"></div>
       <div class="divider"></div>
 
-      <img src="images/foliage-main-palm1.png" alt="Foliage Palm1" class="gallery-main" />
+      <img src="images/foliage-main-palm1.webp" alt="Foliage Palm1" class="gallery-main" />
       <div class="thumbnails">
-        <img src="images/foliage-palm1-1.png" onclick="openPopup('popup-foliage-palm1-1')">
-        <img src="images/foliage-palm1-2.png" onclick="openPopup('popup-foliage-palm1-2')">
-        <img src="images/foliage-palm1-3.png" onclick="openPopup('popup-foliage-palm1-3')">
-        <img src="images/foliage-palm1-4.png" onclick="openPopup('popup-foliage-palm1-4')">
-        <img src="images/foliage-palm1-5.png" onclick="openPopup('popup-foliage-palm1-5')">
-        <img src="images/foliage-palm1-6.png" onclick="openPopup('popup-foliage-palm1-6')">
-        <img src="images/foliage-palm1-7.png" onclick="openPopup('popup-foliage-palm1-7')">
+        <img src="images/foliage-palm1-1.webp" onclick="openPopup('popup-foliage-palm1-1')">
+        <img src="images/foliage-palm1-2.webp" onclick="openPopup('popup-foliage-palm1-2')">
+        <img src="images/foliage-palm1-3.webp" onclick="openPopup('popup-foliage-palm1-3')">
+        <img src="images/foliage-palm1-4.webp" onclick="openPopup('popup-foliage-palm1-4')">
+        <img src="images/foliage-palm1-5.webp" onclick="openPopup('popup-foliage-palm1-5')">
+        <img src="images/foliage-palm1-6.webp" onclick="openPopup('popup-foliage-palm1-6')">
+        <img src="images/foliage-palm1-7.webp" onclick="openPopup('popup-foliage-palm1-7')">
       </div>
       <div class="divider"></div>
 
-      <img src="images/foliage-main-palm2.png" alt="Foliage Palm2" class="gallery-main" />
+      <img src="images/foliage-main-palm2.webp" alt="Foliage Palm2" class="gallery-main" />
       <div class="thumbnails">
-        <img src="images/foliage-palm2-1.png" onclick="openPopup('popup-foliage-palm2-1')">
-        <img src="images/foliage-palm2-2.png" onclick="openPopup('popup-foliage-palm2-2')">
-        <img src="images/foliage-palm2-3.png" onclick="openPopup('popup-foliage-palm2-3')">
-        <img src="images/foliage-palm2-4.png" onclick="openPopup('popup-foliage-palm2-4')">
-        <img src="images/foliage-palm2-5.png" onclick="openPopup('popup-foliage-palm2-5')">
-        <img src="images/foliage-palm2-6.png" onclick="openPopup('popup-foliage-palm2-6')">
-        <img src="images/foliage-palm2-7.png" onclick="openPopup('popup-foliage-palm2-7')">
+        <img src="images/foliage-palm2-1.webp" onclick="openPopup('popup-foliage-palm2-1')">
+        <img src="images/foliage-palm2-2.webp" onclick="openPopup('popup-foliage-palm2-2')">
+        <img src="images/foliage-palm2-3.webp" onclick="openPopup('popup-foliage-palm2-3')">
+        <img src="images/foliage-palm2-4.webp" onclick="openPopup('popup-foliage-palm2-4')">
+        <img src="images/foliage-palm2-5.webp" onclick="openPopup('popup-foliage-palm2-5')">
+        <img src="images/foliage-palm2-6.webp" onclick="openPopup('popup-foliage-palm2-6')">
+        <img src="images/foliage-palm2-7.webp" onclick="openPopup('popup-foliage-palm2-7')">
       </div>
       <div class="divider"></div>
 
-      <img src="images/foliage-main-palm3.png" alt="Foliage Palm3" class="gallery-main" />
+      <img src="images/foliage-main-palm3.webp" alt="Foliage Palm3" class="gallery-main" />
       <div class="thumbnails">
-        <img src="images/foliage-palm3-1.png" onclick="openPopup('popup-foliage-palm3-1')">
-        <img src="images/foliage-palm3-2.png" onclick="openPopup('popup-foliage-palm3-2')">
-        <img src="images/foliage-palm3-3.png" onclick="openPopup('popup-foliage-palm3-3')">
+        <img src="images/foliage-palm3-1.webp" onclick="openPopup('popup-foliage-palm3-1')">
+        <img src="images/foliage-palm3-2.webp" onclick="openPopup('popup-foliage-palm3-2')">
+        <img src="images/foliage-palm3-3.webp" onclick="openPopup('popup-foliage-palm3-3')">
       </div>
       <div class="divider"></div>
 
-      <img src="images/foliage-main-plant1.png" alt="Foliage Plant1" class="gallery-main" />
+      <img src="images/foliage-main-plant1.webp" alt="Foliage Plant1" class="gallery-main" />
       <div class="thumbnails">
-        <img src="images/foliage-plant1-1.png" onclick="openPopup('popup-foliage-plant1-1')">
-        <img src="images/foliage-plant1-2.png" onclick="openPopup('popup-foliage-plant1-2')">
-        <img src="images/foliage-plant1-3.png" onclick="openPopup('popup-foliage-plant1-3')">
-        <img src="images/foliage-plant1-4.png" onclick="openPopup('popup-foliage-plant1-4')">
-        <img src="images/foliage-plant1-5.png" onclick="openPopup('popup-foliage-plant1-5')">
+        <img src="images/foliage-plant1-1.webp" onclick="openPopup('popup-foliage-plant1-1')">
+        <img src="images/foliage-plant1-2.webp" onclick="openPopup('popup-foliage-plant1-2')">
+        <img src="images/foliage-plant1-3.webp" onclick="openPopup('popup-foliage-plant1-3')">
+        <img src="images/foliage-plant1-4.webp" onclick="openPopup('popup-foliage-plant1-4')">
+        <img src="images/foliage-plant1-5.webp" onclick="openPopup('popup-foliage-plant1-5')">
       </div>
       <div class="divider"></div>
 
-      <img src="images/foliage-main-plant2.png" alt="Foliage Plant2" class="gallery-main" />
+      <img src="images/foliage-main-plant2.webp" alt="Foliage Plant2" class="gallery-main" />
       <div class="thumbnails">
-        <img src="images/foliage-plant2-1.png" onclick="openPopup('popup-foliage-plant2-1')">
-        <img src="images/foliage-plant2-2.png" onclick="openPopup('popup-foliage-plant2-2')">
-        <img src="images/foliage-plant2-3.png" onclick="openPopup('popup-foliage-plant2-3')">
-        <img src="images/foliage-plant2-4.png" onclick="openPopup('popup-foliage-plant2-4')">
-        <img src="images/foliage-plant2-5.png" onclick="openPopup('popup-foliage-plant2-5')">
-        <img src="images/foliage-plant2-6.png" onclick="openPopup('popup-foliage-plant2-6')">
-        <img src="images/foliage-plant2-7.png" onclick="openPopup('popup-foliage-plant2-7')">
+        <img src="images/foliage-plant2-1.webp" onclick="openPopup('popup-foliage-plant2-1')">
+        <img src="images/foliage-plant2-2.webp" onclick="openPopup('popup-foliage-plant2-2')">
+        <img src="images/foliage-plant2-3.webp" onclick="openPopup('popup-foliage-plant2-3')">
+        <img src="images/foliage-plant2-4.webp" onclick="openPopup('popup-foliage-plant2-4')">
+        <img src="images/foliage-plant2-5.webp" onclick="openPopup('popup-foliage-plant2-5')">
+        <img src="images/foliage-plant2-6.webp" onclick="openPopup('popup-foliage-plant2-6')">
+        <img src="images/foliage-plant2-7.webp" onclick="openPopup('popup-foliage-plant2-7')">
       </div>
       <div class="divider"></div>
 
-      <img src="images/foliage-main-plant3.png" alt="Foliage Plant3" class="gallery-main" />
+      <img src="images/foliage-main-plant3.webp" alt="Foliage Plant3" class="gallery-main" />
       <div class="thumbnails">
-        <img src="images/foliage-plant3-1.png" onclick="openPopup('popup-foliage-plant3-1')">
-        <img src="images/foliage-plant3-2.png" onclick="openPopup('popup-foliage-plant3-2')">
-        <img src="images/foliage-plant3-3.png" onclick="openPopup('popup-foliage-plant3-3')">
-        <img src="images/foliage-plant3-4.png" onclick="openPopup('popup-foliage-plant3-4')">
-        <img src="images/foliage-plant3-5.png" onclick="openPopup('popup-foliage-plant3-5')">
-        <img src="images/foliage-plant3-6.png" onclick="openPopup('popup-foliage-plant3-6')">
-        <img src="images/foliage-plant3-7.png" onclick="openPopup('popup-foliage-plant3-7')">
-        <img src="images/foliage-plant3-8.png" onclick="openPopup('popup-foliage-plant3-8')">
-        <img src="images/foliage-plant3-9.png" onclick="openPopup('popup-foliage-plant3-9')">
-        <img src="images/foliage-plant3-10.png" onclick="openPopup('popup-foliage-plant3-10')">
+        <img src="images/foliage-plant3-1.webp" onclick="openPopup('popup-foliage-plant3-1')">
+        <img src="images/foliage-plant3-2.webp" onclick="openPopup('popup-foliage-plant3-2')">
+        <img src="images/foliage-plant3-3.webp" onclick="openPopup('popup-foliage-plant3-3')">
+        <img src="images/foliage-plant3-4.webp" onclick="openPopup('popup-foliage-plant3-4')">
+        <img src="images/foliage-plant3-5.webp" onclick="openPopup('popup-foliage-plant3-5')">
+        <img src="images/foliage-plant3-6.webp" onclick="openPopup('popup-foliage-plant3-6')">
+        <img src="images/foliage-plant3-7.webp" onclick="openPopup('popup-foliage-plant3-7')">
+        <img src="images/foliage-plant3-8.webp" onclick="openPopup('popup-foliage-plant3-8')">
+        <img src="images/foliage-plant3-9.webp" onclick="openPopup('popup-foliage-plant3-9')">
+        <img src="images/foliage-plant3-10.webp" onclick="openPopup('popup-foliage-plant3-10')">
       </div>
       <div class="divider"></div>
 
-      <img src="images/foliage-main-tree.png" alt="Foliage Tree" class="gallery-main" />
-      <div class="thumbnails"><img src="images/foliage-tree-1.png" onclick="openPopup('popup-foliage-tree-1')"></div>
+      <img src="images/foliage-main-tree.webp" alt="Foliage Tree" class="gallery-main" />
+      <div class="thumbnails"><img src="images/foliage-tree-1.webp" onclick="openPopup('popup-foliage-tree-1')"></div>
       <div class="divider"></div>
 
-      <img src="images/foliage-main-trees.png" alt="Foliage Trees" class="gallery-main" />
+      <img src="images/foliage-main-trees.webp" alt="Foliage Trees" class="gallery-main" />
       <div class="thumbnails">
-        <img src="images/foliage-trees-1.png" onclick="openPopup('popup-foliage-trees-1')">
-        <img src="images/foliage-trees-2.png" onclick="openPopup('popup-foliage-trees-2')">
+        <img src="images/foliage-trees-1.webp" onclick="openPopup('popup-foliage-trees-1')">
+        <img src="images/foliage-trees-2.webp" onclick="openPopup('popup-foliage-trees-2')">
       </div>
       <div class="divider"></div>
 
-      <img src="images/foliage-main-liane.png" alt="Foliage Liane" class="gallery-main" />
+      <img src="images/foliage-main-liane.webp" alt="Foliage Liane" class="gallery-main" />
       <div class="thumbnails">
-        <img src="images/foliage-liane-1.png" onclick="openPopup('popup-foliage-liane-1')">
-        <img src="images/foliage-liane-2.png" onclick="openPopup('popup-foliage-liane-2')">
-        <img src="images/foliage-liane-3.png" onclick="openPopup('popup-foliage-liane-3')">
-        <img src="images/foliage-liane-4.png" onclick="openPopup('popup-foliage-liane-4')">
-        <img src="images/foliage-liane-5.png" onclick="openPopup('popup-foliage-liane-5')">
-        <img src="images/foliage-liane-6.png" onclick="openPopup('popup-foliage-liane-6')">
-        <img src="images/foliage-liane-7.png" onclick="openPopup('popup-foliage-liane-7')">
-        <img src="images/foliage-liane-8.png" onclick="openPopup('popup-foliage-liane-8')">
-        <img src="images/foliage-liane-9.png" onclick="openPopup('popup-foliage-liane-9')">
-        <img src="images/foliage-liane-10.png" onclick="openPopup('popup-foliage-liane-10')">
-        <img src="images/foliage-liane-11.png" onclick="openPopup('popup-foliage-liane-11')">
-        <img src="images/foliage-liane-12.png" onclick="openPopup('popup-foliage-liane-12')">
-        <img src="images/foliage-liane-13.png" onclick="openPopup('popup-foliage-liane-13')">
+        <img src="images/foliage-liane-1.webp" onclick="openPopup('popup-foliage-liane-1')">
+        <img src="images/foliage-liane-2.webp" onclick="openPopup('popup-foliage-liane-2')">
+        <img src="images/foliage-liane-3.webp" onclick="openPopup('popup-foliage-liane-3')">
+        <img src="images/foliage-liane-4.webp" onclick="openPopup('popup-foliage-liane-4')">
+        <img src="images/foliage-liane-5.webp" onclick="openPopup('popup-foliage-liane-5')">
+        <img src="images/foliage-liane-6.webp" onclick="openPopup('popup-foliage-liane-6')">
+        <img src="images/foliage-liane-7.webp" onclick="openPopup('popup-foliage-liane-7')">
+        <img src="images/foliage-liane-8.webp" onclick="openPopup('popup-foliage-liane-8')">
+        <img src="images/foliage-liane-9.webp" onclick="openPopup('popup-foliage-liane-9')">
+        <img src="images/foliage-liane-10.webp" onclick="openPopup('popup-foliage-liane-10')">
+        <img src="images/foliage-liane-11.webp" onclick="openPopup('popup-foliage-liane-11')">
+        <img src="images/foliage-liane-12.webp" onclick="openPopup('popup-foliage-liane-12')">
+        <img src="images/foliage-liane-13.webp" onclick="openPopup('popup-foliage-liane-13')">
       </div>
       <div class="divider-full"></div>
     </section>
@@ -941,99 +935,99 @@
 
     // ===== Popup data (solo immagini: title/desc opzionali)
     const popupData = {
-      'popup-interior-base': { img: "images/popup-base.png" },
-      'popup-interior-portal': { img: "images/popup-portal.png" },
-      'popup-interior-sculpture': { img: "images/popup-sculpture.png" },
-      'popup-interior-stairs1': { img: "images/popup-stairs1.png" },
-      'popup-interior-stairs2': { img: "images/popup-stairs2.png" },
-      'popup-interior-fountain': { img: "images/popup-fountain.png" },
-      'popup-exterior-arch': { img: "images/popup-exterior-arch.png" },
-      'popup-exterior-bottom-rocks': { img: "images/popup-exterior-bottom-rocks.png" },
-      'popup-exterior-central-wall': { img: "images/popup-exterior-central-wall.png" },
-      'popup-exterior-columns': { img: "images/popup-exterior-columns.png" },
-      'popup-exterior-entrance': { img: "images/popup-exterior-entrance.png" },
-      'popup-exterior-relief': { img: "images/popup-exterior-relief.png" },
-      'popup-exterior-side-walls': { img: "images/popup-exterior-side-walls.png" },
-      'popup-exterior-stairs': { img: "images/popup-exterior-stairs.png" },
-      'popup-exterior-stelae': { img: "images/popup-exterior-stelae.png" },
-      'popup-exterior-water-slide': { img: "images/popup-exterior-water-slide.png" },
-      'popup-exterior-mountain': { img: "images/popup-exterior-mountain.png" },
-      'popup-foliage1': { img: "images/foliage-thumb-1.png" },
-      'popup-foliage2': { img: "images/foliage-thumb-2.png" },
-      'popup-foliage-moss-1': { img: "images/foliage-moss-1.png" },
-      'popup-foliage-moss-2': { img: "images/foliage-moss-2.png" },
-      'popup-foliage-moss-3': { img: "images/foliage-moss-3.png" },
-      'popup-foliage-moss-4': { img: "images/foliage-moss-4.png" },
-      'popup-foliage-moss-5': { img: "images/foliage-moss-5.png" },
-      'popup-foliage-moss-6': { img: "images/foliage-moss-6.png" },
-      'popup-foliage-moss-7': { img: "images/foliage-moss-7.png" },
-      'popup-foliage-moss-8': { img: "images/foliage-moss-8.png" },
-      'popup-foliage-grass-1': { img: "images/foliage-grass-1.png" },
-      'popup-foliage-grass-2': { img: "images/foliage-grass-2.png" },
-      'popup-foliage-grass-3': { img: "images/foliage-grass-3.png" },
-      'popup-foliage-grass-4': { img: "images/foliage-grass-4.png" },
-      'popup-foliage-grass-5': { img: "images/foliage-grass-5.png" },
-      'popup-foliage-grass-6': { img: "images/foliage-grass-6.png" },
-      'popup-foliage-grass-7': { img: "images/foliage-grass-7.png" },
-      'popup-foliage-grass-8': { img: "images/foliage-grass-8.png" },
-      'popup-foliage-grass-9': { img: "images/foliage-grass-9.png" },
-      'popup-foliage-bush1-1': { img: "images/foliage-bush1-1.png" },
-      'popup-foliage-bush2-1': { img: "images/foliage-bush2-1.png" },
-      'popup-foliage-palm1-1': { img: "images/foliage-palm1-1.png" },
-      'popup-foliage-palm1-2': { img: "images/foliage-palm1-2.png" },
-      'popup-foliage-palm1-3': { img: "images/foliage-palm1-3.png" },
-      'popup-foliage-palm1-4': { img: "images/foliage-palm1-4.png" },
-      'popup-foliage-palm1-5': { img: "images/foliage-palm1-5.png" },
-      'popup-foliage-palm1-6': { img: "images/foliage-palm1-6.png" },
-      'popup-foliage-palm1-7': { img: "images/foliage-palm1-7.png" },
-      'popup-foliage-palm2-1': { img: "images/foliage-palm2-1.png" },
-      'popup-foliage-palm2-2': { img: "images/foliage-palm2-2.png" },
-      'popup-foliage-palm2-3': { img: "images/foliage-palm2-3.png" },
-      'popup-foliage-palm2-4': { img: "images/foliage-palm2-4.png" },
-      'popup-foliage-palm2-5': { img: "images/foliage-palm2-5.png" },
-      'popup-foliage-palm2-6': { img: "images/foliage-palm2-6.png" },
-      'popup-foliage-palm2-7': { img: "images/foliage-palm2-7.png" },
-      'popup-foliage-palm3-1': { img: "images/foliage-palm3-1.png" },
-      'popup-foliage-palm3-2': { img: "images/foliage-palm3-2.png" },
-      'popup-foliage-palm3-3': { img: "images/foliage-palm3-3.png" },
-      'popup-foliage-plant1-1': { img: "images/foliage-plant1-1.png" },
-      'popup-foliage-plant1-2': { img: "images/foliage-plant1-2.png" },
-      'popup-foliage-plant1-3': { img: "images/foliage-plant1-3.png" },
-      'popup-foliage-plant1-4': { img: "images/foliage-plant1-4.png" },
-      'popup-foliage-plant1-5': { img: "images/foliage-plant1-5.png" },
-      'popup-foliage-plant2-1': { img: "images/foliage-plant2-1.png" },
-      'popup-foliage-plant2-2': { img: "images/foliage-plant2-2.png" },
-      'popup-foliage-plant2-3': { img: "images/foliage-plant2-3.png" },
-      'popup-foliage-plant2-4': { img: "images/foliage-plant2-4.png" },
-      'popup-foliage-plant2-5': { img: "images/foliage-plant2-5.png" },
-      'popup-foliage-plant2-6': { img: "images/foliage-plant2-6.png" },
-      'popup-foliage-plant2-7': { img: "images/foliage-plant2-7.png" },
-      'popup-foliage-plant3-1': { img: "images/foliage-plant3-1.png" },
-      'popup-foliage-plant3-2': { img: "images/foliage-plant3-2.png" },
-      'popup-foliage-plant3-3': { img: "images/foliage-plant3-3.png" },
-      'popup-foliage-plant3-4': { img: "images/foliage-plant3-4.png" },
-      'popup-foliage-plant3-5': { img: "images/foliage-plant3-5.png" },
-      'popup-foliage-plant3-6': { img: "images/foliage-plant3-6.png" },
-      'popup-foliage-plant3-7': { img: "images/foliage-plant3-7.png" },
-      'popup-foliage-plant3-8': { img: "images/foliage-plant3-8.png" },
-      'popup-foliage-plant3-9': { img: "images/foliage-plant3-9.png" },
-      'popup-foliage-plant3-10': { img: "images/foliage-plant3-10.png" },
-      'popup-foliage-tree-1': { img: "images/foliage-tree-1.png" },
-      'popup-foliage-trees-1': { img: "images/foliage-trees-1.png" },
-      'popup-foliage-trees-2': { img: "images/foliage-trees-2.png" },
-      'popup-foliage-liane-1': { img: "images/foliage-liane-1.png" },
-      'popup-foliage-liane-2': { img: "images/foliage-liane-2.png" },
-      'popup-foliage-liane-3': { img: "images/foliage-liane-3.png" },
-      'popup-foliage-liane-4': { img: "images/foliage-liane-4.png" },
-      'popup-foliage-liane-5': { img: "images/foliage-liane-5.png" },
-      'popup-foliage-liane-6': { img: "images/foliage-liane-6.png" },
-      'popup-foliage-liane-7': { img: "images/foliage-liane-7.png" },
-      'popup-foliage-liane-8': { img: "images/foliage-liane-8.png" },
-      'popup-foliage-liane-9': { img: "images/foliage-liane-9.png" },
-      'popup-foliage-liane-10': { img: "images/foliage-liane-10.png" },
-      'popup-foliage-liane-11': { img: "images/foliage-liane-11.png" },
-      'popup-foliage-liane-12': { img: "images/foliage-liane-12.png" },
-      'popup-foliage-liane-13': { img: "images/foliage-liane-13.png" }
+      'popup-interior-base': { img: "images/popup-base.webp" },
+      'popup-interior-portal': { img: "images/popup-portal.webp" },
+      'popup-interior-sculpture': { img: "images/popup-sculpture.webp" },
+      'popup-interior-stairs1': { img: "images/popup-stairs1.webp" },
+      'popup-interior-stairs2': { img: "images/popup-stairs2.webp" },
+      'popup-interior-fountain': { img: "images/popup-fountain.webp" },
+      'popup-exterior-arch': { img: "images/popup-exterior-arch.webp" },
+      'popup-exterior-bottom-rocks': { img: "images/popup-exterior-bottom-rocks.webp" },
+      'popup-exterior-central-wall': { img: "images/popup-exterior-central-wall.webp" },
+      'popup-exterior-columns': { img: "images/popup-exterior-columns.webp" },
+      'popup-exterior-entrance': { img: "images/popup-exterior-entrance.webp" },
+      'popup-exterior-relief': { img: "images/popup-exterior-relief.webp" },
+      'popup-exterior-side-walls': { img: "images/popup-exterior-side-walls.webp" },
+      'popup-exterior-stairs': { img: "images/popup-exterior-stairs.webp" },
+      'popup-exterior-stelae': { img: "images/popup-exterior-stelae.webp" },
+      'popup-exterior-water-slide': { img: "images/popup-exterior-water-slide.webp" },
+      'popup-exterior-mountain': { img: "images/popup-exterior-mountain.webp" },
+      'popup-foliage1': { img: "images/foliage-thumb-1.webp" },
+      'popup-foliage2': { img: "images/foliage-thumb-2.webp" },
+      'popup-foliage-moss-1': { img: "images/foliage-moss-1.webp" },
+      'popup-foliage-moss-2': { img: "images/foliage-moss-2.webp" },
+      'popup-foliage-moss-3': { img: "images/foliage-moss-3.webp" },
+      'popup-foliage-moss-4': { img: "images/foliage-moss-4.webp" },
+      'popup-foliage-moss-5': { img: "images/foliage-moss-5.webp" },
+      'popup-foliage-moss-6': { img: "images/foliage-moss-6.webp" },
+      'popup-foliage-moss-7': { img: "images/foliage-moss-7.webp" },
+      'popup-foliage-moss-8': { img: "images/foliage-moss-8.webp" },
+      'popup-foliage-grass-1': { img: "images/foliage-grass-1.webp" },
+      'popup-foliage-grass-2': { img: "images/foliage-grass-2.webp" },
+      'popup-foliage-grass-3': { img: "images/foliage-grass-3.webp" },
+      'popup-foliage-grass-4': { img: "images/foliage-grass-4.webp" },
+      'popup-foliage-grass-5': { img: "images/foliage-grass-5.webp" },
+      'popup-foliage-grass-6': { img: "images/foliage-grass-6.webp" },
+      'popup-foliage-grass-7': { img: "images/foliage-grass-7.webp" },
+      'popup-foliage-grass-8': { img: "images/foliage-grass-8.webp" },
+      'popup-foliage-grass-9': { img: "images/foliage-grass-9.webp" },
+      'popup-foliage-bush1-1': { img: "images/foliage-bush1-1.webp" },
+      'popup-foliage-bush2-1': { img: "images/foliage-bush2-1.webp" },
+      'popup-foliage-palm1-1': { img: "images/foliage-palm1-1.webp" },
+      'popup-foliage-palm1-2': { img: "images/foliage-palm1-2.webp" },
+      'popup-foliage-palm1-3': { img: "images/foliage-palm1-3.webp" },
+      'popup-foliage-palm1-4': { img: "images/foliage-palm1-4.webp" },
+      'popup-foliage-palm1-5': { img: "images/foliage-palm1-5.webp" },
+      'popup-foliage-palm1-6': { img: "images/foliage-palm1-6.webp" },
+      'popup-foliage-palm1-7': { img: "images/foliage-palm1-7.webp" },
+      'popup-foliage-palm2-1': { img: "images/foliage-palm2-1.webp" },
+      'popup-foliage-palm2-2': { img: "images/foliage-palm2-2.webp" },
+      'popup-foliage-palm2-3': { img: "images/foliage-palm2-3.webp" },
+      'popup-foliage-palm2-4': { img: "images/foliage-palm2-4.webp" },
+      'popup-foliage-palm2-5': { img: "images/foliage-palm2-5.webp" },
+      'popup-foliage-palm2-6': { img: "images/foliage-palm2-6.webp" },
+      'popup-foliage-palm2-7': { img: "images/foliage-palm2-7.webp" },
+      'popup-foliage-palm3-1': { img: "images/foliage-palm3-1.webp" },
+      'popup-foliage-palm3-2': { img: "images/foliage-palm3-2.webp" },
+      'popup-foliage-palm3-3': { img: "images/foliage-palm3-3.webp" },
+      'popup-foliage-plant1-1': { img: "images/foliage-plant1-1.webp" },
+      'popup-foliage-plant1-2': { img: "images/foliage-plant1-2.webp" },
+      'popup-foliage-plant1-3': { img: "images/foliage-plant1-3.webp" },
+      'popup-foliage-plant1-4': { img: "images/foliage-plant1-4.webp" },
+      'popup-foliage-plant1-5': { img: "images/foliage-plant1-5.webp" },
+      'popup-foliage-plant2-1': { img: "images/foliage-plant2-1.webp" },
+      'popup-foliage-plant2-2': { img: "images/foliage-plant2-2.webp" },
+      'popup-foliage-plant2-3': { img: "images/foliage-plant2-3.webp" },
+      'popup-foliage-plant2-4': { img: "images/foliage-plant2-4.webp" },
+      'popup-foliage-plant2-5': { img: "images/foliage-plant2-5.webp" },
+      'popup-foliage-plant2-6': { img: "images/foliage-plant2-6.webp" },
+      'popup-foliage-plant2-7': { img: "images/foliage-plant2-7.webp" },
+      'popup-foliage-plant3-1': { img: "images/foliage-plant3-1.webp" },
+      'popup-foliage-plant3-2': { img: "images/foliage-plant3-2.webp" },
+      'popup-foliage-plant3-3': { img: "images/foliage-plant3-3.webp" },
+      'popup-foliage-plant3-4': { img: "images/foliage-plant3-4.webp" },
+      'popup-foliage-plant3-5': { img: "images/foliage-plant3-5.webp" },
+      'popup-foliage-plant3-6': { img: "images/foliage-plant3-6.webp" },
+      'popup-foliage-plant3-7': { img: "images/foliage-plant3-7.webp" },
+      'popup-foliage-plant3-8': { img: "images/foliage-plant3-8.webp" },
+      'popup-foliage-plant3-9': { img: "images/foliage-plant3-9.webp" },
+      'popup-foliage-plant3-10': { img: "images/foliage-plant3-10.webp" },
+      'popup-foliage-tree-1': { img: "images/foliage-tree-1.webp" },
+      'popup-foliage-trees-1': { img: "images/foliage-trees-1.webp" },
+      'popup-foliage-trees-2': { img: "images/foliage-trees-2.webp" },
+      'popup-foliage-liane-1': { img: "images/foliage-liane-1.webp" },
+      'popup-foliage-liane-2': { img: "images/foliage-liane-2.webp" },
+      'popup-foliage-liane-3': { img: "images/foliage-liane-3.webp" },
+      'popup-foliage-liane-4': { img: "images/foliage-liane-4.webp" },
+      'popup-foliage-liane-5': { img: "images/foliage-liane-5.webp" },
+      'popup-foliage-liane-6': { img: "images/foliage-liane-6.webp" },
+      'popup-foliage-liane-7': { img: "images/foliage-liane-7.webp" },
+      'popup-foliage-liane-8': { img: "images/foliage-liane-8.webp" },
+      'popup-foliage-liane-9': { img: "images/foliage-liane-9.webp" },
+      'popup-foliage-liane-10': { img: "images/foliage-liane-10.webp" },
+      'popup-foliage-liane-11': { img: "images/foliage-liane-11.webp" },
+      'popup-foliage-liane-12': { img: "images/foliage-liane-12.webp" },
+      'popup-foliage-liane-13': { img: "images/foliage-liane-13.webp" }
     };
 
     const overlay = document.getElementById('overlay');
