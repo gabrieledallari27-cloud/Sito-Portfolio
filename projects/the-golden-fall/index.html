@@ -73,24 +73,35 @@
       filter: drop-shadow(0 30px 60px rgba(0,0,0,.45)) drop-shadow(0 8px 20px rgba(0,0,0,.35));
       background:transparent;
     }
-    /* Ombra morbida che segue i bordi del PNG */
+   /* Ombra morbida che segue i bordi del PNG
+   -> usa un gradient semplice invece della mask-image per evitare che la sfumatura
+      si estenda troppo in alto sui viewport stretti */
+    /* REPLACE: .hero-media::after */
     .hero-media::after{
       content:"";
-      position:absolute; inset:0;
-      background:rgba(0,0,0,.65);
-      filter:blur(24px);
-      transform:translateY(10px);
-      border-radius: inherit;
-      -webkit-mask-image:url("images/header-image.png");
-      -webkit-mask-repeat:no-repeat;
-      -webkit-mask-position:center;
-      -webkit-mask-size:contain;
-              mask-image:url("images/header-image.png");
-              mask-repeat:no-repeat;
-              mask-position:center;
-              mask-size:contain;
+      position:absolute;
+      inset:0;
       pointer-events:none;
+      border-radius: inherit;
+
+      /* fade dal centro verso il basso: più morbido in alto, più intenso in basso */
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.00) 0%,
+        rgba(0,0,0,0.06) 18%,
+        rgba(0,0,0,0.18) 40%,
+        rgba(0,0,0,0.34) 65%,
+        rgba(0,0,0,0.82) 100%
+      );
+
+      /* leggermente più blur per ammorbidire la transizione e la "estensione" */
+      filter: blur(22px);
+
+      /* sposta un po' verso il basso per creare il letterbox morbido */
+      transform: translateY(10px);
     }
+
+
 
     .hero-overlay{
       position:absolute; inset:0;
@@ -374,6 +385,20 @@
         height: 64px !important;
       }
     }
+
+    /* REPLACE / ADD media queries related to heroPadFallback and overlay padding */
+    @media (max-width: 900px){
+      :root{ --heroPadFallback: clamp(48px, 14vh, 220px); } /* fallback più grande su tablet/mobile */
+      .hero-overlay{ padding: clamp(18px,5vw,36px) clamp(14px,4vw,24px); }
+    }
+
+    @media (max-width: 560px){
+      :root{ --heroPadFallback: clamp(72px, 18vh, 280px); } /* ancora più spazio su phone molto stretto */
+      .hero-overlay{ padding: clamp(20px,6vw,44px) clamp(12px,4vw,20px); }
+      .overlay-content{ gap:16px; }
+      .main-title{ font-size: clamp(20px, 7.5vw, 36px); }
+    }
+
 
 
     /* ——— Project details ——— */
@@ -1147,28 +1172,58 @@
       pop.classList.add('active');
     }
 
-    // ===== Letterbox inferiore dinamico della HERO (come Swamp)
+    // LETTERBOX inferiore dinamico della HERO (adattata)
+    /* REPLACE: adjustHeroPad() */
     function adjustHeroPad(){
       const media = document.getElementById('heroMedia');
       const content = document.getElementById('overlayContent');
       if(!media || !content) return;
 
-      const portrait = window.innerHeight > window.innerWidth;
-      let pad = 0;
-      if (portrait) {
-        const contentH = content.getBoundingClientRect().height; // titolo + paragrafi + icone
-        const extra = 8;
-        const maxPad = Math.floor(window.innerHeight * 0.36);
-        const minPad = 24;
-        pad = Math.max(minPad, Math.min(maxPad, Math.ceil(contentH + extra)));
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+
+      // dimensione contenuto (titolo + paragrafi + icone)
+      const contentH = content.getBoundingClientRect().height || 0;
+      const extra = 10; // padding extra tra contenuto e bordo della hero
+
+      // soft cap: non permettere al pad di occupare più del X% della viewport
+      let softCapPercent = 0.40; // 40% su mobile/tablet — permette letterbox più alto come richiesto
+      // riduciamo il cap su desktop
+      if (vw >= 1000) softCapPercent = 0.18;
+
+      const hardCapPx = Math.floor(vh * softCapPercent);
+      const minPad = 24;
+
+      // Se lo schermo è stretto, aggiungiamo un offset extra (spinge il contenuto più in basso)
+      let extraPad = 0;
+      if (vw <= 700) {
+        extraPad = Math.floor(vh * 0.06); // ~6% vh extra su phone
+      } else if (vw <= 900) {
+        extraPad = Math.floor(vh * 0.03); // piccolo extra su tablet
       }
+
+      // Calcolo base
+      let pad = Math.max(minPad, Math.ceil(contentH + extra)) + extraPad;
+
+      // Non superare il cap
+      pad = Math.min(pad, hardCapPx);
+
+      // Ulteriore limite su desktop
+      if (vw >= 1000) pad = Math.min(pad, 140);
+
       media.style.setProperty('--heroPad', pad + 'px');
     }
+
+
 
     window.addEventListener('load', adjustHeroPad);
     window.addEventListener('resize', adjustHeroPad, {passive:true});
     window.addEventListener('orientationchange', adjustHeroPad);
     if (document.fonts && document.fonts.ready) { document.fonts.ready.then(adjustHeroPad); }
+    // piccolo ritardo per assicurare il rendering dei fonts/partials
+    setTimeout(adjustHeroPad, 250);
+    setTimeout(adjustHeroPad, 800);
+
   </script>
 </body>
 </html>
