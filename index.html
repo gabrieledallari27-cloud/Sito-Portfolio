@@ -245,6 +245,12 @@
   .btn:active, .hero-btn:active{ transform: scale(1.02); }
 
   .section{ position:relative; z-index:1; padding:clamp(28px,5vw,56px) 20px; max-width:1280px; margin:0 auto; background:transparent; }
+
+  /* ✅ FIX: abbassa SOLO il blocco "Selected Works / Portfolio Highlights" per eliminare lo stacco */
+  section.section[aria-label="Portfolio"]{
+    padding-top: clamp(64px, 8vw, 110px);
+  }
+
   .section h2{ font-family:var(--font-sans); font-weight:700; font-size:clamp(22px,3.6vw,40px); line-height:1.1; margin:0 0 16px; letter-spacing:.02em; }
   .section .kicker{ color:var(--accent); text-transform:uppercase; letter-spacing:.18em; font-size:.8rem; margin-bottom:6px; font-family:var(--font-sans); font-weight:100; }
 
@@ -541,6 +547,7 @@
     window.addEventListener('load', onResize, {once:true});
   })();
   </script>
+
   <div data-include="partials/cursor-trail.html"></div>
 </body>
 </html>
