@@ -264,9 +264,20 @@
 
   .portfolio-cta{ display:flex; gap:12px; margin-top:18px; flex-wrap:wrap; justify-content:center; }
 
-  /* ===== FOOTER con SOLE ICONE ===== */
-  .site-footer{ flex-shrink:0; border-top:1px solid var(--border); background:linear-gradient(180deg, rgba(10,12,16,.35), rgba(10,12,16,.12)); backdrop-filter:blur(4px); }
-  .footer-inner{ max-width:980px; margin:0 auto; padding:14px 16px; display:flex; justify-content:center; }
+  /* ===== FOOTER con SOLE ICONE + COPYRIGHT in basso a sinistra ===== */
+  .site-footer{
+    flex-shrink:0;
+    border-top:1px solid var(--border);
+    background:linear-gradient(180deg, rgba(10,12,16,.35), rgba(10,12,16,.12));
+    backdrop-filter:blur(4px);
+  }
+  .footer-inner{
+    max-width:980px;
+    margin:0 auto;
+    padding:14px 16px;
+    display:flex;
+    justify-content:center;
+  }
   .socials{ display:flex; align-items:center; gap:14px; }
   .socials a{
     width:44px; height:44px; display:grid; place-items:center;
@@ -284,7 +295,17 @@
   }
   .socials svg{ width:22px; height:22px; stroke-width:1.8; }
   .socials svg *{ vector-effect:non-scaling-stroke; }
-  
+
+  /* NEW: copyright in basso a sinistra (stesso max-width del footer-inner) */
+  .footer-bottom{
+    max-width:980px;
+    margin:0 auto;
+    padding:0 16px 18px;
+    font-size:13px;
+    color:rgba(233,233,239,.58);
+    text-align:left;
+  }
+
   .vfx{ position:absolute; inset:0; pointer-events:none; }
   .vfx-grain{ z-index:5; background-image:url("images/vfx/film_grain_512.png"); background-repeat:repeat; background-size:var(--grain-tile) var(--grain-tile); mix-blend-mode:soft-light; opacity:var(--grain-opacity); }
   .vfx-grain::after{ content:""; position:absolute; inset:0; background-image:inherit; background-repeat:inherit; background-position:37px 29px; background-size:calc(var(--grain-tile)*1.08) calc(var(--grain-tile)*1.08); mix-blend-mode:soft-light; opacity:calc(var(--grain-opacity)*0.6); }
@@ -364,7 +385,7 @@
     </section>
   </main>
 
-  <!-- FOOTER: sole icone -->
+  <!-- FOOTER: sole icone + copyright -->
   <footer class="site-footer" role="contentinfo">
     <div class="footer-inner">
       <nav class="socials" aria-label="Social links">
@@ -392,6 +413,10 @@
           </svg>
         </a>
       </nav>
+    </div>
+
+    <div class="footer-bottom">
+      © Gabriele Dallari 2026 – All Rights Reserved.
     </div>
   </footer>
 
