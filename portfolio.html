@@ -329,6 +329,48 @@
   }
   body.vertical .edge-cta{ display:inline-flex; }
 
+  /* ===================== */
+  /* ✅ ADD: COMING SOON UI */
+  /* ===================== */
+  .card.coming-soon{
+    cursor:default;
+    opacity:.72;
+    filter: grayscale(1) saturate(.2) brightness(.78);
+  }
+  .card.coming-soon.hovered:not(.active){
+    --scale: 1;
+    box-shadow: 0 10px 28px rgba(0,0,0,.45);
+    border-color: var(--border);
+  }
+  .card.coming-soon.active{
+    box-shadow: 0 18px 44px rgba(0,0,0,.55);
+    border-color: rgba(255,255,255,.14);
+  }
+  .card.coming-soon.active::after{ display:none; }
+
+  .card .thumb{ position:relative; }
+
+  /* ✅ qui il centraggio perfetto */
+  .coming-soon-badge{
+    position:absolute; inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+    line-height:1;
+    padding:14px;
+
+    background: rgba(10,12,16,.55);
+    backdrop-filter: blur(2px);
+    font-family:"Bebas Neue", sans-serif;
+    letter-spacing:.18em;
+    font-size: clamp(18px, 2.2vw, 26px);
+    color: rgba(233,233,239,.82);
+    text-shadow: 0 6px 18px rgba(0,0,0,.65);
+    pointer-events:none;
+  }
+
   @media (max-width: 1200px){ :root{ --card-w: 300px; --card-h: 168px; } }
   @media (max-width: 900px){  :root{ --card-w: 280px; --card-h: 160px; } }
   @media (max-width: 600px){  :root{ --card-w: 260px; --card-h: 150px; } }
@@ -423,35 +465,29 @@ const PROJECTS_LEFT = [
     cover: "projects/sloth/images/portfolio/sloth-cover.png",
     thumb: "projects/sloth/images/portfolio/sloth-cover.png",
     href: "projects/sloth/index.html" },
-  { title: "The Forgotten Spaceship", subtitle: "Compositing & CGI integration",
-    cover: "projects/capsule/images/cover.jpg",
-    thumb: "projects/capsuleimages/thumb.jpg",
-    href: "projects/capsule/capsule.html" }
+  /* ✅ COMING SOON */
+  { title: "The Forgotten Spaceship", subtitle: "COMING SOON",
+    cover: "",
+    thumb: "",
+    href: "#",
+    comingSoon: true }
 ];
 
+/* ✅ tutti a destra = COMING SOON */
 const PROJECTS_RIGHT = [
-  { title: "Forest Guardian — Concept", subtitle: "Personal concept • Digital Painting",
-    cover: "projects/artworks/forest-guardian/cover.png",
-    thumb: "projects/artworks/forest-guardian/thumb.png",
-    href: "projects/artworks/forest-guardian/index.html" },
-  { title: "Neon Alley", subtitle: "Illustration • Procreate",
-    cover: "projects/artworks/neon-alley/cover.png",
-    thumb: "projects/artworks/neon-alley/thumb.png",
-    href: "projects/artworks/neon-alley/index.html" },
-  { title: "Artworks", subtitle: "Traditional painting collection",
-    cover: "projects/artworks/paintings/cover.png",
-    thumb: "projects/artworks/paintings/thumb.png",
-    href: "projects/artworks/paintings.html" },
-  { title: "Mythic Ruins", subtitle: "Concept art • Photoshop",
-    cover: "projects/artworks/mythic-ruins/cover.png",
-    thumb: "projects/artworks/mythic-ruins/thumb.png",
-    href: "projects/artworks/mythic-ruins/index.html" }
+  { title: "Sketches", subtitle: "COMING SOON",
+    cover: "", thumb: "", href: "#", comingSoon: true },
+  { title: "Concept art", subtitle: "COMING SOON",
+    cover: "", thumb: "", href: "#", comingSoon: true },
+  { title: "Artworks", subtitle: "COMING SOON",
+    cover: "", thumb: "", href: "#", comingSoon: true },
 ];
 
 /* ========= UTIL ========= */
 const byId = id => document.getElementById(id);
 function preloadImage(src){
   return new Promise(resolve=>{
+    if(!src) return resolve();
     const im = new Image();
     im.onload = resolve; im.onerror = resolve;
     im.decode ? im.decode().then(resolve).catch(resolve) : null;
@@ -460,6 +496,11 @@ function preloadImage(src){
 }
 function crossfadeBg(bgEl, url){
   if(!bgEl) return;
+  if(!url){
+    bgEl.classList.add('hidden');
+    bgEl.style.backgroundImage = 'none';
+    return;
+  }
   bgEl.classList.add('hidden');
   requestAnimationFrame(()=>{
     bgEl.style.backgroundImage = `url("${url}")`;
@@ -490,9 +531,25 @@ function HalfColumn(opts){
   const items = data.map((p, i)=>{
     const card = document.createElement('div');
     card.className = 'card';
+
+    if(p.comingSoon){
+      card.classList.add('coming-soon');
+      card.setAttribute('aria-disabled', 'true');
+    }
+
     const thumb = document.createElement('div');
     thumb.className = 'thumb';
-    thumb.style.backgroundImage = `url('${p.thumb || ''}')`;
+
+    if(p.comingSoon){
+      thumb.style.backgroundImage = 'none';
+      const badge = document.createElement('div');
+      badge.className = 'coming-soon-badge';
+      badge.textContent = 'COMING SOON';
+      thumb.appendChild(badge);
+    }else{
+      thumb.style.backgroundImage = `url('${p.thumb || ''}')`;
+    }
+
     const meta  = document.createElement('div'); meta.className = 'meta';
     const t = document.createElement('p'); t.className='title'; t.textContent = p.title || '—';
     const s = document.createElement('p'); s.className='subtitle'; s.textContent = p.subtitle || '';
@@ -501,7 +558,11 @@ function HalfColumn(opts){
 
     card.addEventListener('mouseenter', ()=> card.classList.add('hovered'));
     card.addEventListener('mouseleave', ()=> card.classList.remove('hovered'));
-    card.addEventListener('click', (ev)=>{ ev.stopPropagation(); if(!animating) goTo(i); });
+
+    /* ✅ click SOLO se non è coming soon */
+    if(!p.comingSoon){
+      card.addEventListener('click', (ev)=>{ ev.stopPropagation(); if(!animating) goTo(i); });
+    }
 
     colEl.appendChild(card);
     return { card, thumb };
@@ -595,6 +656,24 @@ function HalfColumn(opts){
 
   function updateInfo(applyBg=true){
     const p = data[activeIndex];
+
+    if(p.comingSoon){
+      if(applyBg) crossfadeBg(infoEls.bg, "");
+      infoEls.title && (infoEls.title.textContent = p.title || '');
+      infoEls.sub && (infoEls.sub.textContent   = 'COMING SOON');
+
+      if(infoEls.link){
+        infoEls.link.href = '#';
+        infoEls.link.style.display = 'none';
+      }
+      if(edgeCtaEl){
+        edgeCtaEl.href = '#';
+        edgeCtaEl.style.display = 'none';
+      }
+      return;
+    }
+
+    if(infoEls.link) infoEls.link.style.display = '';
     if(applyBg) crossfadeBg(infoEls.bg, p.cover);
     infoEls.title && (infoEls.title.textContent = p.title || '');
     infoEls.sub && (infoEls.sub.textContent   = p.subtitle || '');
@@ -613,6 +692,8 @@ function HalfColumn(opts){
 
   function flyScreen(dir, img){
     return new Promise(resolve=>{
+      if(!img) return resolve();
+
       const fly = document.createElement('div');
       fly.className = 'fly';
       fly.style.backgroundImage = `url('${img}')`;

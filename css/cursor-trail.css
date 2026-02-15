@@ -4,7 +4,7 @@
   inset: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 9999;          /* sopra tutto */
+  z-index: 999999;          /* sopra tutto */
   pointer-events: none;   /* non blocca click/hover */
   display: block;
 }
