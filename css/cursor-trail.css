@@ -1,0 +1,20 @@
+/* Cursor trail overlay */
+#cursorTrail{
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;          /* sopra tutto */
+  pointer-events: none;   /* non blocca click/hover */
+  display: block;
+}
+
+/* Non mostrarlo su touch/mobile (coarse pointer) */
+@media (pointer: coarse){
+  #cursorTrail{ display:none !important; }
+}
+
+/* Rispetta riduzione animazioni */
+@media (prefers-reduced-motion: reduce){
+  #cursorTrail{ display:none !important; }
+}
