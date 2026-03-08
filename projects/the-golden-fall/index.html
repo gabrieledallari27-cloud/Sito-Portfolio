@@ -264,8 +264,31 @@
     .video-embed{
       position:relative; width:100%; max-width:1280px; aspect-ratio:16/9;
       background:#000; border-radius:8px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,.4);
+      display:flex; align-items:center; justify-content:center;
+      min-height:220px;
     }
-    .video-embed iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+
+    .watch-btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:14px 22px;
+      border-radius:999px;
+      background:rgba(18,20,26,.92);
+      border:1px solid rgba(255,255,255,.12);
+      color:#e9e9ef;
+      text-decoration:none;
+      font-weight:700;
+      letter-spacing:.02em;
+      box-shadow:0 6px 20px rgba(0,0,0,.35);
+      transition:background .18s ease, color .18s ease, transform .12s ease;
+    }
+    .watch-btn:hover,
+    .watch-btn:focus-visible{
+      background:#9ee7ff;
+      color:#0b0c10;
+      transform:translateY(-1px);
+    }
 
     /* ====== Concept & Blockout (Exterior) ====== */
     .stepper{display:flex;gap:14px;align-items:center;margin:6px 0 18px}
@@ -858,12 +881,13 @@
     <section class="section" id="video">
       <h2>Full Video</h2>
       <div class="video-embed">
-        <iframe
-          src="https://www.youtube.com/watch?v=zeANbIlP1a4" 
-          title="The Golden Fall - Full Video"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen
-          referrerpolicy="strict-origin-when-cross-origin"></iframe>
+        <a
+          href="https://www.youtube.com/watch?v=zeANbIlP1a4"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="watch-btn">
+          Watch on YouTube
+        </a>
       </div>
     </section>
 
