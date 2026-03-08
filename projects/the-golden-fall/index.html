@@ -881,12 +881,38 @@
     <section class="section" id="video">
       <h2>Full Video</h2>
       <div class="video-embed">
-        <a
-          href="https://www.youtube.com/watch?v=zeANbIlP1a4"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="watch-btn">
-          Watch on YouTube
+        <a href="https://www.youtube.com/watch?v=zeANbIlP1a4" target="_blank" rel="noopener noreferrer" style="position:relative;display:block;width:100%;height:100%;">
+    
+          <img 
+            src="https://img.youtube.com/vi/zeANbIlP1a4/maxresdefault.jpg"
+            alt="The Golden Fall video thumbnail"
+            style="width:100%;height:100%;object-fit:cover;"
+          >
+
+          <div style="
+            position:absolute;
+            inset:0;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            pointer-events:none;
+          ">
+            <div style="
+              width:80px;
+              height:80px;
+              border-radius:50%;
+              background:rgba(0,0,0,0.6);
+              display:flex;
+              align-items:center;
+              justify-content:center;
+              backdrop-filter:blur(4px);
+            ">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="white">
+                <polygon points="8,5 19,12 8,19"></polygon>
+              </svg>
+            </div>
+          </div>
+
         </a>
       </div>
     </section>
