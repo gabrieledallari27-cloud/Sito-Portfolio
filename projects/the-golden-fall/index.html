@@ -15,7 +15,7 @@
       --page-max: 1280px;
       --min-title: 22px;
       --min-copy: 14px;
-      --hero-radius: 42px;              /* aumenta qui quanto vuoi (es. 18–22px) */
+      --hero-radius: 42px;
 
       /* letterbox inferiore di fallback (se JS non gira) */
       --heroPadFallback: clamp(24px, 8vh, 100px);
@@ -64,7 +64,6 @@
     .hero{ position:relative; margin:72px 0 26px; }
     .hero-media{
       position:relative;
-      /* ⚫️ Estensione nera sotto (letterbox) */
       padding-bottom: var(--heroPad, var(--heroPadFallback));
       background:#000; border-radius:var(--hero-radius); overflow:hidden;
     }
@@ -73,18 +72,13 @@
       filter: drop-shadow(0 30px 60px rgba(0,0,0,.45)) drop-shadow(0 8px 20px rgba(0,0,0,.35));
       background:transparent;
     }
-   /* Ombra morbida che segue i bordi del PNG
-   -> usa un gradient semplice invece della mask-image per evitare che la sfumatura
-      si estenda troppo in alto sui viewport stretti */
-    /* REPLACE: .hero-media::after */
+
     .hero-media::after{
       content:"";
       position:absolute;
       inset:0;
       pointer-events:none;
       border-radius: inherit;
-
-      /* fade dal centro verso il basso: più morbido in alto, più intenso in basso */
       background: linear-gradient(
         to bottom,
         rgba(0,0,0,0.00) 0%,
@@ -93,15 +87,9 @@
         rgba(0,0,0,0.34) 65%,
         rgba(0,0,0,0.82) 100%
       );
-
-      /* leggermente più blur per ammorbidire la transizione e la "estensione" */
       filter: blur(22px);
-
-      /* sposta un po' verso il basso per creare il letterbox morbido */
       transform: translateY(10px);
     }
-
-
 
     .hero-overlay{
       position:absolute; inset:0;
@@ -109,12 +97,12 @@
       padding: clamp(14px,3.5vw,28px) clamp(14px,3.5vw,24px);
       pointer-events:none;
     }
-    /* wrapper misurato in JS */
+
     .overlay-content{
       display:flex; flex-direction:column; gap:14px;
       width:100%; max-width:min(980px,96%);
-      pointer-events:auto; /* per rendere cliccabili i link delle icone */
-      margin: 0 auto; /* centra il contenuto overlay */
+      pointer-events:auto;
+      margin: 0 auto;
     }
 
     .main-title{
@@ -136,8 +124,8 @@
       display:flex; align-items:center; justify-content:center;
       gap: clamp(10px, 2.2vw, 18px);
       margin-top:18px; padding-top:12px;
-      align-self:center;                 /* resta centrata sempre */
-      margin-left:auto; margin-right:auto; /* forza centratura orizzontale */
+      align-self:center;
+      margin-left:auto; margin-right:auto;
     }
     .icon-link{
       display:flex; flex-direction:column; align-items:center; gap:8px;
@@ -177,28 +165,25 @@
     }
     .close-section-btn:hover{ background: rgba(0,0,0,.75); transform: scale(1.05); }
 
-    /* POPUP base: centra, ma NON forza la larghezza (shrink to content) */
+    /* POPUP base */
     .popup{
       position: relative;
       margin: 0;
       background:#111; color:#fff;
       padding:24px; border:1px solid #444;
       z-index:1000; box-sizing:border-box;
-      /* shrink-to-fit, ma con un tetto */
       width:auto;
       max-width: min(
         var(--page-max),
         calc(100vw - 40px - env(safe-area-inset-left) - env(safe-area-inset-right))
       );
-      /* limite di altezza per non uscire dalla viewport */
       max-height: calc(100dvh - 40px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
       overflow:auto; text-align:center; border-radius:10px;
       box-shadow: 0 20px 60px rgba(0,0,0,.6);
-      display:none;                    /* attivo con .active */
+      display:none;
     }
-    .popup.active{ display:inline-block; }  /* shrink-to-fit e centrato dall’overlay */
+    .popup.active{ display:inline-block; }
 
-    /* Versione grande (gallerie): qui invece vogliamo full width contenuta */
     .popup.big{
       display:block;
       width: min(
@@ -209,44 +194,36 @@
       padding:28px; border-width:0;
     }
 
-
-    /* DOPO (riempie e centra davvero) */
     .popup > img#popup-img{
       display: block;
-      width: auto;          /* occupa tutta la larghezza del popup */
+      width: auto;
       height: auto;
-      max-width: 100%;      /* non restare alla larghezza nativa */
-      max-height: calc(100dvh - 160px); /* spazio per titolo + bottone */
-      margin: 10px auto 0;  /* centrata anche se più piccola in altezza */
+      max-width: 100%;
+      max-height: calc(100dvh - 160px);
+      margin: 10px auto 0;
       border-radius: 6px;
     }
 
-
-    /* DOPO: */
     .overlay{
       position: fixed;
       inset: 0;
       z-index: 999;
       background: rgba(0,0,0,.6);
-      display: none;                 /* attivo solo con .active */
-      /* padding per margini e notch */
+      display: none;
       padding:
         calc(20px + env(safe-area-inset-top))
         calc(20px + env(safe-area-inset-right))
         calc(20px + env(safe-area-inset-bottom))
         calc(20px + env(safe-area-inset-left));
     }
-    /* 1) l'overlay diventa scrollabile quando è attivo */
     .overlay.active{
       display: grid;
-      justify-items: center;   /* centrato orizzontalmente */
-      align-items: start;      /* parte dall’alto, così può “crescere” */
-      overflow: auto;          /* mostra la scrollbar se il popup è più alto della viewport */
+      justify-items: center;
+      align-items: start;
+      overflow: auto;
     }
 
-
-
-    /* Thumbnails generiche (fuori dal popup) */
+    /* Thumbnails */
     .thumbnails{ display:flex; gap:10px; flex-wrap:wrap; justify-content:center; align-items:center; }
     .thumbnails img{
       max-height:80px; width:auto; cursor:pointer; border:2px solid transparent;
@@ -296,15 +273,14 @@
     .stepper-dot.active{background:#fff}
     .stepper-line{flex:1;height:2px;background:#444}
 
-    /* Triptych sempre a 3 colonne, con soglia minima e scroll orizzontale quando serve */
     .concept-row{
       display:grid;
       grid-template-columns: repeat(3, minmax(260px, 1fr));
       gap:16px;
       margin-bottom:18px;
-      overflow-x: auto;           /* evita che si schiaccino troppo: scroll orizzontale sotto i ~820px */
+      overflow-x: auto;
       -webkit-overflow-scrolling: touch;
-      padding-bottom: 4px;        /* spazio per la scrollbar su alcuni OS */
+      padding-bottom: 4px;
       scrollbar-gutter: stable;
     }
 
@@ -313,27 +289,24 @@
       display:flex; align-items:center; justify-content:center; padding:8px;
     }
     .concept-card img{
-      width:100%; height:auto; /* niente height fissa, niente object-fit che schiaccia */
+      width:100%; height:auto;
       display:block;
     }
 
-    /* Mantiene sempre due colonne; se lo schermo è troppo stretto, scorre in orizzontale senza cambiare layout */
     .blockout-layout{
       display:grid;
       grid-template-columns: minmax(360px, 1.1fr) minmax(340px, 1fr);
       gap:24px;
       align-items:center;
       margin-bottom:8px;
-      overflow-x:auto;                 /* impedisce il “collasso” in una colonna */
+      overflow-x:auto;
       -webkit-overflow-scrolling:touch;
       scrollbar-gutter: stable;
     }
 
-
     .blockout-left img{width:100%;max-width:1000px;border:1px solid #333;border-radius:8px;display:block;background:#000}
     .blockout-left .caption{margin-top:8px;color:#cfcfcf;font-size:.9rem}
 
-   /* Mantieni sempre 2 colonne per i dettagli; se serve, scroll orizzontale interno */
     .blockout-right{
       display:grid;
       grid-template-columns: repeat(2, minmax(220px, 1fr));
@@ -365,7 +338,6 @@
     .render-card img{ display:block; width:100%; height:200px; object-fit:cover; filter:grayscale(35%); background:#000 }
     .render-card figcaption{ padding:8px 10px; font-size:.9rem; color:#ddd; text-align:center; }
 
-    /* Popup: area gallery con thumbs (specifico per non “rompere” i CSS generici) */
     .popup .gallery-main{ width:100%; height:auto; border:1px solid #333; border-radius:8px; background:#000; }
     .popup .thumbs{ display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:12px; }
     .popup .thumbs img{
@@ -378,45 +350,48 @@
     .popup .thumbs img:hover, .popup .thumbs img.active{
       border-color:gold; filter:grayscale(0) brightness(1); transform:scale(1.05);
     }
-    /* ===== Popup più grandi su schermi stretti ===== */
+
     @media (max-width: 900px){
       .popup{
-        max-height: 92dvh;       /* usa l'altezza dinamica mobile */
-        padding: 16px;           /* riduci padding per guadagnare area utile */
+        max-height: 92dvh;
+        padding: 16px;
       }
       .popup.big{
-        max-height: 96dvh;       /* prima 92vh */
-        padding: 12px;           /* più contenuto visibile */
+        max-height: 96dvh;
+        padding: 12px;
         border-width: 0;
       }
-      /* Immagine singola dentro al popup semplice */
       .popup > img#popup-img{
-        max-height: calc(92dvh - 80px);  /* più alta su mobile */
+        max-height: calc(92dvh - 80px);
       }
-      /* Immagine principale delle gallerie */
       .popup .gallery-main{
-        max-height: calc(96dvh - 140px); /* lascia spazio a titolo + thumbs + bottone */
+        max-height: calc(96dvh - 140px);
       }
-      /* Thumbs un filo più compatte per lasciare spazio all'immagine grande */
       .popup .thumbs img{
         height: 64px !important;
       }
     }
 
-    /* REPLACE / ADD media queries related to heroPadFallback and overlay padding */
     @media (max-width: 900px){
-      :root{ --heroPadFallback: clamp(48px, 14vh, 220px); } /* fallback più grande su tablet/mobile */
+      :root{ --heroPadFallback: clamp(120px, 30vh, 420px); }
       .hero-overlay{ padding: clamp(18px,5vw,36px) clamp(14px,4vw,24px); }
     }
 
     @media (max-width: 560px){
-      :root{ --heroPadFallback: clamp(72px, 18vh, 280px); } /* ancora più spazio su phone molto stretto */
+      :root{ --heroPadFallback: clamp(180px, 42vh, 560px); }
       .hero-overlay{ padding: clamp(20px,6vw,44px) clamp(12px,4vw,20px); }
       .overlay-content{ gap:16px; }
       .main-title{ font-size: clamp(20px, 7.5vw, 36px); }
+      .icon-bar{
+        gap: 12px;
+      }
+      .icon-link img{
+        width: clamp(52px, 16vw, 82px);
+      }
+      .icon-link span{
+        font-size: clamp(11px, 3.6vw, 15px);
+      }
     }
-
-
 
     /* ——— Project details ——— */
     .pd-box{
@@ -437,7 +412,7 @@
       height:48px; width:auto; display:block; border:0; background:transparent; user-select:none; -webkit-user-drag:none;
     }
 
-    /* ====== ✅ HOTSPOT (ripristino numerini + click) ====== */
+    /* ====== ✅ HOTSPOT ====== */
     .hotspot-container{ position:relative; }
     .hotspot-number{
       position:absolute;
@@ -480,7 +455,7 @@
           </p>
 
           <!-- ICONE -->
-          <nav class="icon-bar" aria-label="Sections">
+          <nav class="icon-bar" id="heroIconBar" aria-label="Sections">
             <a href="#" class="icon-link" data-target="making-of">
               <img src="images/icons/interior.webp" alt="Interior icon"><span>Interior</span>
             </a>
@@ -553,7 +528,6 @@
       </div>
       <div class="divider-full"></div>
 
-      <!-- In-Engine renders -->
       <h3>In-Engine Renders</h3>
       <div class="render-grid">
         <figure class="render-card" onclick="openGallery('int_corridor1')">
@@ -594,12 +568,10 @@
       <h2>Making Of – Exterior</h2>
 
       <h3>References</h3>
-      <!-- layout invariato, scala tutto insieme -->
       <img src="images/exterior-moodboard.webp" alt="Moodboard Exterior" class="gallery-main" />
 
       <div class="divider-full"></div>
 
-      <!-- Concept -->
       <h3>Concept – from sketch to final</h3>
       <p class="subtitle">Exterior temple concept art created in <strong>Photoshop</strong>, from initial sketches to the final design.</p>
       <div class="stepper" aria-hidden="true">
@@ -608,7 +580,6 @@
         <span class="stepper-dot"></span>
       </div>
 
-      <!-- ✅ Triptych che scala (3 colonne sempre, niente “barrette” alte) -->
       <div class="concept-row">
         <figure class="concept-card"><img src="images/exterior-concept-sketch.jpg" alt="Exterior concept – sketch" loading="lazy"></figure>
         <figure class="concept-card"><img src="images/exterior-concept-wip.jpg" alt="Exterior concept – first pass" loading="lazy"></figure>
@@ -617,7 +588,6 @@
 
       <div class="divider-full"></div>
 
-      <!-- Blockout -->
       <h3>Blockout – overview & details</h3>
       <p class="subtitle">Initial exterior scene layout, modeled in <strong>Maya</strong> and rendered with <strong>Arnold</strong>.</p>
       <div class="blockout-layout">
@@ -636,7 +606,6 @@
 
       <div class="divider-full"></div>
 
-      <!-- Assets & Materials (hotspots) -->
       <h3>Assets & Materials</h3>
       <p class="subtitle">
         <strong>3D assets</strong> modeled in <strong>Maya</strong>, with high-detail sculpts created in <strong>ZBrush</strong> and baked into <strong>normal maps</strong> in <strong>Substance Painter</strong>. Base <strong>smart materials</strong> created in <strong>Substance Painter</strong> and refined by <strong>texture artists</strong> to achieve the final <strong>look</strong> in <strong>Unreal Engine</strong>.
@@ -661,7 +630,6 @@
 
       <div class="divider-full"></div>
 
-      <!-- In-Engine renders (exterior) -->
       <h3>In-Engine Renders</h3>
       <div class="render-grid">
         <figure class="render-card" onclick="openGallery('ext_entrance_in')">
@@ -883,13 +851,11 @@
       <h3>Watch on Youtube</h3>
       <div class="video-embed">
         <a href="https://www.youtube.com/watch?v=zeANbIlP1a4" target="_blank" rel="noopener noreferrer" style="position:relative;display:block;width:100%;height:100%;">
-    
           <img 
             src="https://img.youtube.com/vi/zeANbIlP1a4/maxresdefault.jpg"
             alt="The Golden Fall video thumbnail"
             style="width:100%;height:100%;object-fit:cover;"
           >
-
           <div style="
             position:absolute;
             inset:0;
@@ -913,7 +879,6 @@
               </svg>
             </div>
           </div>
-
         </a>
       </div>
     </section>
@@ -944,7 +909,6 @@
         <button class="close-section-btn" style="position:static;margin:16px auto 0" onclick="closePopup()">×</button>
       </div>
     </div>
-
 
   </div>
 
@@ -978,13 +942,11 @@
       adjustHeroPad();
     }
 
-    // ===== Hotspot states
     function activateHotspot(elem){
       elem.closest('.hotspot-container')?.querySelectorAll('.hotspot-number').forEach(h=>h.classList.remove('selected'));
       elem.classList.add('selected');
     }
 
-    // ===== Popup data (solo immagini: title/desc opzionali)
     const popupData = {
       'popup-interior-base': { img: "images/popup-base.webp" },
       'popup-interior-portal': { img: "images/popup-portal.webp" },
@@ -1103,7 +1065,6 @@
       pop.classList.remove('big');
     }
 
-    // Hover hotspot: swap immagine principale
     document.querySelectorAll('.hotspot-number').forEach(h=>{
       const container = h.closest('.hotspot-container');
       const mainImg = container?.querySelector('.gallery-main');
@@ -1116,7 +1077,6 @@
       }
     });
 
-    // Swap thumbs landscape
     (function setupThumbSwap(mainId, thumbsSelector){
       const main = document.getElementById(mainId);
       const thumbs = document.querySelectorAll(`${thumbsSelector} img`);
@@ -1133,9 +1093,7 @@
       });
     })('landMain','#landThumbs');
 
-    /* ===== Galleries per i render (popup con thumbs) ===== */
     const galleries = {
-      // INTERIOR
       int_corridor1: [
         "images/interior-renders/corridor1-1.jpg",
         "images/interior-renders/corridor1-2.jpg",
@@ -1167,7 +1125,6 @@
         "images/interior-renders/entrance-3.jpg"
       ],
 
-      // EXTERIOR
       ext_entrance_in: [
         "images/exterior-renders/entrance-in-1.jpg",
         "images/exterior-renders/entrance-in-2.jpg",
@@ -1217,58 +1174,44 @@
       pop.classList.add('active');
     }
 
-    // LETTERBOX inferiore dinamico della HERO (adattata)
-    /* REPLACE: adjustHeroPad() */
     function adjustHeroPad(){
       const media = document.getElementById('heroMedia');
       const content = document.getElementById('overlayContent');
+      const icons = document.getElementById('heroIconBar');
       if(!media || !content) return;
 
       const vw = window.innerWidth;
       const vh = window.innerHeight;
 
-      // dimensione contenuto (titolo + paragrafi + icone)
-      const contentH = content.getBoundingClientRect().height || 0;
-      const extra = 10; // padding extra tra contenuto e bordo della hero
+      const contentH = Math.ceil(content.getBoundingClientRect().height || 0);
+      const iconsH = Math.ceil(icons?.getBoundingClientRect().height || 0);
 
-      // soft cap: non permettere al pad di occupare più del X% della viewport
-      let softCapPercent = 0.40; // 40% su mobile/tablet — permette letterbox più alto come richiesto
-      // riduciamo il cap su desktop
-      if (vw >= 1000) softCapPercent = 0.18;
+      let pad = 24;
 
-      const hardCapPx = Math.floor(vh * softCapPercent);
-      const minPad = 24;
-
-      // Se lo schermo è stretto, aggiungiamo un offset extra (spinge il contenuto più in basso)
-      let extraPad = 0;
-      if (vw <= 700) {
-        extraPad = Math.floor(vh * 0.06); // ~6% vh extra su phone
+      if (vw <= 560) {
+        const extra = 28;
+        const maxPad = Math.floor(vh * 0.72);
+        pad = Math.max(180, Math.min(maxPad, contentH + extra));
       } else if (vw <= 900) {
-        extraPad = Math.floor(vh * 0.03); // piccolo extra su tablet
+        const extra = 24;
+        const maxPad = Math.floor(vh * 0.58);
+        pad = Math.max(120, Math.min(maxPad, contentH + extra));
+      } else {
+        const extra = 18;
+        const maxPad = 180;
+        const minPad = 36;
+        pad = Math.max(minPad, Math.min(maxPad, contentH + iconsH + extra));
       }
-
-      // Calcolo base
-      let pad = Math.max(minPad, Math.ceil(contentH + extra)) + extraPad;
-
-      // Non superare il cap
-      pad = Math.min(pad, hardCapPx);
-
-      // Ulteriore limite su desktop
-      if (vw >= 1000) pad = Math.min(pad, 140);
 
       media.style.setProperty('--heroPad', pad + 'px');
     }
-
-
 
     window.addEventListener('load', adjustHeroPad);
     window.addEventListener('resize', adjustHeroPad, {passive:true});
     window.addEventListener('orientationchange', adjustHeroPad);
     if (document.fonts && document.fonts.ready) { document.fonts.ready.then(adjustHeroPad); }
-    // piccolo ritardo per assicurare il rendering dei fonts/partials
     setTimeout(adjustHeroPad, 250);
     setTimeout(adjustHeroPad, 800);
-
   </script>
 </body>
 </html>
